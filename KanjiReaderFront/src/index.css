@@ -1,0 +1,137 @@
+:root {
+  font-family:
+    "Yu Mincho",
+    "Meiryo",
+    Yu Gothic UI,
+    MS PGothic, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*::selection {
+  background-color: #c00c75;
+  color: white;
+}
+
+a {
+  cursor: pointer;
+  font-weight: 500;
+
+  text-decoration: inherit;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+a:hover {
+  color: #c00c75;
+  text-shadow: 0 0 20px #c00c75;
+  transition: all 0.5s ease;
+}
+
+a:active {
+  transform: scale(1.05);
+  color: #fa0092;
+  text-shadow: 0 0 30px #fa0092;
+  transition: all 0.1s ease;
+}
+
+/* Дополнительный эффект с псевдоэлементом для свечения */
+a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #c00c75, transparent);
+  transition: width 0.3s ease;
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+@keyframes textGlow {
+  0% {
+    text-shadow: 0 0 15px #c00c75;
+  }
+
+  100% {
+    text-shadow: 0 0 25px #c00c75;
+  }
+}
+
+@keyframes textGlowHigher {
+  0% {
+    text-shadow: 0 0 20px #fa0092;
+  }
+
+  100% {
+    text-shadow: 0 0 30px #fa0092;
+  }
+}
+
+body {
+  margin: 0;
+  font-size: 20px;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  background: #1f1f1f;
+
+  border: none;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: linear-gradient(45deg, #c00c75, transparent) border-box;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+button:hover::before {
+  opacity: 1;
+}
+
+button:hover {
+  color: #c00c75;
+  box-shadow: 0 0 20px #c00c7569;
+  transform: scale(1.1);
+}

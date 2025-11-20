@@ -1,0 +1,4016 @@
+[
+  {
+    "kanji": "入所",
+    "furigana": "にゅうしょ",
+    "english": "Admission",
+    "roman": "nyuusho"
+  },
+  {
+    "kanji": "上級",
+    "furigana": "じょうきゅう",
+    "english": "Advanced Level",
+    "roman": "joukyuu"
+  },
+  {
+    "kanji": "味方",
+    "furigana": "みかた",
+    "english": "Ally",
+    "roman": "mikata"
+  },
+  {
+    "kanji": "売り上げ",
+    "furigana": "うりあげ",
+    "english": "Amount Sold",
+    "roman": "uriage"
+  },
+  {
+    "kanji": "不良",
+    "furigana": "ふりょう",
+    "english": "Bad",
+    "roman": "furyou"
+  },
+  {
+    "kanji": "初歩",
+    "furigana": "しょほ",
+    "english": "Basics",
+    "roman": "shoho"
+  },
+  {
+    "kanji": "戦い",
+    "furigana": "たたかい",
+    "english": "Battle",
+    "roman": "tatakai"
+  },
+  {
+    "kanji": "戦場",
+    "furigana": "せんじょう",
+    "english": "Battlefield",
+    "roman": "senjou"
+  },
+  {
+    "kanji": "予め",
+    "furigana": "あらかじめ",
+    "english": "Beforehand",
+    "roman": "arakajime"
+  },
+  {
+    "kanji": "初級",
+    "furigana": "しょきゅう",
+    "english": "Beginner Level",
+    "roman": "shokyuu"
+  },
+  {
+    "kanji": "伝記",
+    "furigana": "でんき",
+    "english": "Biography",
+    "roman": "denki"
+  },
+  {
+    "kanji": "生物学",
+    "furigana": "せいぶつがく",
+    "english": "Biology",
+    "roman": "seibutsugaku"
+  },
+  {
+    "kanji": "乗り場",
+    "furigana": "のりば",
+    "english": "Boarding Area",
+    "roman": "noriba"
+  },
+  {
+    "kanji": "注意",
+    "furigana": "ちゅうい",
+    "english": "Caution",
+    "roman": "chuui"
+  },
+  {
+    "kanji": "洋服",
+    "furigana": "ようふく",
+    "english": "Clothes",
+    "roman": "youfuku"
+  },
+  {
+    "kanji": "共通点",
+    "furigana": "きょうつうてん",
+    "english": "Common Point",
+    "roman": "kyoutsuuten"
+  },
+  {
+    "kanji": "競争",
+    "furigana": "きょうそう",
+    "english": "Competition",
+    "roman": "kyousou"
+  },
+  {
+    "kanji": "仲間",
+    "furigana": "なかま",
+    "english": "Comrade",
+    "roman": "nakama"
+  },
+  {
+    "kanji": "便利",
+    "furigana": "べんり",
+    "english": "Convenient",
+    "roman": "benri"
+  },
+  {
+    "kanji": "共同",
+    "furigana": "きょうどう",
+    "english": "Cooperation",
+    "roman": "kyoudou"
+  },
+  {
+    "kanji": "正解",
+    "furigana": "せいかい",
+    "english": "Correct Answer",
+    "roman": "seikai"
+  },
+  {
+    "kanji": "〜部",
+    "furigana": "ぶ",
+    "english": "Department",
+    "roman": "bu"
+  },
+  {
+    "kanji": "決心",
+    "furigana": "けっしん",
+    "english": "Determination",
+    "roman": "kesshin"
+  },
+  {
+    "kanji": "別",
+    "furigana": "べつ",
+    "english": "Different",
+    "roman": "betsu"
+  },
+  {
+    "kanji": "別人",
+    "furigana": "べつじん",
+    "english": "Different Person",
+    "roman": "betsujin"
+  },
+  {
+    "kanji": "教育",
+    "furigana": "きょういく",
+    "english": "Education",
+    "roman": "kyouiku"
+  },
+  {
+    "kanji": "入学試験",
+    "furigana": "にゅうがくしけん",
+    "english": "Entrance Exam",
+    "roman": "nyuugakushiken"
+  },
+  {
+    "kanji": "特に",
+    "furigana": "とくに",
+    "english": "Especially",
+    "roman": "tokuni"
+  },
+  {
+    "kanji": "運命",
+    "furigana": "うんめい",
+    "english": "Fate",
+    "roman": "unmei"
+  },
+  {
+    "kanji": "心持ち",
+    "furigana": "こころもち",
+    "english": "Feeling",
+    "roman": "kokoromochi"
+  },
+  {
+    "kanji": "気持ち",
+    "furigana": "きもち",
+    "english": "Feeling",
+    "roman": "kimochi"
+  },
+  {
+    "kanji": "指",
+    "furigana": "ゆび",
+    "english": "Finger",
+    "roman": "yubi"
+  },
+  {
+    "kanji": "首位",
+    "furigana": "しゅい",
+    "english": "First Place",
+    "roman": "shui"
+  },
+  {
+    "kanji": "一位",
+    "furigana": "いちい",
+    "english": "First Place",
+    "roman": "ichii"
+  },
+  {
+    "kanji": "昔話",
+    "furigana": "むかしばなし",
+    "english": "Folk Tale",
+    "roman": "mukashibanashi"
+  },
+  {
+    "kanji": "食べ物",
+    "furigana": "たべもの",
+    "english": "Food",
+    "roman": "tabemono"
+  },
+  {
+    "kanji": "友好",
+    "furigana": "ゆうこう",
+    "english": "Friendship",
+    "roman": "yuukou"
+  },
+  {
+    "kanji": "仕返し",
+    "furigana": "しかえし",
+    "english": "Getting Even",
+    "roman": "shikaeshi"
+  },
+  {
+    "kanji": "神",
+    "furigana": "かみ",
+    "english": "God",
+    "roman": "kami"
+  },
+  {
+    "kanji": "良い",
+    "furigana": "よい",
+    "english": "Good",
+    "roman": "yoi"
+  },
+  {
+    "kanji": "気持ちいい",
+    "furigana": "きもちいい",
+    "english": "Good Feeling",
+    "roman": "kimochiii"
+  },
+  {
+    "kanji": "努力",
+    "furigana": "どりょく",
+    "english": "Great Effort",
+    "roman": "doryoku"
+  },
+  {
+    "kanji": "苦労",
+    "furigana": "くろう",
+    "english": "Hardship",
+    "roman": "kurou"
+  },
+  {
+    "kanji": "苦手",
+    "furigana": "にがて",
+    "english": "Hard To Deal With",
+    "roman": "nigate"
+  },
+  {
+    "kanji": "高級",
+    "furigana": "こうきゅう",
+    "english": "High Class",
+    "roman": "koukyuu"
+  },
+  {
+    "kanji": "平仮名",
+    "furigana": "ひらがな",
+    "english": "Hiragana",
+    "roman": "hiragana"
+  },
+  {
+    "kanji": "使い方",
+    "furigana": "つかいかた",
+    "english": "How To Use",
+    "roman": "tsukaikata"
+  },
+  {
+    "kanji": "〜付き",
+    "furigana": "つき",
+    "english": "Including",
+    "roman": "tsuki"
+  },
+  {
+    "kanji": "不便",
+    "furigana": "ふべん",
+    "english": "Inconvenient",
+    "roman": "fuben"
+  },
+  {
+    "kanji": "中級",
+    "furigana": "ちゅうきゅう",
+    "english": "Intermediate Level",
+    "roman": "chuukyuu"
+  },
+  {
+    "kanji": "始めに",
+    "furigana": "はじめに",
+    "english": "In The Beginning",
+    "roman": "hajimeni"
+  },
+  {
+    "kanji": "仕事",
+    "furigana": "しごと",
+    "english": "Job",
+    "roman": "shigoto"
+  },
+  {
+    "kanji": "丁度いい",
+    "furigana": "ちょうどいい",
+    "english": "Just Right",
+    "roman": "choudoii"
+  },
+  {
+    "kanji": "労働者",
+    "furigana": "ろうどうしゃ",
+    "english": "Laborer",
+    "roman": "roudousha"
+  },
+  {
+    "kanji": "命",
+    "furigana": "いのち",
+    "english": "Life",
+    "roman": "inochi"
+  },
+  {
+    "kanji": "好き",
+    "furigana": "すき",
+    "english": "Like",
+    "roman": "suki"
+  },
+  {
+    "kanji": "文字通り",
+    "furigana": "もじどおり",
+    "english": "Literal",
+    "roman": "mojidoori"
+  },
+  {
+    "kanji": "昔",
+    "furigana": "むかし",
+    "english": "Long Ago",
+    "roman": "mukashi"
+  },
+  {
+    "kanji": "負け犬",
+    "furigana": "まけいぬ",
+    "english": "Loser",
+    "roman": "makeinu"
+  },
+  {
+    "kanji": "低い",
+    "furigana": "ひくい",
+    "english": "Low",
+    "roman": "hikui"
+  },
+  {
+    "kanji": "労働",
+    "furigana": "ろうどう",
+    "english": "Manual Labor",
+    "roman": "roudou"
+  },
+  {
+    "kanji": "意味",
+    "furigana": "いみ",
+    "english": "Meaning",
+    "roman": "imi"
+  },
+  {
+    "kanji": "新た",
+    "furigana": "あらた",
+    "english": "New",
+    "roman": "arata"
+  },
+  {
+    "kanji": "別に",
+    "furigana": "べつに",
+    "english": "Not Particularly",
+    "roman": "betsuni"
+  },
+  {
+    "kanji": "発売中",
+    "furigana": "はつばいちゅう",
+    "english": "Now For Sale",
+    "roman": "hatsubaichuu"
+  },
+  {
+    "kanji": "老人",
+    "furigana": "ろうじん",
+    "english": "Old Person",
+    "roman": "roujin"
+  },
+  {
+    "kanji": "意見",
+    "furigana": "いけん",
+    "english": "Opinion",
+    "roman": "iken"
+  },
+  {
+    "kanji": "命令",
+    "furigana": "めいれい",
+    "english": "Order",
+    "roman": "meirei"
+  },
+  {
+    "kanji": "注文",
+    "furigana": "ちゅうもん",
+    "english": "Order",
+    "roman": "chuumon"
+  },
+  {
+    "kanji": "用意",
+    "furigana": "ようい",
+    "english": "Preparation",
+    "roman": "youi"
+  },
+  {
+    "kanji": "公共",
+    "furigana": "こうきょう",
+    "english": "Public",
+    "roman": "koukyou"
+  },
+  {
+    "kanji": "〜位",
+    "furigana": "い",
+    "english": "Rank",
+    "roman": "i"
+  },
+  {
+    "kanji": "本物",
+    "furigana": "ほんもの",
+    "english": "Real Thing",
+    "roman": "honmono"
+  },
+  {
+    "kanji": "電波",
+    "furigana": "でんぱ",
+    "english": "Reception",
+    "roman": "denpa"
+  },
+  {
+    "kanji": "受付",
+    "furigana": "うけつけ",
+    "english": "Receptionist",
+    "roman": "uketsuke"
+  },
+  {
+    "kanji": "仲直り",
+    "furigana": "なかなおり",
+    "english": "Reconciliation",
+    "roman": "nakanaori"
+  },
+  {
+    "kanji": "仲",
+    "furigana": "なか",
+    "english": "Relationship",
+    "roman": "naka"
+  },
+  {
+    "kanji": "便所",
+    "furigana": "べんじょ",
+    "english": "Restroom",
+    "roman": "benjo"
+  },
+  {
+    "kanji": "金持ち",
+    "furigana": "かねもち",
+    "english": "Rich Person",
+    "roman": "kanemochi"
+  },
+  {
+    "kanji": "屋上",
+    "furigana": "おくじょう",
+    "english": "Rooftop",
+    "roman": "okujou"
+  },
+  {
+    "kanji": "海岸",
+    "furigana": "かいがん",
+    "english": "Seashore",
+    "roman": "kaigan"
+  },
+  {
+    "kanji": "秒",
+    "furigana": "びょう",
+    "english": "Second",
+    "roman": "byou"
+  },
+  {
+    "kanji": "安売り",
+    "furigana": "やすうり",
+    "english": "Sell Cheaply",
+    "roman": "yasuuri"
+  },
+  {
+    "kanji": "売り手",
+    "furigana": "うりて",
+    "english": "Seller",
+    "roman": "urite"
+  },
+  {
+    "kanji": "別の",
+    "furigana": "べつの",
+    "english": "Separate",
+    "roman": "betsuno"
+  },
+  {
+    "kanji": "別々",
+    "furigana": "べつべつ",
+    "english": "Separate",
+    "roman": "betsubetsu"
+  },
+  {
+    "kanji": "共有",
+    "furigana": "きょうゆう",
+    "english": "Shared",
+    "roman": "kyouyuu"
+  },
+  {
+    "kanji": "神道",
+    "furigana": "しんとう",
+    "english": "Shinto",
+    "roman": "shintou"
+  },
+  {
+    "kanji": "神社",
+    "furigana": "じんじゃ",
+    "english": "Shinto Shrine",
+    "roman": "jinja"
+  },
+  {
+    "kanji": "買い物",
+    "furigana": "かいもの",
+    "english": "Shopping",
+    "roman": "kaimono"
+  },
+  {
+    "kanji": "辺",
+    "furigana": "へん",
+    "english": "Side",
+    "roman": "hen"
+  },
+  {
+    "kanji": "見物",
+    "furigana": "けんぶつ",
+    "english": "Sightseeing",
+    "roman": "kenbutsu"
+  },
+  {
+    "kanji": "売り切れ",
+    "furigana": "うりきれ",
+    "english": "Sold Out",
+    "roman": "urikire"
+  },
+  {
+    "kanji": "時々",
+    "furigana": "ときどき",
+    "english": "Sometimes",
+    "roman": "tokidoki"
+  },
+  {
+    "kanji": "特別",
+    "furigana": "とくべつ",
+    "english": "Special",
+    "roman": "tokubetsu"
+  },
+  {
+    "kanji": "見事",
+    "furigana": "みごと",
+    "english": "Splendid",
+    "roman": "migoto"
+  },
+  {
+    "kanji": "成功",
+    "furigana": "せいこう",
+    "english": "Success",
+    "roman": "seikou"
+  },
+  {
+    "kanji": "作戦",
+    "furigana": "さくせん",
+    "english": "Tactics",
+    "roman": "sakusen"
+  },
+  {
+    "kanji": "物語",
+    "furigana": "ものがたり",
+    "english": "Tale",
+    "roman": "monogatari"
+  },
+  {
+    "kanji": "戦車",
+    "furigana": "せんしゃ",
+    "english": "Tank",
+    "roman": "sensha"
+  },
+  {
+    "kanji": "味",
+    "furigana": "あじ",
+    "english": "Taste",
+    "roman": "aji"
+  },
+  {
+    "kanji": "最初",
+    "furigana": "さいしょ",
+    "english": "The First",
+    "roman": "saisho"
+  },
+  {
+    "kanji": "初回",
+    "furigana": "しょかい",
+    "english": "The First Time",
+    "roman": "shokai"
+  },
+  {
+    "kanji": "最低",
+    "furigana": "さいてい",
+    "english": "The Lowest",
+    "roman": "saitei"
+  },
+  {
+    "kanji": "西洋",
+    "furigana": "せいよう",
+    "english": "The West",
+    "roman": "seiyou"
+  },
+  {
+    "kanji": "進める",
+    "furigana": "すすめる",
+    "english": "To Advance Something",
+    "roman": "susumeru"
+  },
+  {
+    "kanji": "指定する",
+    "furigana": "していする",
+    "english": "To Appoint",
+    "roman": "shiteisuru"
+  },
+  {
+    "kanji": "成る",
+    "furigana": "なる",
+    "english": "To Become",
+    "roman": "naru"
+  },
+  {
+    "kanji": "育つ",
+    "furigana": "そだつ",
+    "english": "To Be Raised",
+    "roman": "sodatsu"
+  },
+  {
+    "kanji": "返る",
+    "furigana": "かえる",
+    "english": "To Be Returned",
+    "roman": "kaeru"
+  },
+  {
+    "kanji": "放送する",
+    "furigana": "ほうそうする",
+    "english": "To Broadcast Something",
+    "roman": "housousuru"
+  },
+  {
+    "kanji": "通う",
+    "furigana": "かよう",
+    "english": "To Commute",
+    "roman": "kayou"
+  },
+  {
+    "kanji": "比べる",
+    "furigana": "くらべる",
+    "english": "To Compare",
+    "roman": "kuraberu"
+  },
+  {
+    "kanji": "競う",
+    "furigana": "きそう",
+    "english": "To Compete",
+    "roman": "kisou"
+  },
+  {
+    "kanji": "争う",
+    "furigana": "あらそう",
+    "english": "To Compete",
+    "roman": "arasou"
+  },
+  {
+    "kanji": "集中する",
+    "furigana": "しゅうちゅうする",
+    "english": "To Concentrate",
+    "roman": "shuuchuusuru"
+  },
+  {
+    "kanji": "伝える",
+    "furigana": "つたえる",
+    "english": "To Convey",
+    "roman": "tsutaeru"
+  },
+  {
+    "kanji": "欠かす",
+    "furigana": "かかす",
+    "english": "To Do Without",
+    "roman": "kakasu"
+  },
+  {
+    "kanji": "追う",
+    "furigana": "おう",
+    "english": "To Follow",
+    "roman": "ou"
+  },
+  {
+    "kanji": "東北",
+    "furigana": "とうほく",
+    "english": "Tohoku",
+    "roman": "touhoku"
+  },
+  {
+    "kanji": "保持する",
+    "furigana": "ほじする",
+    "english": "To Keep",
+    "roman": "hojisuru"
+  },
+  {
+    "kanji": "欠く",
+    "furigana": "かく",
+    "english": "To Lack Something",
+    "roman": "kaku"
+  },
+  {
+    "kanji": "今夜",
+    "furigana": "こんや",
+    "english": "Tonight",
+    "roman": "kon'ya"
+  },
+  {
+    "kanji": "開放する",
+    "furigana": "かいほうする",
+    "english": "To Open Something Up",
+    "roman": "kaihousuru"
+  },
+  {
+    "kanji": "拾う",
+    "furigana": "ひろう",
+    "english": "To Pick Something Up",
+    "roman": "hirou"
+  },
+  {
+    "kanji": "指す",
+    "furigana": "さす",
+    "english": "To Point",
+    "roman": "sasu"
+  },
+  {
+    "kanji": "注ぐ",
+    "furigana": "そそぐ",
+    "english": "To Pour",
+    "roman": "sosogu"
+  },
+  {
+    "kanji": "気付く",
+    "furigana": "きづく",
+    "english": "To Realize",
+    "roman": "kizuku"
+  },
+  {
+    "kanji": "放す",
+    "furigana": "はなす",
+    "english": "To Release",
+    "roman": "hanasu"
+  },
+  {
+    "kanji": "転がす",
+    "furigana": "ころがす",
+    "english": "To Roll Something",
+    "roman": "korogasu"
+  },
+  {
+    "kanji": "見送る",
+    "furigana": "みおくる",
+    "english": "To See Off",
+    "roman": "miokuru"
+  },
+  {
+    "kanji": "苦しむ",
+    "furigana": "くるしむ",
+    "english": "To Suffer",
+    "roman": "kurushimu"
+  },
+  {
+    "kanji": "試す",
+    "furigana": "ためす",
+    "english": "To Try Something Out",
+    "roman": "tamesu"
+  },
+  {
+    "kanji": "働く",
+    "furigana": "はたらく",
+    "english": "To Work",
+    "roman": "hataraku"
+  },
+  {
+    "kanji": "利く",
+    "furigana": "きく",
+    "english": "To Work Well",
+    "roman": "kiku"
+  },
+  {
+    "kanji": "意外",
+    "furigana": "いがい",
+    "english": "Unexpected",
+    "roman": "igai"
+  },
+  {
+    "kanji": "乗り物",
+    "furigana": "のりもの",
+    "english": "Vehicle",
+    "roman": "norimono"
+  },
+  {
+    "kanji": "勝ち",
+    "furigana": "かち",
+    "english": "Victory",
+    "roman": "kachi"
+  },
+  {
+    "kanji": "戦争",
+    "furigana": "せんそう",
+    "english": "War",
+    "roman": "sensou"
+  },
+  {
+    "kanji": "波",
+    "furigana": "なみ",
+    "english": "Wave",
+    "roman": "nami"
+  },
+  {
+    "kanji": "洋室",
+    "furigana": "ようしつ",
+    "english": "Western Style Room",
+    "roman": "youshitsu"
+  },
+  {
+    "kanji": "誰",
+    "furigana": "だれ",
+    "english": "Who",
+    "roman": "dare"
+  },
+  {
+    "kanji": "行動",
+    "furigana": "こうどう",
+    "english": "Action",
+    "roman": "koudou"
+  },
+  {
+    "kanji": "活動",
+    "furigana": "かつどう",
+    "english": "Activity",
+    "roman": "katsudou"
+  },
+  {
+    "kanji": "空港",
+    "furigana": "くうこう",
+    "english": "Airport",
+    "roman": "kuukou"
+  },
+  {
+    "kanji": "全員",
+    "furigana": "ぜんいん",
+    "english": "All Members",
+    "roman": "zen'in"
+  },
+  {
+    "kanji": "もう",
+    "furigana": "もう",
+    "english": "Already",
+    "roman": "mou"
+  },
+  {
+    "kanji": "動物",
+    "furigana": "どうぶつ",
+    "english": "Animal",
+    "roman": "doubutsu"
+  },
+  {
+    "kanji": "鳴き声",
+    "furigana": "なきごえ",
+    "english": "Animal Cry",
+    "roman": "nakigoe"
+  },
+  {
+    "kanji": "勝手",
+    "furigana": "かって",
+    "english": "As One Pleases",
+    "roman": "katte"
+  },
+  {
+    "kanji": "大西洋",
+    "furigana": "たいせいよう",
+    "english": "Atlantic Ocean",
+    "roman": "taiseiyou"
+  },
+  {
+    "kanji": "悪い",
+    "furigana": "わるい",
+    "english": "Bad",
+    "roman": "warui"
+  },
+  {
+    "kanji": "悪人",
+    "furigana": "あくにん",
+    "english": "Bad Person",
+    "roman": "akunin"
+  },
+  {
+    "kanji": "野球",
+    "furigana": "やきゅう",
+    "english": "Baseball",
+    "roman": "yakyuu"
+  },
+  {
+    "kanji": "飲み物",
+    "furigana": "のみもの",
+    "english": "Beverage",
+    "roman": "nomimono"
+  },
+  {
+    "kanji": "酒飲み",
+    "furigana": "さけのみ",
+    "english": "Boozer",
+    "roman": "sakenomi"
+  },
+  {
+    "kanji": "親分",
+    "furigana": "おやぶん",
+    "english": "Boss",
+    "roman": "oyabun"
+  },
+  {
+    "kanji": "息",
+    "furigana": "いき",
+    "english": "Breath",
+    "roman": "iki"
+  },
+  {
+    "kanji": "商売",
+    "furigana": "しょうばい",
+    "english": "Business",
+    "roman": "shoubai"
+  },
+  {
+    "kanji": "心配事",
+    "furigana": "しんぱいごと",
+    "english": "Cares",
+    "roman": "shinpaigoto"
+  },
+  {
+    "kanji": "虫歯",
+    "furigana": "むしば",
+    "english": "Cavity",
+    "roman": "mushiba"
+  },
+  {
+    "kanji": "第二章",
+    "furigana": "だいにしょう",
+    "english": "Chapter Two",
+    "roman": "dainishou"
+  },
+  {
+    "kanji": "童話",
+    "furigana": "どうわ",
+    "english": "Children's Story",
+    "roman": "douwa"
+  },
+  {
+    "kanji": "音読み",
+    "furigana": "おんよみ",
+    "english": "Chinese Reading",
+    "roman": "on'yomi"
+  },
+  {
+    "kanji": "都市",
+    "furigana": "とし",
+    "english": "City",
+    "roman": "toshi"
+  },
+  {
+    "kanji": "部室",
+    "furigana": "ぶしつ",
+    "english": "Clubroom",
+    "roman": "bushitsu"
+  },
+  {
+    "kanji": "寒い",
+    "furigana": "さむい",
+    "english": "Cold",
+    "roman": "samui"
+  },
+  {
+    "kanji": "会社員",
+    "furigana": "かいしゃいん",
+    "english": "Company Employee",
+    "roman": "kaishain"
+  },
+  {
+    "kanji": "落ち",
+    "furigana": "おち",
+    "english": "Conclusion",
+    "roman": "ochi"
+  },
+  {
+    "kanji": "大根",
+    "furigana": "だいこん",
+    "english": "Daikon",
+    "roman": "daikon"
+  },
+  {
+    "kanji": "深い",
+    "furigana": "ふかい",
+    "english": "Deep",
+    "roman": "fukai"
+  },
+  {
+    "kanji": "最深",
+    "furigana": "さいしん",
+    "english": "Deepest",
+    "roman": "saishin"
+  },
+  {
+    "kanji": "歯医者",
+    "furigana": "はいしゃ",
+    "english": "Dentist",
+    "roman": "haisha"
+  },
+  {
+    "kanji": "消化",
+    "furigana": "しょうか",
+    "english": "Digestion",
+    "roman": "shouka"
+  },
+  {
+    "kanji": "二倍",
+    "furigana": "にばい",
+    "english": "Double",
+    "roman": "nibai"
+  },
+  {
+    "kanji": "運転手",
+    "furigana": "うんてんしゅ",
+    "english": "Driver",
+    "roman": "untenshu"
+  },
+  {
+    "kanji": "社員",
+    "furigana": "しゃいん",
+    "english": "Employee",
+    "roman": "shain"
+  },
+  {
+    "kanji": "民族",
+    "furigana": "みんぞく",
+    "english": "Ethnic Group",
+    "roman": "minzoku"
+  },
+  {
+    "kanji": "運動",
+    "furigana": "うんどう",
+    "english": "Exercise",
+    "roman": "undou"
+  },
+  {
+    "kanji": "期待",
+    "furigana": "きたい",
+    "english": "Expectation",
+    "roman": "kitai"
+  },
+  {
+    "kanji": "落ち葉",
+    "furigana": "おちば",
+    "english": "Fallen Leaves",
+    "roman": "ochiba"
+  },
+  {
+    "kanji": "家族",
+    "furigana": "かぞく",
+    "english": "Family",
+    "roman": "kazoku"
+  },
+  {
+    "kanji": "家庭",
+    "furigana": "かてい",
+    "english": "Family",
+    "roman": "katei"
+  },
+  {
+    "kanji": "父親",
+    "furigana": "ちちおや",
+    "english": "Father",
+    "roman": "chichioya"
+  },
+  {
+    "kanji": "疲労",
+    "furigana": "ひろう",
+    "english": "Fatigue",
+    "roman": "hirou"
+  },
+  {
+    "kanji": "祭",
+    "furigana": "まつり",
+    "english": "Festival",
+    "roman": "matsuri"
+  },
+  {
+    "kanji": "祭日",
+    "furigana": "さいじつ",
+    "english": "Festival Day",
+    "roman": "saijitsu"
+  },
+  {
+    "kanji": "一階",
+    "furigana": "いっかい",
+    "english": "First Floor",
+    "roman": "ikkai"
+  },
+  {
+    "kanji": "第一位",
+    "furigana": "だいいちい",
+    "english": "First Place",
+    "roman": "daiichii"
+  },
+  {
+    "kanji": "一流",
+    "furigana": "いちりゅう",
+    "english": "First Rate",
+    "roman": "ichiryuu"
+  },
+  {
+    "kanji": "〜階",
+    "furigana": "かい",
+    "english": "Floor",
+    "roman": "kai"
+  },
+  {
+    "kanji": "四十二階",
+    "furigana": "よんじゅうにかい",
+    "english": "Forty Second Floor",
+    "roman": "yonjuunikai"
+  },
+  {
+    "kanji": "庭",
+    "furigana": "にわ",
+    "english": "Garden",
+    "roman": "niwa"
+  },
+  {
+    "kanji": "集まり",
+    "furigana": "あつまり",
+    "english": "Gathering",
+    "roman": "atsumari"
+  },
+  {
+    "kanji": "大学院生",
+    "furigana": "だいがくいんせい",
+    "english": "Graduate Student",
+    "roman": "daigakuinsei"
+  },
+  {
+    "kanji": "港",
+    "furigana": "みなと",
+    "english": "Harbor",
+    "roman": "minato"
+  },
+  {
+    "kanji": "彼",
+    "furigana": "かれ",
+    "english": "He",
+    "roman": "kare"
+  },
+  {
+    "kanji": "広島",
+    "furigana": "ひろしま",
+    "english": "Hiroshima",
+    "roman": "hiroshima"
+  },
+  {
+    "kanji": "温泉",
+    "furigana": "おんせん",
+    "english": "Hot Springs",
+    "roman": "onsen"
+  },
+  {
+    "kanji": "湯",
+    "furigana": "ゆ",
+    "english": "Hot Water",
+    "roman": "yu"
+  },
+  {
+    "kanji": "暑い",
+    "furigana": "あつい",
+    "english": "Hot Weather",
+    "roman": "atsui"
+  },
+  {
+    "kanji": "僕",
+    "furigana": "ぼく",
+    "english": "I",
+    "roman": "boku"
+  },
+  {
+    "kanji": "利息",
+    "furigana": "りそく",
+    "english": "Interest",
+    "roman": "risoku"
+  },
+  {
+    "kanji": "島",
+    "furigana": "しま",
+    "english": "Island",
+    "roman": "shima"
+  },
+  {
+    "kanji": "顔文字",
+    "furigana": "かおもじ",
+    "english": "Kaomoji",
+    "roman": "kaomoji"
+  },
+  {
+    "kanji": "京都",
+    "furigana": "きょうと",
+    "english": "Kyoto",
+    "roman": "kyouto"
+  },
+  {
+    "kanji": "終電",
+    "furigana": "しゅうでん",
+    "english": "Last Train",
+    "roman": "shuuden"
+  },
+  {
+    "kanji": "一代",
+    "furigana": "いちだい",
+    "english": "Lifetime",
+    "roman": "ichidai"
+  },
+  {
+    "kanji": "運",
+    "furigana": "うん",
+    "english": "Luck",
+    "roman": "un"
+  },
+  {
+    "kanji": "本流",
+    "furigana": "ほんりゅう",
+    "english": "Mainstream",
+    "roman": "honryuu"
+  },
+  {
+    "kanji": "会員",
+    "furigana": "かいいん",
+    "english": "Member",
+    "roman": "kaiin"
+  },
+  {
+    "kanji": "商人",
+    "furigana": "しょうにん",
+    "english": "Merchant",
+    "roman": "shounin"
+  },
+  {
+    "kanji": "深夜",
+    "furigana": "しんや",
+    "english": "Middle Of The Night",
+    "roman": "shin'ya"
+  },
+  {
+    "kanji": "母親",
+    "furigana": "ははおや",
+    "english": "Mother",
+    "roman": "hahaoya"
+  },
+  {
+    "kanji": "登山",
+    "furigana": "とざん",
+    "english": "Mountain Climbing",
+    "roman": "tozan"
+  },
+  {
+    "kanji": "北西",
+    "furigana": "ほくせい",
+    "english": "Northwest",
+    "roman": "hokusei"
+  },
+  {
+    "kanji": "都合",
+    "furigana": "つごう",
+    "english": "One's Convenience",
+    "roman": "tsugou"
+  },
+  {
+    "kanji": "根気",
+    "furigana": "こんき",
+    "english": "Patience",
+    "roman": "konki"
+  },
+  {
+    "kanji": "期間",
+    "furigana": "きかん",
+    "english": "Period",
+    "roman": "kikan"
+  },
+  {
+    "kanji": "植物",
+    "furigana": "しょくぶつ",
+    "english": "Plant",
+    "roman": "shokubutsu"
+  },
+  {
+    "kanji": "屋根",
+    "furigana": "やね",
+    "english": "Roof",
+    "roman": "yane"
+  },
+  {
+    "kanji": "根本",
+    "furigana": "こんぽん",
+    "english": "Root",
+    "roman": "konpon"
+  },
+  {
+    "kanji": "根",
+    "furigana": "ね",
+    "english": "Root",
+    "roman": "ne"
+  },
+  {
+    "kanji": "船員",
+    "furigana": "せんいん",
+    "english": "Sailor",
+    "roman": "sen'in"
+  },
+  {
+    "kanji": "学期",
+    "furigana": "がっき",
+    "english": "School Term",
+    "roman": "gakki"
+  },
+  {
+    "kanji": "二階",
+    "furigana": "にかい",
+    "english": "Second Floor",
+    "roman": "nikai"
+  },
+  {
+    "kanji": "店員",
+    "furigana": "てんいん",
+    "english": "Shop Staff",
+    "roman": "ten'in"
+  },
+  {
+    "kanji": "短い",
+    "furigana": "みじかい",
+    "english": "Short",
+    "roman": "mijikai"
+  },
+  {
+    "kanji": "短期",
+    "furigana": "たんき",
+    "english": "Short Period",
+    "roman": "tanki"
+  },
+  {
+    "kanji": "短刀",
+    "furigana": "たんとう",
+    "english": "Short Sword",
+    "roman": "tantou"
+  },
+  {
+    "kanji": "解答",
+    "furigana": "かいとう",
+    "english": "Solving",
+    "roman": "kaitou"
+  },
+  {
+    "kanji": "誰か",
+    "furigana": "だれか",
+    "english": "Someone",
+    "roman": "dareka"
+  },
+  {
+    "kanji": "息子",
+    "furigana": "むすこ",
+    "english": "Son",
+    "roman": "musuko"
+  },
+  {
+    "kanji": "球",
+    "furigana": "たま",
+    "english": "Sphere",
+    "roman": "tama"
+  },
+  {
+    "kanji": "泉",
+    "furigana": "いずみ",
+    "english": "Spring",
+    "roman": "izumi"
+  },
+  {
+    "kanji": "着々",
+    "furigana": "ちゃくちゃく",
+    "english": "Steadily",
+    "roman": "chakuchaku"
+  },
+  {
+    "kanji": "湯気",
+    "furigana": "ゆげ",
+    "english": "Steam",
+    "roman": "yuge"
+  },
+  {
+    "kanji": "勉強",
+    "furigana": "べんきょう",
+    "english": "Studies",
+    "roman": "benkyou"
+  },
+  {
+    "kanji": "水泳",
+    "furigana": "すいえい",
+    "english": "Swimming",
+    "roman": "suiei"
+  },
+  {
+    "kanji": "茶の湯",
+    "furigana": "ちゃのゆ",
+    "english": "Tea Ceremony",
+    "roman": "chanoyu"
+  },
+  {
+    "kanji": "温度",
+    "furigana": "おんど",
+    "english": "Temperature",
+    "roman": "ondo"
+  },
+  {
+    "kanji": "気温",
+    "furigana": "きおん",
+    "english": "Temperature",
+    "roman": "kion"
+  },
+  {
+    "kanji": "地球",
+    "furigana": "ちきゅう",
+    "english": "The Earth",
+    "roman": "chikyuu"
+  },
+  {
+    "kanji": "終わり",
+    "furigana": "おわり",
+    "english": "The End",
+    "roman": "owari"
+  },
+  {
+    "kanji": "第一",
+    "furigana": "だいいち",
+    "english": "The First",
+    "roman": "daiichi"
+  },
+  {
+    "kanji": "三番目",
+    "furigana": "さんばんめ",
+    "english": "The Third Thing",
+    "roman": "sanbanme"
+  },
+  {
+    "kanji": "最悪",
+    "furigana": "さいあく",
+    "english": "The Worst",
+    "roman": "saiaku"
+  },
+  {
+    "kanji": "彼ら",
+    "furigana": "かれら",
+    "english": "They",
+    "roman": "karera"
+  },
+  {
+    "kanji": "時期",
+    "furigana": "じき",
+    "english": "Time",
+    "roman": "jiki"
+  },
+  {
+    "kanji": "〜倍",
+    "furigana": "ばい",
+    "english": "Times",
+    "roman": "bai"
+  },
+  {
+    "kanji": "決まる",
+    "furigana": "きまる",
+    "english": "To Be Decided",
+    "roman": "kimaru"
+  },
+  {
+    "kanji": "始まる",
+    "furigana": "はじまる",
+    "english": "To Begin",
+    "roman": "hajimaru"
+  },
+  {
+    "kanji": "聞こえる",
+    "furigana": "きこえる",
+    "english": "To Be Hearable",
+    "roman": "kikoeru"
+  },
+  {
+    "kanji": "伝わる",
+    "furigana": "つたわる",
+    "english": "To Be Transmitted",
+    "roman": "tsutawaru"
+  },
+  {
+    "kanji": "登る",
+    "furigana": "のぼる",
+    "english": "To Climb",
+    "roman": "noboru"
+  },
+  {
+    "kanji": "取れる",
+    "furigana": "とれる",
+    "english": "To Come Off",
+    "roman": "toreru"
+  },
+  {
+    "kanji": "集まる",
+    "furigana": "あつまる",
+    "english": "To Come Together",
+    "roman": "atsumaru"
+  },
+  {
+    "kanji": "要求する",
+    "furigana": "ようきゅうする",
+    "english": "To Demand Something",
+    "roman": "youkyuusuru"
+  },
+  {
+    "kanji": "落とす",
+    "furigana": "おとす",
+    "english": "To Drop Something",
+    "roman": "otosu"
+  },
+  {
+    "kanji": "消す",
+    "furigana": "けす",
+    "english": "To Extinguish Something",
+    "roman": "kesu"
+  },
+  {
+    "kanji": "転ぶ",
+    "furigana": "ころぶ",
+    "english": "To Fall Over",
+    "roman": "korobu"
+  },
+  {
+    "kanji": "終える",
+    "furigana": "おえる",
+    "english": "To Finish Something",
+    "roman": "oeru"
+  },
+  {
+    "kanji": "流す",
+    "furigana": "ながす",
+    "english": "To Flush Something",
+    "roman": "nagasu"
+  },
+  {
+    "kanji": "苦しめる",
+    "furigana": "くるしめる",
+    "english": "To Hurt Someone",
+    "roman": "kurushimeru"
+  },
+  {
+    "kanji": "東京都",
+    "furigana": "とうきょうと",
+    "english": "Tokyo Metropolis",
+    "roman": "toukyouto"
+  },
+  {
+    "kanji": "動く",
+    "furigana": "うごく",
+    "english": "To Move",
+    "roman": "ugoku"
+  },
+  {
+    "kanji": "起こる",
+    "furigana": "おこる",
+    "english": "To Occur",
+    "roman": "okoru"
+  },
+  {
+    "kanji": "開く",
+    "furigana": "あく",
+    "english": "To Open",
+    "roman": "aku"
+  },
+  {
+    "kanji": "歯",
+    "furigana": "は",
+    "english": "Tooth",
+    "roman": "ha"
+  },
+  {
+    "kanji": "植える",
+    "furigana": "うえる",
+    "english": "To Plant Something",
+    "roman": "ueru"
+  },
+  {
+    "kanji": "映す",
+    "furigana": "うつす",
+    "english": "To Project",
+    "roman": "utsusu"
+  },
+  {
+    "kanji": "歌う",
+    "furigana": "うたう",
+    "english": "To Sing",
+    "roman": "utau"
+  },
+  {
+    "kanji": "鳴る",
+    "furigana": "なる",
+    "english": "To Sound",
+    "roman": "naru"
+  },
+  {
+    "kanji": "合う",
+    "furigana": "あう",
+    "english": "To Suit",
+    "roman": "au"
+  },
+  {
+    "kanji": "待つ",
+    "furigana": "まつ",
+    "english": "To Wait",
+    "roman": "matsu"
+  },
+  {
+    "kanji": "着る",
+    "furigana": "きる",
+    "english": "To Wear",
+    "roman": "kiru"
+  },
+  {
+    "kanji": "心配する",
+    "furigana": "しんぱいする",
+    "english": "To Worry",
+    "roman": "shinpaisuru"
+  },
+  {
+    "kanji": "流行",
+    "furigana": "りゅうこう",
+    "english": "Trend",
+    "roman": "ryuukou"
+  },
+  {
+    "kanji": "旅",
+    "furigana": "たび",
+    "english": "Trip",
+    "roman": "tabi"
+  },
+  {
+    "kanji": "旅行",
+    "furigana": "りょこう",
+    "english": "Trip",
+    "roman": "ryokou"
+  },
+  {
+    "kanji": "都会",
+    "furigana": "とかい",
+    "english": "Urban Area",
+    "roman": "tokai"
+  },
+  {
+    "kanji": "温かい",
+    "furigana": "あたたかい",
+    "english": "Warm",
+    "roman": "atatakai"
+  },
+  {
+    "kanji": "水深",
+    "furigana": "すいしん",
+    "english": "Water Depth",
+    "roman": "suishin"
+  },
+  {
+    "kanji": "話し方",
+    "furigana": "はなしかた",
+    "english": "Way Of Speaking",
+    "roman": "hanashikata"
+  },
+  {
+    "kanji": "洋食",
+    "furigana": "ようしょく",
+    "english": "Western Style Food",
+    "roman": "youshoku"
+  },
+  {
+    "kanji": "言葉",
+    "furigana": "ことば",
+    "english": "Word",
+    "roman": "kotoba"
+  },
+  {
+    "kanji": "文章",
+    "furigana": "ぶんしょう",
+    "english": "Writing",
+    "roman": "bunshou"
+  },
+  {
+    "kanji": "感心",
+    "furigana": "かんしん",
+    "english": "Admiration",
+    "roman": "kanshin"
+  },
+  {
+    "kanji": "入館料",
+    "furigana": "にゅうかんりょう",
+    "english": "Admission Fee",
+    "roman": "nyuukanryou"
+  },
+  {
+    "kanji": "養子",
+    "furigana": "ようし",
+    "english": "Adopted Child",
+    "roman": "youshi"
+  },
+  {
+    "kanji": "マンション",
+    "furigana": "マンション",
+    "english": "Apartment Building",
+    "roman": "manshon"
+  },
+  {
+    "kanji": "整理",
+    "furigana": "せいり",
+    "english": "Arrangement",
+    "roman": "seiri"
+  },
+  {
+    "kanji": "〜放題",
+    "furigana": "ほうだい",
+    "english": "As Much As You Want",
+    "roman": "houdai"
+  },
+  {
+    "kanji": "暗殺",
+    "furigana": "あんさつ",
+    "english": "Assassination",
+    "roman": "ansatsu"
+  },
+  {
+    "kanji": "想定",
+    "furigana": "そうてい",
+    "english": "Assumption",
+    "roman": "soutei"
+  },
+  {
+    "kanji": "初めに",
+    "furigana": "はじめに",
+    "english": "At First",
+    "roman": "hajimeni"
+  },
+  {
+    "kanji": "銀行",
+    "furigana": "ぎんこう",
+    "english": "Bank",
+    "roman": "ginkou"
+  },
+  {
+    "kanji": "彼氏",
+    "furigana": "かれし",
+    "english": "Boyfriend",
+    "roman": "kareshi"
+  },
+  {
+    "kanji": "橋",
+    "furigana": "はし",
+    "english": "Bridge",
+    "roman": "hashi"
+  },
+  {
+    "kanji": "缶ビール",
+    "furigana": "かんびーる",
+    "english": "Can Beer",
+    "roman": "kanbiiru"
+  },
+  {
+    "kanji": "賞金",
+    "furigana": "しょうきん",
+    "english": "Cash Prize",
+    "roman": "shoukin"
+  },
+  {
+    "kanji": "事情",
+    "furigana": "じじょう",
+    "english": "Circumstances",
+    "roman": "jijou"
+  },
+  {
+    "kanji": "器",
+    "furigana": "うつわ",
+    "english": "Container",
+    "roman": "utsuwa"
+  },
+  {
+    "kanji": "大会",
+    "furigana": "たいかい",
+    "english": "Convention",
+    "roman": "taikai"
+  },
+  {
+    "kanji": "暗い",
+    "furigana": "くらい",
+    "english": "Dark",
+    "roman": "kurai"
+  },
+  {
+    "kanji": "器用",
+    "furigana": "きよう",
+    "english": "Dextrous",
+    "roman": "kiyou"
+  },
+  {
+    "kanji": "疑問",
+    "furigana": "ぎもん",
+    "english": "Doubt",
+    "roman": "gimon"
+  },
+  {
+    "kanji": "ワンピース",
+    "furigana": "ワンピース",
+    "english": "Dress",
+    "roman": "wanpiisu"
+  },
+  {
+    "kanji": "酒好き",
+    "furigana": "さけずき",
+    "english": "Drinker",
+    "roman": "sakezuki"
+  },
+  {
+    "kanji": "飲み会",
+    "furigana": "のみかい",
+    "english": "Drinking Party",
+    "roman": "nomikai"
+  },
+  {
+    "kanji": "空き缶",
+    "furigana": "あきかん",
+    "english": "Empty Can",
+    "roman": "akikan"
+  },
+  {
+    "kanji": "熱心",
+    "furigana": "ねっしん",
+    "english": "Enthusiasm",
+    "roman": "nesshin"
+  },
+  {
+    "kanji": "全然",
+    "furigana": "ぜんぜん",
+    "english": "Entirely",
+    "roman": "zenzen"
+  },
+  {
+    "kanji": "皆さん",
+    "furigana": "みなさん",
+    "english": "Everyone",
+    "roman": "minasan"
+  },
+  {
+    "kanji": "予想",
+    "furigana": "よそう",
+    "english": "Expectation",
+    "roman": "yosou"
+  },
+  {
+    "kanji": "表情",
+    "furigana": "ひょうじょう",
+    "english": "Facial Expression",
+    "roman": "hyoujou"
+  },
+  {
+    "kanji": "料金",
+    "furigana": "りょうきん",
+    "english": "Fee",
+    "roman": "ryoukin"
+  },
+  {
+    "kanji": "感情",
+    "furigana": "かんじょう",
+    "english": "Feeling",
+    "roman": "kanjou"
+  },
+  {
+    "kanji": "感じ",
+    "furigana": "かんじ",
+    "english": "Feeling",
+    "roman": "kanji"
+  },
+  {
+    "kanji": "熱",
+    "furigana": "ねつ",
+    "english": "Fever",
+    "roman": "netsu"
+  },
+  {
+    "kanji": "指先",
+    "furigana": "ゆびさき",
+    "english": "Fingertip",
+    "roman": "yubisaki"
+  },
+  {
+    "kanji": "〜様",
+    "furigana": "さま",
+    "english": "Formal Name Ender",
+    "roman": "sama"
+  },
+  {
+    "kanji": "初めて",
+    "furigana": "はじめて",
+    "english": "For The First Time",
+    "roman": "hajimete"
+  },
+  {
+    "kanji": "仲良く",
+    "furigana": "なかよく",
+    "english": "Friendly",
+    "roman": "nakayoku"
+  },
+  {
+    "kanji": "駅前",
+    "furigana": "えきまえ",
+    "english": "Front Of Station",
+    "roman": "ekimae"
+  },
+  {
+    "kanji": "会",
+    "furigana": "かい",
+    "english": "Gathering",
+    "roman": "kai"
+  },
+  {
+    "kanji": "目標",
+    "furigana": "もくひょう",
+    "english": "Goal",
+    "roman": "mokuhyou"
+  },
+  {
+    "kanji": "神様",
+    "furigana": "かみさま",
+    "english": "God",
+    "roman": "kamisama"
+  },
+  {
+    "kanji": "女神",
+    "furigana": "めがみ",
+    "english": "Goddess",
+    "roman": "megami"
+  },
+  {
+    "kanji": "仲良し",
+    "furigana": "なかよし",
+    "english": "Good Friend",
+    "roman": "nakayoshi"
+  },
+  {
+    "kanji": "緑",
+    "furigana": "みどり",
+    "english": "Green",
+    "roman": "midori"
+  },
+  {
+    "kanji": "緑色",
+    "furigana": "みどりいろ",
+    "english": "Green",
+    "roman": "midoriiro"
+  },
+  {
+    "kanji": "北海道",
+    "furigana": "ほっかいどう",
+    "english": "Hokkaido",
+    "roman": "hokkaidou"
+  },
+  {
+    "kanji": "宿題",
+    "furigana": "しゅくだい",
+    "english": "Homework",
+    "roman": "shukudai"
+  },
+  {
+    "kanji": "熱い",
+    "furigana": "あつい",
+    "english": "Hot Thing",
+    "roman": "atsui"
+  },
+  {
+    "kanji": "人情",
+    "furigana": "にんじょう",
+    "english": "Human Feelings",
+    "roman": "ninjou"
+  },
+  {
+    "kanji": "億",
+    "furigana": "おく",
+    "english": "Hundred Million",
+    "roman": "oku"
+  },
+  {
+    "kanji": "俺",
+    "furigana": "おれ",
+    "english": "I",
+    "roman": "ore"
+  },
+  {
+    "kanji": "思想",
+    "furigana": "しそう",
+    "english": "Ideology",
+    "roman": "shisou"
+  },
+  {
+    "kanji": "感想",
+    "furigana": "かんそう",
+    "english": "Impressions",
+    "roman": "kansou"
+  },
+  {
+    "kanji": "旅館",
+    "furigana": "りょかん",
+    "english": "Japanese Inn",
+    "roman": "ryokan"
+  },
+  {
+    "kanji": "神風",
+    "furigana": "かみかぜ",
+    "english": "Kamikaze",
+    "roman": "kamikaze"
+  },
+  {
+    "kanji": "王様",
+    "furigana": "おうさま",
+    "english": "King",
+    "roman": "ousama"
+  },
+  {
+    "kanji": "左利き",
+    "furigana": "ひだりきき",
+    "english": "Left Handed",
+    "roman": "hidarikiki"
+  },
+  {
+    "kanji": "小指",
+    "furigana": "こゆび",
+    "english": "Little Finger",
+    "roman": "koyubi"
+  },
+  {
+    "kanji": "宿",
+    "furigana": "やど",
+    "english": "Lodging",
+    "roman": "yado"
+  },
+  {
+    "kanji": "暗記",
+    "furigana": "あんき",
+    "english": "Memorization",
+    "roman": "anki"
+  },
+  {
+    "kanji": "水銀",
+    "furigana": "すいぎん",
+    "english": "Mercury",
+    "roman": "suigin"
+  },
+  {
+    "kanji": "中指",
+    "furigana": "なかゆび",
+    "english": "Middle Finger",
+    "roman": "nakayubi"
+  },
+  {
+    "kanji": "鏡",
+    "furigana": "かがみ",
+    "english": "Mirror",
+    "roman": "kagami"
+  },
+  {
+    "kanji": "映画館",
+    "furigana": "えいがかん",
+    "english": "Movie Theater",
+    "roman": "eigakan"
+  },
+  {
+    "kanji": "殺人",
+    "furigana": "さつじん",
+    "english": "Murder",
+    "roman": "satsujin"
+  },
+  {
+    "kanji": "楽器",
+    "furigana": "がっき",
+    "english": "Musical Instrument",
+    "roman": "gakki"
+  },
+  {
+    "kanji": "当然",
+    "furigana": "とうぜん",
+    "english": "Natural",
+    "roman": "touzen"
+  },
+  {
+    "kanji": "自然",
+    "furigana": "しぜん",
+    "english": "Nature",
+    "roman": "shizen"
+  },
+  {
+    "kanji": "一億",
+    "furigana": "いちおく",
+    "english": "One Hundred Million",
+    "roman": "ichioku"
+  },
+  {
+    "kanji": "一億円",
+    "furigana": "いちおくえん",
+    "english": "One Hundred Million Yen",
+    "roman": "ichiokuen"
+  },
+  {
+    "kanji": "情熱",
+    "furigana": "じょうねつ",
+    "english": "Passion",
+    "roman": "jounetsu"
+  },
+  {
+    "kanji": "体育",
+    "furigana": "たいいく",
+    "english": "Pe Class",
+    "roman": "taiiku"
+  },
+  {
+    "kanji": "情け",
+    "furigana": "なさけ",
+    "english": "Pity",
+    "roman": "nasake"
+  },
+  {
+    "kanji": "詩",
+    "furigana": "し",
+    "english": "Poem",
+    "roman": "shi"
+  },
+  {
+    "kanji": "詩人",
+    "furigana": "しじん",
+    "english": "Poet",
+    "roman": "shijin"
+  },
+  {
+    "kanji": "詩歌",
+    "furigana": "しいか",
+    "english": "Poetry",
+    "roman": "shiika"
+  },
+  {
+    "kanji": "練習",
+    "furigana": "れんしゅう",
+    "english": "Practice",
+    "roman": "renshuu"
+  },
+  {
+    "kanji": "選手",
+    "furigana": "せんしゅ",
+    "english": "Pro Athlete",
+    "roman": "senshu"
+  },
+  {
+    "kanji": "問題",
+    "furigana": "もんだい",
+    "english": "Problem",
+    "roman": "mondai"
+  },
+  {
+    "kanji": "実感",
+    "furigana": "じっかん",
+    "english": "Realization",
+    "roman": "jikkan"
+  },
+  {
+    "kanji": "大好き",
+    "furigana": "だいすき",
+    "english": "Really Like",
+    "roman": "daisuki"
+  },
+  {
+    "kanji": "回想",
+    "furigana": "かいそう",
+    "english": "Reminiscence",
+    "roman": "kaisou"
+  },
+  {
+    "kanji": "右利き",
+    "furigana": "みぎきき",
+    "english": "Right Handed",
+    "roman": "migikiki"
+  },
+  {
+    "kanji": "輪",
+    "furigana": "わ",
+    "english": "Ring",
+    "roman": "wa"
+  },
+  {
+    "kanji": "学問",
+    "furigana": "がくもん",
+    "english": "Schooling",
+    "roman": "gakumon"
+  },
+  {
+    "kanji": "課長",
+    "furigana": "かちょう",
+    "english": "Section Manager",
+    "roman": "kachou"
+  },
+  {
+    "kanji": "彼女",
+    "furigana": "かのじょ",
+    "english": "She",
+    "roman": "kanojo"
+  },
+  {
+    "kanji": "新宿",
+    "furigana": "しんじゅく",
+    "english": "Shinjuku",
+    "roman": "shinjuku"
+  },
+  {
+    "kanji": "銀",
+    "furigana": "ぎん",
+    "english": "Silver",
+    "roman": "gin"
+  },
+  {
+    "kanji": "銀色",
+    "furigana": "ぎんいろ",
+    "english": "Silver",
+    "roman": "gin'iro"
+  },
+  {
+    "kanji": "特選",
+    "furigana": "とくせん",
+    "english": "Special Selection",
+    "roman": "tokusen"
+  },
+  {
+    "kanji": "駅",
+    "furigana": "えき",
+    "english": "Station",
+    "roman": "eki"
+  },
+  {
+    "kanji": "駅長",
+    "furigana": "えきちょう",
+    "english": "Station Master",
+    "roman": "ekichou"
+  },
+  {
+    "kanji": "自殺",
+    "furigana": "じさつ",
+    "english": "Suicide",
+    "roman": "jisatsu"
+  },
+  {
+    "kanji": "力士",
+    "furigana": "りきし",
+    "english": "Sumo Wrestler",
+    "roman": "rikishi"
+  },
+  {
+    "kanji": "同感",
+    "furigana": "どうかん",
+    "english": "Sympathy",
+    "roman": "doukan"
+  },
+  {
+    "kanji": "食器",
+    "furigana": "しょっき",
+    "english": "Tableware",
+    "roman": "shokki"
+  },
+  {
+    "kanji": "田代島",
+    "furigana": "たしろじま",
+    "english": "Tashirojima",
+    "roman": "tashirojima"
+  },
+  {
+    "kanji": "感謝",
+    "furigana": "かんしゃ",
+    "english": "Thanks",
+    "roman": "kansha"
+  },
+  {
+    "kanji": "五感",
+    "furigana": "ごかん",
+    "english": "The Five Senses",
+    "roman": "gokan"
+  },
+  {
+    "kanji": "親指",
+    "furigana": "おやゆび",
+    "english": "Thumb",
+    "roman": "oyayubi"
+  },
+  {
+    "kanji": "疲れ",
+    "furigana": "つかれ",
+    "english": "Tiredness",
+    "roman": "tsukare"
+  },
+  {
+    "kanji": "謝る",
+    "furigana": "あやまる",
+    "english": "To Apologize",
+    "roman": "ayamaru"
+  },
+  {
+    "kanji": "着く",
+    "furigana": "つく",
+    "english": "To Arrive",
+    "roman": "tsuku"
+  },
+  {
+    "kanji": "空く",
+    "furigana": "あく",
+    "english": "To Become Empty",
+    "roman": "aku"
+  },
+  {
+    "kanji": "感動する",
+    "furigana": "かんどうする",
+    "english": "To Be Emotionally Moved",
+    "roman": "kandousuru"
+  },
+  {
+    "kanji": "育てる",
+    "furigana": "そだてる",
+    "english": "To Bring Up",
+    "roman": "sodateru"
+  },
+  {
+    "kanji": "追い付く",
+    "furigana": "おいつく",
+    "english": "To Catch Up With",
+    "roman": "oitsuku"
+  },
+  {
+    "kanji": "追いかける",
+    "furigana": "おいかける",
+    "english": "To Chase",
+    "roman": "oikakeru"
+  },
+  {
+    "kanji": "選ぶ",
+    "furigana": "えらぶ",
+    "english": "To Choose",
+    "roman": "erabu"
+  },
+  {
+    "kanji": "感じる",
+    "furigana": "かんじる",
+    "english": "To Feel",
+    "roman": "kanjiru"
+  },
+  {
+    "kanji": "戦う",
+    "furigana": "たたかう",
+    "english": "To Fight",
+    "roman": "tatakau"
+  },
+  {
+    "kanji": "養う",
+    "furigana": "やしなう",
+    "english": "To Foster",
+    "roman": "yashinau"
+  },
+  {
+    "kanji": "受かる",
+    "furigana": "うかる",
+    "english": "To Get Accepted",
+    "roman": "ukaru"
+  },
+  {
+    "kanji": "放れる",
+    "furigana": "はなれる",
+    "english": "To Get Loose",
+    "roman": "hanareru"
+  },
+  {
+    "kanji": "疲れる",
+    "furigana": "つかれる",
+    "english": "To Get Tired",
+    "roman": "tsukareru"
+  },
+  {
+    "kanji": "温める",
+    "furigana": "あたためる",
+    "english": "To Heat Something Up",
+    "roman": "atatameru"
+  },
+  {
+    "kanji": "手伝う",
+    "furigana": "てつだう",
+    "english": "To Help",
+    "roman": "tetsudau"
+  },
+  {
+    "kanji": "想像する",
+    "furigana": "そうぞうする",
+    "english": "To Imagine",
+    "roman": "souzousuru"
+  },
+  {
+    "kanji": "殺す",
+    "furigana": "ころす",
+    "english": "To Kill",
+    "roman": "korosu"
+  },
+  {
+    "kanji": "見返る",
+    "furigana": "みかえる",
+    "english": "To Look Back At",
+    "roman": "mikaeru"
+  },
+  {
+    "kanji": "注文する",
+    "furigana": "ちゅうもんする",
+    "english": "To Order",
+    "roman": "chuumonsuru"
+  },
+  {
+    "kanji": "話題",
+    "furigana": "わだい",
+    "english": "Topic",
+    "roman": "wadai"
+  },
+  {
+    "kanji": "別れる",
+    "furigana": "わかれる",
+    "english": "To Separate",
+    "roman": "wakareru"
+  },
+  {
+    "kanji": "共有する",
+    "furigana": "きょうゆうする",
+    "english": "To Share",
+    "roman": "kyouyuusuru"
+  },
+  {
+    "kanji": "解く",
+    "furigana": "とく",
+    "english": "To Solve",
+    "roman": "toku"
+  },
+  {
+    "kanji": "駅員",
+    "furigana": "えきいん",
+    "english": "Train Station Employee",
+    "roman": "ekiin"
+  },
+  {
+    "kanji": "理解",
+    "furigana": "りかい",
+    "english": "Understanding",
+    "roman": "rikai"
+  },
+  {
+    "kanji": "天王星",
+    "furigana": "てんのうせい",
+    "english": "Uranus",
+    "roman": "tennousei"
+  },
+  {
+    "kanji": "俺たち",
+    "furigana": "おれたち",
+    "english": "We",
+    "roman": "oretachi"
+  },
+  {
+    "kanji": "洋風",
+    "furigana": "ようふう",
+    "english": "Western Style",
+    "roman": "youfuu"
+  },
+  {
+    "kanji": "車輪",
+    "furigana": "しゃりん",
+    "english": "Wheel",
+    "roman": "sharin"
+  },
+  {
+    "kanji": "能力",
+    "furigana": "のうりょく",
+    "english": "Ability",
+    "roman": "nouryoku"
+  },
+  {
+    "kanji": "約",
+    "furigana": "やく",
+    "english": "About",
+    "roman": "yaku"
+  },
+  {
+    "kanji": "知り合い",
+    "furigana": "しりあい",
+    "english": "Acquaintance",
+    "roman": "shiriai"
+  },
+  {
+    "kanji": "〜的",
+    "furigana": "てき",
+    "english": "Al",
+    "roman": "teki"
+  },
+  {
+    "kanji": "周年",
+    "furigana": "しゅうねん",
+    "english": "Anniversary",
+    "roman": "shuunen"
+  },
+  {
+    "kanji": "協会",
+    "furigana": "きょうかい",
+    "english": "Association",
+    "roman": "kyoukai"
+  },
+  {
+    "kanji": "雰囲気",
+    "furigana": "ふんいき",
+    "english": "Atmosphere",
+    "roman": "fun'iki"
+  },
+  {
+    "kanji": "自動",
+    "furigana": "じどう",
+    "english": "Automatic",
+    "roman": "jidou"
+  },
+  {
+    "kanji": "気持ち悪い",
+    "furigana": "きもちわるい",
+    "english": "Bad Feeling",
+    "roman": "kimochiwarui"
+  },
+  {
+    "kanji": "悪口",
+    "furigana": "わるぐち",
+    "english": "Bad Mouthing",
+    "roman": "waruguchi"
+  },
+  {
+    "kanji": "骨",
+    "furigana": "ほね",
+    "english": "Bone",
+    "roman": "hone"
+  },
+  {
+    "kanji": "骨折",
+    "furigana": "こっせつ",
+    "english": "Broken Bone",
+    "roman": "kossetsu"
+  },
+  {
+    "kanji": "束",
+    "furigana": "たば",
+    "english": "Bundle",
+    "roman": "taba"
+  },
+  {
+    "kanji": "世話",
+    "furigana": "せわ",
+    "english": "Care",
+    "roman": "sewa"
+  },
+  {
+    "kanji": "人参",
+    "furigana": "にんじん",
+    "english": "Carrot",
+    "roman": "ninjin"
+  },
+  {
+    "kanji": "場合",
+    "furigana": "ばあい",
+    "english": "Case",
+    "roman": "baai"
+  },
+  {
+    "kanji": "人格",
+    "furigana": "じんかく",
+    "english": "Character",
+    "roman": "jinkaku"
+  },
+  {
+    "kanji": "周り",
+    "furigana": "まわり",
+    "english": "Circumference",
+    "roman": "mawari"
+  },
+  {
+    "kanji": "芸人",
+    "furigana": "げいにん",
+    "english": "Comedian",
+    "roman": "geinin"
+  },
+  {
+    "kanji": "完全",
+    "furigana": "かんぜん",
+    "english": "Complete",
+    "roman": "kanzen"
+  },
+  {
+    "kanji": "完成",
+    "furigana": "かんせい",
+    "english": "Completion",
+    "roman": "kansei"
+  },
+  {
+    "kanji": "完了",
+    "furigana": "かんりょう",
+    "english": "Completion",
+    "roman": "kanryou"
+  },
+  {
+    "kanji": "妥協",
+    "furigana": "だきょう",
+    "english": "Compromise",
+    "roman": "dakyou"
+  },
+  {
+    "kanji": "具合",
+    "furigana": "ぐあい",
+    "english": "Condition",
+    "roman": "guai"
+  },
+  {
+    "kanji": "近代的",
+    "furigana": "きんだいてき",
+    "english": "Contemporary",
+    "roman": "kindaiteki"
+  },
+  {
+    "kanji": "料理",
+    "furigana": "りょうり",
+    "english": "Cooking",
+    "roman": "ryouri"
+  },
+  {
+    "kanji": "協力",
+    "furigana": "きょうりょく",
+    "english": "Cooperation",
+    "roman": "kyouryoku"
+  },
+  {
+    "kanji": "周期",
+    "furigana": "しゅうき",
+    "english": "Cycle",
+    "roman": "shuuki"
+  },
+  {
+    "kanji": "深さ",
+    "furigana": "ふかさ",
+    "english": "Depth",
+    "roman": "fukasa"
+  },
+  {
+    "kanji": "願望",
+    "furigana": "がんぼう",
+    "english": "Desire",
+    "roman": "ganbou"
+  },
+  {
+    "kanji": "言葉つき",
+    "furigana": "ことばつき",
+    "english": "Diction",
+    "roman": "kotobatsuki"
+  },
+  {
+    "kanji": "失望",
+    "furigana": "しつぼう",
+    "english": "Disappointment",
+    "roman": "shitsubou"
+  },
+  {
+    "kanji": "消しゴム",
+    "furigana": "けしごむ",
+    "english": "Eraser",
+    "roman": "keshigomu"
+  },
+  {
+    "kanji": "皆様",
+    "furigana": "みなさま",
+    "english": "Everyone",
+    "roman": "minasama"
+  },
+  {
+    "kanji": "悪気",
+    "furigana": "わるぎ",
+    "english": "Evil Intent",
+    "roman": "warugi"
+  },
+  {
+    "kanji": "例文",
+    "furigana": "れいぶん",
+    "english": "Example Sentence",
+    "roman": "reibun"
+  },
+  {
+    "kanji": "例外",
+    "furigana": "れいがい",
+    "english": "Exception",
+    "roman": "reigai"
+  },
+  {
+    "kanji": "女性",
+    "furigana": "じょせい",
+    "english": "Female",
+    "roman": "josei"
+  },
+  {
+    "kanji": "例えば",
+    "furigana": "たとえば",
+    "english": "For Example",
+    "roman": "tatoeba"
+  },
+  {
+    "kanji": "基本",
+    "furigana": "きほん",
+    "english": "Foundation",
+    "roman": "kihon"
+  },
+  {
+    "kanji": "毛皮",
+    "furigana": "けがわ",
+    "english": "Fur",
+    "roman": "kegawa"
+  },
+  {
+    "kanji": "試合",
+    "furigana": "しあい",
+    "english": "Game",
+    "roman": "shiai"
+  },
+  {
+    "kanji": "芸者",
+    "furigana": "げいしゃ",
+    "english": "Geisha",
+    "roman": "geisha"
+  },
+  {
+    "kanji": "性",
+    "furigana": "せい",
+    "english": "Gender",
+    "roman": "sei"
+  },
+  {
+    "kanji": "良好",
+    "furigana": "りょうこう",
+    "english": "Good",
+    "roman": "ryoukou"
+  },
+  {
+    "kanji": "お疲れ様",
+    "furigana": "おつかれさま",
+    "english": "Good Work",
+    "roman": "otsukaresama"
+  },
+  {
+    "kanji": "卒業",
+    "furigana": "そつぎょう",
+    "english": "Graduation",
+    "roman": "sotsugyou"
+  },
+  {
+    "kanji": "固い",
+    "furigana": "かたい",
+    "english": "Hard",
+    "roman": "katai"
+  },
+  {
+    "kanji": "念願",
+    "furigana": "ねんがん",
+    "english": "Heart's Desire",
+    "roman": "nengan"
+  },
+  {
+    "kanji": "希望",
+    "furigana": "きぼう",
+    "english": "Hope",
+    "roman": "kibou"
+  },
+  {
+    "kanji": "消化不良",
+    "furigana": "しょうかふりょう",
+    "english": "Indigestion",
+    "roman": "shoukafuryou"
+  },
+  {
+    "kanji": "材料",
+    "furigana": "ざいりょう",
+    "english": "Ingredients",
+    "roman": "zairyou"
+  },
+  {
+    "kanji": "一例",
+    "furigana": "いちれい",
+    "english": "Instance",
+    "roman": "ichirei"
+  },
+  {
+    "kanji": "本能",
+    "furigana": "ほんのう",
+    "english": "Instinct",
+    "roman": "honnou"
+  },
+  {
+    "kanji": "意図的",
+    "furigana": "いとてき",
+    "english": "Intentional",
+    "roman": "itoteki"
+  },
+  {
+    "kanji": "着物",
+    "furigana": "きもの",
+    "english": "Kimono",
+    "roman": "kimono"
+  },
+  {
+    "kanji": "行",
+    "furigana": "ぎょう",
+    "english": "Line Of Text",
+    "roman": "gyou"
+  },
+  {
+    "kanji": "材木",
+    "furigana": "ざいもく",
+    "english": "Lumber",
+    "roman": "zaimoku"
+  },
+  {
+    "kanji": "本館",
+    "furigana": "ほんかん",
+    "english": "Main Building",
+    "roman": "honkan"
+  },
+  {
+    "kanji": "男性",
+    "furigana": "だんせい",
+    "english": "Male",
+    "roman": "dansei"
+  },
+  {
+    "kanji": "意地悪",
+    "furigana": "いじわる",
+    "english": "Malicious",
+    "roman": "ijiwaru"
+  },
+  {
+    "kanji": "山登り",
+    "furigana": "やまのぼり",
+    "english": "Mountain Climbing",
+    "roman": "yamanobori"
+  },
+  {
+    "kanji": "動き",
+    "furigana": "うごき",
+    "english": "Movement",
+    "roman": "ugoki"
+  },
+  {
+    "kanji": "明らか",
+    "furigana": "あきらか",
+    "english": "Obvious",
+    "roman": "akiraka"
+  },
+  {
+    "kanji": "一周",
+    "furigana": "いっしゅう",
+    "english": "One Time Around",
+    "roman": "isshuu"
+  },
+  {
+    "kanji": "開閉",
+    "furigana": "かいへい",
+    "english": "Opening And Closing",
+    "roman": "kaihei"
+  },
+  {
+    "kanji": "残業",
+    "furigana": "ざんぎょう",
+    "english": "Overtime",
+    "roman": "zangyou"
+  },
+  {
+    "kanji": "性格",
+    "furigana": "せいかく",
+    "english": "Personality",
+    "roman": "seikaku"
+  },
+  {
+    "kanji": "松",
+    "furigana": "まつ",
+    "english": "Pine",
+    "roman": "matsu"
+  },
+  {
+    "kanji": "松葉",
+    "furigana": "まつば",
+    "english": "Pine Needle",
+    "roman": "matsuba"
+  },
+  {
+    "kanji": "お願いします",
+    "furigana": "おねがいします",
+    "english": "Please Help Me",
+    "roman": "onegaishimasu"
+  },
+  {
+    "kanji": "流行語",
+    "furigana": "りゅうこうご",
+    "english": "Popular Phrase",
+    "roman": "ryuukougo"
+  },
+  {
+    "kanji": "流行歌",
+    "furigana": "りゅうこうか",
+    "english": "Popular Song",
+    "roman": "ryuukouka"
+  },
+  {
+    "kanji": "約束",
+    "furigana": "やくそく",
+    "english": "Promise",
+    "roman": "yakusoku"
+  },
+  {
+    "kanji": "目的",
+    "furigana": "もくてき",
+    "english": "Purpose",
+    "roman": "mokuteki"
+  },
+  {
+    "kanji": "理性",
+    "furigana": "りせい",
+    "english": "Reason",
+    "roman": "risei"
+  },
+  {
+    "kanji": "残り",
+    "furigana": "のこり",
+    "english": "Remainder",
+    "roman": "nokori"
+  },
+  {
+    "kanji": "予約",
+    "furigana": "よやく",
+    "english": "Reservation",
+    "roman": "yoyaku"
+  },
+  {
+    "kanji": "回転ずし",
+    "furigana": "かいてんずし",
+    "english": "Rotating Sushi",
+    "roman": "kaitenzushi"
+  },
+  {
+    "kanji": "文化祭",
+    "furigana": "ぶんかさい",
+    "english": "School Festival",
+    "roman": "bunkasai"
+  },
+  {
+    "kanji": "性病",
+    "furigana": "せいびょう",
+    "english": "Sexually Transmitted Disease",
+    "roman": "seibyou"
+  },
+  {
+    "kanji": "格好",
+    "furigana": "かっこう",
+    "english": "Shape",
+    "roman": "kakkou"
+  },
+  {
+    "kanji": "芸能界",
+    "furigana": "げいのうかい",
+    "english": "Show Business",
+    "roman": "geinoukai"
+  },
+  {
+    "kanji": "合図",
+    "furigana": "あいず",
+    "english": "Signal",
+    "roman": "aizu"
+  },
+  {
+    "kanji": "骨格",
+    "furigana": "こっかく",
+    "english": "Skeleton",
+    "roman": "kokkaku"
+  },
+  {
+    "kanji": "運動会",
+    "furigana": "うんどうかい",
+    "english": "Sports Day",
+    "roman": "undoukai"
+  },
+  {
+    "kanji": "待ちぼうけ",
+    "furigana": "まちぼうけ",
+    "english": "Stood Up",
+    "roman": "machibouke"
+  },
+  {
+    "kanji": "閉店",
+    "furigana": "へいてん",
+    "english": "Store Closed",
+    "roman": "heiten"
+  },
+  {
+    "kanji": "苺",
+    "furigana": "いちご",
+    "english": "Strawberry",
+    "roman": "ichigo"
+  },
+  {
+    "kanji": "頑固",
+    "furigana": "がんこ",
+    "english": "Stubborn",
+    "roman": "ganko"
+  },
+  {
+    "kanji": "周囲",
+    "furigana": "しゅうい",
+    "english": "Surroundings",
+    "roman": "shuui"
+  },
+  {
+    "kanji": "水着",
+    "furigana": "みずぎ",
+    "english": "Swimsuit",
+    "roman": "mizugi"
+  },
+  {
+    "kanji": "才能",
+    "furigana": "さいのう",
+    "english": "Talent",
+    "roman": "sainou"
+  },
+  {
+    "kanji": "四季",
+    "furigana": "しき",
+    "english": "The Four Seasons",
+    "roman": "shiki"
+  },
+  {
+    "kanji": "整理する",
+    "furigana": "せいりする",
+    "english": "To Arrange",
+    "roman": "seirisuru"
+  },
+  {
+    "kanji": "間に合う",
+    "furigana": "まにあう",
+    "english": "To Be In Time For",
+    "roman": "maniau"
+  },
+  {
+    "kanji": "落ち着く",
+    "furigana": "おちつく",
+    "english": "To Calm Down",
+    "roman": "ochitsuku"
+  },
+  {
+    "kanji": "参る",
+    "furigana": "まいる",
+    "english": "To Come",
+    "roman": "mairu"
+  },
+  {
+    "kanji": "消化する",
+    "furigana": "しょうかする",
+    "english": "To Digest",
+    "roman": "shoukasuru"
+  },
+  {
+    "kanji": "消える",
+    "furigana": "きえる",
+    "english": "To Disappear",
+    "roman": "kieru"
+  },
+  {
+    "kanji": "期待する",
+    "furigana": "きたいする",
+    "english": "To Expect",
+    "roman": "kitaisuru"
+  },
+  {
+    "kanji": "折る",
+    "furigana": "おる",
+    "english": "To Fold Something",
+    "roman": "oru"
+  },
+  {
+    "kanji": "合わせる",
+    "furigana": "あわせる",
+    "english": "To Join Together",
+    "roman": "awaseru"
+  },
+  {
+    "kanji": "待たせる",
+    "furigana": "またせる",
+    "english": "To Make Someone Wait",
+    "roman": "mataseru"
+  },
+  {
+    "kanji": "動かす",
+    "furigana": "うごかす",
+    "english": "To Move Something",
+    "roman": "ugokasu"
+  },
+  {
+    "kanji": "合格する",
+    "furigana": "ごうかくする",
+    "english": "To Pass A Test",
+    "roman": "goukakusuru"
+  },
+  {
+    "kanji": "着ける",
+    "furigana": "つける",
+    "english": "To Put On",
+    "roman": "tsukeru"
+  },
+  {
+    "kanji": "残る",
+    "furigana": "のこる",
+    "english": "To Remain Behind",
+    "roman": "nokoru"
+  },
+  {
+    "kanji": "回転する",
+    "furigana": "かいてんする",
+    "english": "To Rotate",
+    "roman": "kaitensuru"
+  },
+  {
+    "kanji": "流れる",
+    "furigana": "ながれる",
+    "english": "To Stream",
+    "roman": "nagareru"
+  },
+  {
+    "kanji": "勉強する",
+    "furigana": "べんきょうする",
+    "english": "To Study",
+    "roman": "benkyousuru"
+  },
+  {
+    "kanji": "囲む",
+    "furigana": "かこむ",
+    "english": "To Surround",
+    "roman": "kakomu"
+  },
+  {
+    "kanji": "旅行する",
+    "furigana": "りょこうする",
+    "english": "To Travel",
+    "roman": "ryokousuru"
+  },
+  {
+    "kanji": "理解する",
+    "furigana": "りかいする",
+    "english": "To Understand",
+    "roman": "rikaisuru"
+  },
+  {
+    "kanji": "起こす",
+    "furigana": "おこす",
+    "english": "To Wake Someone Up",
+    "roman": "okosu"
+  },
+  {
+    "kanji": "温まる",
+    "furigana": "あたたまる",
+    "english": "To Warm Up",
+    "roman": "atatamaru"
+  },
+  {
+    "kanji": "望む",
+    "furigana": "のぞむ",
+    "english": "To Wish",
+    "roman": "nozomu"
+  },
+  {
+    "kanji": "旅行者",
+    "furigana": "りょこうしゃ",
+    "english": "Traveler",
+    "roman": "ryokousha"
+  },
+  {
+    "kanji": "下着",
+    "furigana": "したぎ",
+    "english": "Underwear",
+    "roman": "shitagi"
+  },
+  {
+    "kanji": "残念",
+    "furigana": "ざんねん",
+    "english": "Unfortunate",
+    "roman": "zannen"
+  },
+  {
+    "kanji": "日本的",
+    "furigana": "にほんてき",
+    "english": "Very Japanese",
+    "roman": "nihonteki"
+  },
+  {
+    "kanji": "待合",
+    "furigana": "まちあい",
+    "english": "Waiting Room",
+    "roman": "machiai"
+  },
+  {
+    "kanji": "俺ら",
+    "furigana": "おれら",
+    "english": "We",
+    "roman": "orera"
+  },
+  {
+    "kanji": "井戸",
+    "furigana": "いど",
+    "english": "Well",
+    "roman": "ido"
+  },
+  {
+    "kanji": "狼男",
+    "furigana": "おおかみおとこ",
+    "english": "Werewolf",
+    "roman": "ookamiotoko"
+  },
+  {
+    "kanji": "望み",
+    "furigana": "のぞみ",
+    "english": "Wish",
+    "roman": "nozomi"
+  },
+  {
+    "kanji": "折角",
+    "furigana": "せっかく",
+    "english": "With Trouble",
+    "roman": "sekkaku"
+  },
+  {
+    "kanji": "狼",
+    "furigana": "おおかみ",
+    "english": "Wolf",
+    "roman": "ookami"
+  },
+  {
+    "kanji": "木材",
+    "furigana": "もくざい",
+    "english": "Wood",
+    "roman": "mokuzai"
+  },
+  {
+    "kanji": "飲み放題",
+    "furigana": "のみほうだい",
+    "english": "All You Can Drink",
+    "roman": "nomihoudai"
+  },
+  {
+    "kanji": "食べ放題",
+    "furigana": "たべほうだい",
+    "english": "All You Can Eat",
+    "roman": "tabehoudai"
+  },
+  {
+    "kanji": "変人",
+    "furigana": "へんじん",
+    "english": "An Eccentric",
+    "roman": "henjin"
+  },
+  {
+    "kanji": "お願い",
+    "furigana": "おねがい",
+    "english": "A Request",
+    "roman": "onegai"
+  },
+  {
+    "kanji": "軍",
+    "furigana": "ぐん",
+    "english": "Army",
+    "roman": "gun"
+  },
+  {
+    "kanji": "芸術",
+    "furigana": "げいじゅつ",
+    "english": "Art",
+    "roman": "geijutsu"
+  },
+  {
+    "kanji": "秋",
+    "furigana": "あき",
+    "english": "Autumn",
+    "roman": "aki"
+  },
+  {
+    "kanji": "比例",
+    "furigana": "ひれい",
+    "english": "Being Proportional",
+    "roman": "hirei"
+  },
+  {
+    "kanji": "上司",
+    "furigana": "じょうし",
+    "english": "Boss",
+    "roman": "joushi"
+  },
+  {
+    "kanji": "岩",
+    "furigana": "いわ",
+    "english": "Boulder",
+    "roman": "iwa"
+  },
+  {
+    "kanji": "英国",
+    "furigana": "えいこく",
+    "english": "Britain",
+    "roman": "eikoku"
+  },
+  {
+    "kanji": "仏",
+    "furigana": "ほとけ",
+    "english": "Buddha",
+    "roman": "hotoke"
+  },
+  {
+    "kanji": "仏教",
+    "furigana": "ぶっきょう",
+    "english": "Buddhism",
+    "roman": "bukkyou"
+  },
+  {
+    "kanji": "計算",
+    "furigana": "けいさん",
+    "english": "Calculation",
+    "roman": "keisan"
+  },
+  {
+    "kanji": "猫",
+    "furigana": "ねこ",
+    "english": "Cat",
+    "roman": "neko"
+  },
+  {
+    "kanji": "世紀",
+    "furigana": "せいき",
+    "english": "Century",
+    "roman": "seiki"
+  },
+  {
+    "kanji": "式",
+    "furigana": "しき",
+    "english": "Ceremony",
+    "roman": "shiki"
+  },
+  {
+    "kanji": "変化",
+    "furigana": "へんか",
+    "english": "Change",
+    "roman": "henka"
+  },
+  {
+    "kanji": "晴れ",
+    "furigana": "はれ",
+    "english": "Clear Weather",
+    "roman": "hare"
+  },
+  {
+    "kanji": "不器用",
+    "furigana": "ぶきよう",
+    "english": "Clumsy",
+    "roman": "bukiyou"
+  },
+  {
+    "kanji": "紀元後",
+    "furigana": "きげんご",
+    "english": "Common Era",
+    "roman": "kigengo"
+  },
+  {
+    "kanji": "自信",
+    "furigana": "じしん",
+    "english": "Confidence",
+    "roman": "jishin"
+  },
+  {
+    "kanji": "勇気",
+    "furigana": "ゆうき",
+    "english": "Courage",
+    "roman": "yuuki"
+  },
+  {
+    "kanji": "トランプ",
+    "furigana": "トランプ",
+    "english": "Deck Of Cards",
+    "roman": "toranpu"
+  },
+  {
+    "kanji": "区",
+    "furigana": "く",
+    "english": "District",
+    "roman": "ku"
+  },
+  {
+    "kanji": "地区",
+    "furigana": "ちく",
+    "english": "District",
+    "roman": "chiku"
+  },
+  {
+    "kanji": "不信",
+    "furigana": "ふしん",
+    "english": "Distrust",
+    "roman": "fushin"
+  },
+  {
+    "kanji": "英会話",
+    "furigana": "えいかいわ",
+    "english": "English Conversation",
+    "roman": "eikaiwa"
+  },
+  {
+    "kanji": "英和",
+    "furigana": "えいわ",
+    "english": "English Japanese",
+    "roman": "eiwa"
+  },
+  {
+    "kanji": "英語",
+    "furigana": "えいご",
+    "english": "English Language",
+    "roman": "eigo"
+  },
+  {
+    "kanji": "英文",
+    "furigana": "えいぶん",
+    "english": "English Writing",
+    "roman": "eibun"
+  },
+  {
+    "kanji": "毎晩",
+    "furigana": "まいばん",
+    "english": "Every Night",
+    "roman": "maiban"
+  },
+  {
+    "kanji": "信心",
+    "furigana": "しんじん",
+    "english": "Faith",
+    "roman": "shinjin"
+  },
+  {
+    "kanji": "美術",
+    "furigana": "びじゅつ",
+    "english": "Fine Art",
+    "roman": "bijutsu"
+  },
+  {
+    "kanji": "食中毒",
+    "furigana": "しょくちゅうどく",
+    "english": "Food Poisoning",
+    "roman": "shokuchuudoku"
+  },
+  {
+    "kanji": "四匹",
+    "furigana": "よんひき",
+    "english": "Four Small Animals",
+    "roman": "yonhiki"
+  },
+  {
+    "kanji": "福島",
+    "furigana": "ふくしま",
+    "english": "Fukushima",
+    "roman": "fukushima"
+  },
+  {
+    "kanji": "大仏",
+    "furigana": "だいぶつ",
+    "english": "Giant Buddha Statue",
+    "roman": "daibutsu"
+  },
+  {
+    "kanji": "今晩は",
+    "furigana": "こんばんは",
+    "english": "Good Evening",
+    "roman": "konbanha"
+  },
+  {
+    "kanji": "文法",
+    "furigana": "ぶんぽう",
+    "english": "Grammar",
+    "roman": "bunpou"
+  },
+  {
+    "kanji": "緑茶",
+    "furigana": "りょくちゃ",
+    "english": "Green Tea",
+    "roman": "ryokucha"
+  },
+  {
+    "kanji": "丈",
+    "furigana": "たけ",
+    "english": "Height",
+    "roman": "take"
+  },
+  {
+    "kanji": "乗馬",
+    "furigana": "じょうば",
+    "english": "Horseback Riding",
+    "roman": "jouba"
+  },
+  {
+    "kanji": "夫",
+    "furigana": "おっと",
+    "english": "Husband",
+    "roman": "otto"
+  },
+  {
+    "kanji": "不法",
+    "furigana": "ふほう",
+    "english": "Illegal",
+    "roman": "fuhou"
+  },
+  {
+    "kanji": "事変",
+    "furigana": "じへん",
+    "english": "Incident",
+    "roman": "jihen"
+  },
+  {
+    "kanji": "伝",
+    "furigana": "つて",
+    "english": "Intermediary",
+    "roman": "tsute"
+  },
+  {
+    "kanji": "子猫",
+    "furigana": "こねこ",
+    "english": "Kitten",
+    "roman": "koneko"
+  },
+  {
+    "kanji": "昨年",
+    "furigana": "さくねん",
+    "english": "Last Year",
+    "roman": "sakunen"
+  },
+  {
+    "kanji": "列",
+    "furigana": "れつ",
+    "english": "Line",
+    "roman": "retsu"
+  },
+  {
+    "kanji": "昼休み",
+    "furigana": "ひるやすみ",
+    "english": "Lunch Break",
+    "roman": "hiruyasumi"
+  },
+  {
+    "kanji": "ご飯",
+    "furigana": "ごはん",
+    "english": "Meal",
+    "roman": "gohan"
+  },
+  {
+    "kanji": "飯",
+    "furigana": "めし",
+    "english": "Meal",
+    "roman": "meshi"
+  },
+  {
+    "kanji": "方法",
+    "furigana": "ほうほう",
+    "english": "Method",
+    "roman": "houhou"
+  },
+  {
+    "kanji": "情けない",
+    "furigana": "なさけない",
+    "english": "Miserable",
+    "roman": "nasakenai"
+  },
+  {
+    "kanji": "人殺し",
+    "furigana": "ひとごろし",
+    "english": "Murder",
+    "roman": "hitogoroshi"
+  },
+  {
+    "kanji": "殺人者",
+    "furigana": "さつじんしゃ",
+    "english": "Murderer",
+    "roman": "satsujinsha"
+  },
+  {
+    "kanji": "海軍",
+    "furigana": "かいぐん",
+    "english": "Navy",
+    "roman": "kaigun"
+  },
+  {
+    "kanji": "晩",
+    "furigana": "ばん",
+    "english": "Night",
+    "roman": "ban"
+  },
+  {
+    "kanji": "昼",
+    "furigana": "ひる",
+    "english": "Noon",
+    "roman": "hiru"
+  },
+  {
+    "kanji": "オノマトペ",
+    "furigana": "オノマトペ",
+    "english": "Onomatopoeia",
+    "roman": "onomatope"
+  },
+  {
+    "kanji": "由来",
+    "furigana": "ゆらい",
+    "english": "Origin",
+    "roman": "yurai"
+  },
+  {
+    "kanji": "相手",
+    "furigana": "あいて",
+    "english": "Partner",
+    "roman": "aite"
+  },
+  {
+    "kanji": "乗客",
+    "furigana": "じょうきゃく",
+    "english": "Passenger",
+    "roman": "joukyaku"
+  },
+  {
+    "kanji": "計画",
+    "furigana": "けいかく",
+    "english": "Plan",
+    "roman": "keikaku"
+  },
+  {
+    "kanji": "毒",
+    "furigana": "どく",
+    "english": "Poison",
+    "roman": "doku"
+  },
+  {
+    "kanji": "毒ガス",
+    "furigana": "どくがす",
+    "english": "Poison Gas",
+    "roman": "dokugasu"
+  },
+  {
+    "kanji": "中毒",
+    "furigana": "ちゅうどく",
+    "english": "Poisoning",
+    "roman": "chuudoku"
+  },
+  {
+    "kanji": "返信",
+    "furigana": "へんしん",
+    "english": "Reply",
+    "roman": "henshin"
+  },
+  {
+    "kanji": "指輪",
+    "furigana": "ゆびわ",
+    "english": "Ring",
+    "roman": "yubiwa"
+  },
+  {
+    "kanji": "輪ゴム",
+    "furigana": "わごむ",
+    "english": "Rubber Band",
+    "roman": "wagomu"
+  },
+  {
+    "kanji": "大変",
+    "furigana": "たいへん",
+    "english": "Serious",
+    "roman": "taihen"
+  },
+  {
+    "kanji": "浅い",
+    "furigana": "あさい",
+    "english": "Shallow",
+    "roman": "asai"
+  },
+  {
+    "kanji": "単に",
+    "furigana": "たんに",
+    "english": "Simply",
+    "roman": "tanni"
+  },
+  {
+    "kanji": "技能",
+    "furigana": "ぎのう",
+    "english": "Skill",
+    "roman": "ginou"
+  },
+  {
+    "kanji": "坂",
+    "furigana": "さか",
+    "english": "Slope",
+    "roman": "saka"
+  },
+  {
+    "kanji": "〜匹",
+    "furigana": "ひき",
+    "english": "Small Animal Counter",
+    "roman": "hiki"
+  },
+  {
+    "kanji": "軍人",
+    "furigana": "ぐんじん",
+    "english": "Soldier",
+    "roman": "gunjin"
+  },
+  {
+    "kanji": "頑丈",
+    "furigana": "がんじょう",
+    "english": "Solid",
+    "roman": "ganjou"
+  },
+  {
+    "kanji": "初耳",
+    "furigana": "はつみみ",
+    "english": "Something Heard For The First Time",
+    "roman": "hatsumimi"
+  },
+  {
+    "kanji": "特技",
+    "furigana": "とくぎ",
+    "english": "Specialty",
+    "roman": "tokugi"
+  },
+  {
+    "kanji": "春",
+    "furigana": "はる",
+    "english": "Spring",
+    "roman": "haru"
+  },
+  {
+    "kanji": "春休み",
+    "furigana": "はるやすみ",
+    "english": "Spring Break",
+    "roman": "haruyasumi"
+  },
+  {
+    "kanji": "変",
+    "furigana": "へん",
+    "english": "Strange",
+    "roman": "hen"
+  },
+  {
+    "kanji": "丈夫",
+    "furigana": "じょうぶ",
+    "english": "Sturdy",
+    "roman": "joubu"
+  },
+  {
+    "kanji": "太陽",
+    "furigana": "たいよう",
+    "english": "Sun",
+    "roman": "taiyou"
+  },
+  {
+    "kanji": "同期中",
+    "furigana": "どうきちゅう",
+    "english": "Syncing",
+    "roman": "doukichuu"
+  },
+  {
+    "kanji": "美味しい",
+    "furigana": "おいしい",
+    "english": "Tasty",
+    "roman": "oishii"
+  },
+  {
+    "kanji": "技",
+    "furigana": "わざ",
+    "english": "Technique",
+    "roman": "waza"
+  },
+  {
+    "kanji": "寺",
+    "furigana": "てら",
+    "english": "Temple",
+    "roman": "tera"
+  },
+  {
+    "kanji": "昨今",
+    "furigana": "さっこん",
+    "english": "These Days",
+    "roman": "sakkon"
+  },
+  {
+    "kanji": "受け入れる",
+    "furigana": "うけいれる",
+    "english": "To Accept Something",
+    "roman": "ukeireru"
+  },
+  {
+    "kanji": "整える",
+    "furigana": "ととのえる",
+    "english": "To Arrange",
+    "roman": "totonoeru"
+  },
+  {
+    "kanji": "好む",
+    "furigana": "このむ",
+    "english": "To Be Fond Of",
+    "roman": "konomu"
+  },
+  {
+    "kanji": "信じる",
+    "furigana": "しんじる",
+    "english": "To Believe",
+    "roman": "shinjiru"
+  },
+  {
+    "kanji": "解ける",
+    "furigana": "とける",
+    "english": "To Be Solved",
+    "roman": "tokeru"
+  },
+  {
+    "kanji": "変える",
+    "furigana": "かえる",
+    "english": "To Change Something",
+    "roman": "kaeru"
+  },
+  {
+    "kanji": "晴れる",
+    "furigana": "はれる",
+    "english": "To Clear Up",
+    "roman": "hareru"
+  },
+  {
+    "kanji": "泣く",
+    "furigana": "なく",
+    "english": "To Cry",
+    "roman": "naku"
+  },
+  {
+    "kanji": "疑う",
+    "furigana": "うたがう",
+    "english": "To Doubt",
+    "roman": "utagau"
+  },
+  {
+    "kanji": "放つ",
+    "furigana": "はなつ",
+    "english": "To Fire",
+    "roman": "hanatsu"
+  },
+  {
+    "kanji": "下りる",
+    "furigana": "おりる",
+    "english": "To Go Down",
+    "roman": "oriru"
+  },
+  {
+    "kanji": "舐める",
+    "furigana": "なめる",
+    "english": "To Lick",
+    "roman": "nameru"
+  },
+  {
+    "kanji": "暗記する",
+    "furigana": "あんきする",
+    "english": "To Memorize",
+    "roman": "ankisuru"
+  },
+  {
+    "kanji": "払う",
+    "furigana": "はらう",
+    "english": "To Pay",
+    "roman": "harau"
+  },
+  {
+    "kanji": "練習する",
+    "furigana": "れんしゅうする",
+    "english": "To Practice",
+    "roman": "renshuusuru"
+  },
+  {
+    "kanji": "外す",
+    "furigana": "はずす",
+    "english": "To Remove",
+    "roman": "hazusu"
+  },
+  {
+    "kanji": "帰る",
+    "furigana": "かえる",
+    "english": "To Return Home",
+    "roman": "kaeru"
+  },
+  {
+    "kanji": "見返す",
+    "furigana": "みかえす",
+    "english": "To Show Someone What One Can Do",
+    "roman": "mikaesu"
+  },
+  {
+    "kanji": "合計",
+    "furigana": "ごうけい",
+    "english": "Total",
+    "roman": "goukei"
+  },
+  {
+    "kanji": "有毒",
+    "furigana": "ゆうどく",
+    "english": "Toxic",
+    "roman": "yuudoku"
+  },
+  {
+    "kanji": "信号",
+    "furigana": "しんごう",
+    "english": "Traffic Light",
+    "roman": "shingou"
+  },
+  {
+    "kanji": "信用",
+    "furigana": "しんよう",
+    "english": "Trust",
+    "roman": "shin'you"
+  },
+  {
+    "kanji": "了解",
+    "furigana": "りょうかい",
+    "english": "Understanding",
+    "roman": "ryoukai"
+  },
+  {
+    "kanji": "変事",
+    "furigana": "へんじ",
+    "english": "Unexpected Incident",
+    "roman": "henji"
+  },
+  {
+    "kanji": "変死",
+    "furigana": "へんし",
+    "english": "Unnatural Death",
+    "roman": "henshi"
+  },
+  {
+    "kanji": "様々",
+    "furigana": "さまざま",
+    "english": "Various",
+    "roman": "samazama"
+  },
+  {
+    "kanji": "時計",
+    "furigana": "とけい",
+    "english": "Watch",
+    "roman": "tokei"
+  },
+  {
+    "kanji": "単語",
+    "furigana": "たんご",
+    "english": "Word",
+    "roman": "tango"
+  },
+  {
+    "kanji": "作家",
+    "furigana": "さっか",
+    "english": "Writer",
+    "roman": "sakka"
+  },
+  {
+    "kanji": "昨日",
+    "furigana": "きのう",
+    "english": "Yesterday",
+    "roman": "kinou"
+  }
+]
