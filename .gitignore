@@ -72,3 +72,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+*project/target*
+project/target/
+project/project/
+target/
+*.class
+*.cache

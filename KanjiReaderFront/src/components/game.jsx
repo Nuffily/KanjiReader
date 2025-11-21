@@ -4,6 +4,7 @@ import "../css/App.css"
 import CountdownTimer from './CountDownTimer';
 import { useGlobalKeyPress } from './Some';
 import ResultList from './ResultList';
+import config from "../config.js"
 
 function useVocabulary(set = 'WK51-55', number = 10) {
   const [data, setData] = useState([]);
@@ -16,7 +17,7 @@ function useVocabulary(set = 'WK51-55', number = 10) {
         setLoading(true);
         setError(null);
         const response = await fetch(
-          `http://localhost:8099/vocabulary/${set}/${number}`
+          `${config.apiUrl}/vocabulary/${set}/${number}`
         );
 
         if (!response.ok) {
