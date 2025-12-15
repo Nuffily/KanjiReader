@@ -8,4 +8,7 @@
     <root level="DEBUG">
         <appender-ref ref="CONSOLE" />
     </root>
+
+    <logger name="com.zaxxer.hikari" level="WARN"/>      <!-- HikariCP -->
+    <logger name="io.netty" level="WARN"/>               <!-- Netty -->
 </configuration>

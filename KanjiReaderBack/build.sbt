@@ -10,7 +10,8 @@ lazy val root = (project in file("."))
 libraryDependencies ++= Seq(
   "dev.zio"       %% "zio"                 % "2.0.21",
   "dev.zio"       %% "zio-json"            % "0.6.2",
-  "dev.zio"       %% "zio-http"            % "3.0.0",
+  "dev.zio"       %% "zio-http"            % "3.7.3",
+  "dev.zio" %% "zio-http-client" % "3.7.3",
   "io.getquill"   %% "quill-zio"           % "4.7.0",
   "io.getquill"   %% "quill-jdbc-zio"      % "4.7.0",
   "com.h2database" % "h2"                  % "2.2.224",

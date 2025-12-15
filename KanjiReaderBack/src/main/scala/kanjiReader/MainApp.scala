@@ -1,13 +1,13 @@
 package kanjiReader
 
+import kanjiReader.auth.{AuthRoutes, GitHubService}
 import zio.config.typesafe.TypesafeConfigProvider
 import zio.http.Middleware.CorsConfig
 import zio.http._
 import zio.http.netty.NettyConfig
 import zio.{Random, _}
-import kanjiReader.config.HttpServerConfig
-import kanjiReader.users.{PersistentUserRepo, UserRoutes}
-import kanjiReader.vocabulary.zxc.greet.VocabularyRoutes
+import kanjiReader.config.{GitHubConfig, HttpServerConfig}
+import kanjiReader.vocabulary.VocabularyRoutes
 
 object MainApp extends ZIOAppDefault {
 
@@ -27,6 +27,9 @@ object MainApp extends ZIOAppDefault {
           Server.Config.default.binding(c.host, c.port)
         }
       )
+
+  private val gitHubConfigLayer: ZLayer[Any, Config.Error, GitHubConfig] =
+    ZLayer.fromZIO(ZIO.config[GitHubConfig](GitHubConfig.config))
 
   private val nettyConfig: ZLayer[Any, Config.Error, NettyConfig] =
     ZLayer
@@ -48,7 +51,7 @@ object MainApp extends ZIOAppDefault {
 
     (Server
       .install(
-        UserRoutes() ++ VocabularyRoutes() @@ simpleCors
+        kanjiUsers.UserRoutes() ++ VocabularyRoutes() @@ simpleCors ++ AuthRoutes() @@ simpleCors
       )
       .flatMap(port =>
         Console.printLine(s"Started server on port: $port")
@@ -57,8 +60,11 @@ object MainApp extends ZIOAppDefault {
         serverConfig,
         nettyConfig,
         Server.live,
+        gitHubConfigLayer,
+        GitHubService.layer,
 
-        PersistentUserRepo.layer,
+        Client.default,
+        kanjiUsers.PersistentUserRepo.layer,
         randomLayer
       )
   }
