@@ -1,24 +1,18 @@
 package kanjiReader.kanjiUsers
 
+import kanjiReader.KanjiResponse
 import zio._
 import zio.http._
 import zio.json.EncoderOps
-import zio.schema.codec.JsonCodec.schemaBasedBinaryCodec
 
-/** Collection of routes that:
-  *   - Accept a `Request` and returns a `Response`
-  *   - May fail with type of `Response`
-  *   - Require a `UserRepo` from the environment
-  */
 object UserRoutes {
 
   def apply(): Routes[UserRepo, Response] =
     Routes(
       Method.POST / "register" -> handler { (req: Request) =>
         for {
-          bodyString <- req.body.asString.orElseFail(Response.badRequest)
-          id <- ZIO.fromOption(bodyString.trim.toIntOption)
-            .orElseFail(Response.badRequest("Invalid integer format"))
+
+          id <- KanjiResponse.getIntBodyOrBad(req)
 
           r <-
             UserRepo
@@ -48,7 +42,7 @@ object UserRoutes {
 
           r <-
             UserRepo
-              .lookup(id)
+              .lookupId(id)
               .mapBoth(
                 e =>
                   Response

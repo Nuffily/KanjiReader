@@ -1,27 +1,10 @@
 package kanjiReader.kanjiUsers
 
-import io.getquill.context.ZioJdbc.DataSourceLayer
+import io.getquill.jdbczio.Quill
 import io.getquill.{Escape, H2ZioJdbcContext}
 import zio._
-import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 
-import java.time.LocalDateTime
-import java.util.UUID
 import javax.sql.DataSource
-
-case class UserTable(
-    id: Int,
-    level: Byte,
-    experience: Int,
-    refill: LocalDateTime
-)
-
-object UserTable {
-  implicit val encoder: JsonEncoder[UserTable] =
-    DeriveJsonEncoder.gen[UserTable]
-  implicit val decoder: JsonDecoder[UserTable] =
-    DeriveJsonDecoder.gen[UserTable]
-}
 
 case class PersistentUserRepo(ds: DataSource) extends UserRepo {
   val ctx = new H2ZioJdbcContext(Escape)
@@ -48,7 +31,7 @@ case class PersistentUserRepo(ds: DataSource) extends UserRepo {
               .run {
                 quote {
                   query[UserTable].insertValue {
-                    lift(UserTable(id, 0, 0, date))
+                    lift(UserTable(id, 0, date))
                   }
                 }
               }
@@ -59,8 +42,7 @@ case class PersistentUserRepo(ds: DataSource) extends UserRepo {
     } yield result
   }
 
-
-  override def lookup(id: Int): Task[Option[UserTable]] =
+  override def lookupId(id: Int): Task[Option[UserTable]] =
     ctx
       .run {
         quote {
@@ -71,10 +53,33 @@ case class PersistentUserRepo(ds: DataSource) extends UserRepo {
       .provide(ZLayer.succeed(ds))
       .map(_.headOption)
 
+//  def lookupToken(token: String): Task[Option[UserTable]] =
+//    ctx
+//      .run {
+//        quote {
+//          query[UserTable]
+//            .filter(p => p.id == lift(id))
+//        }
+//      }
+//      .provide(ZLayer.succeed(ds))
+//      .map(_.headOption)
+
+//  def addExp(id: Int, exp: Int): Task[Boolean] =
+//    ctx
+//      .run {
+//        quote {
+//          query[UserTable]
+//            .filter(p => p.id == lift(id))
+//            .updateValue(   )
+//        }
+//      }
+//      .provide(ZLayer.succeed(ds))
+//      .map(_.is)
+
 }
 
 object PersistentUserRepo {
   def layer: ZLayer[Any, Throwable, PersistentUserRepo] =
-    DataSourceLayer.fromPrefix("UserApp") >>>
+    Quill.DataSource.fromPrefix("UserApp") >>>
       ZLayer.fromFunction(PersistentUserRepo(_))
 }
