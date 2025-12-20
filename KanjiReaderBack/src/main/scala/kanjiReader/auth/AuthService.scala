@@ -1,9 +1,12 @@
 package kanjiReader.auth
 
+import kanjiReader.kanjiUsers.{UserRepo, UserTable}
 import zio.http.Client
 import zio.http.Header.Authorization
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 import zio.{&, ZIO}
+
+import java.time.LocalDateTime
 
 case class AccessTokenResponse(
     access_token: String,
@@ -53,14 +56,42 @@ object GitHubError {
     DeriveJsonEncoder.gen[GitHubError]
 }
 
+case class KanjiUser(
+    login: String,
+    id: Long,
+    avatar_url: String,
+    experience: Int,
+    refill: LocalDateTime
+)
+
+object KanjiUser {
+  def apply(gitHubUser: GitHubUser, userTable: UserTable): KanjiUser =
+    KanjiUser(
+      gitHubUser.login,
+      gitHubUser.id,
+      gitHubUser.avatar_url,
+      userTable.experience,
+      userTable.refill
+    )
+
+  implicit val decoder: JsonDecoder[KanjiUser] =
+    DeriveJsonDecoder.gen[KanjiUser]
+  implicit val encoder: JsonEncoder[KanjiUser] =
+    DeriveJsonEncoder.gen[KanjiUser]
+}
+
 trait AuthService {
   def getAccessToken(
       code: String
   ): ZIO[Client, AuthTokenError, AccessTokenResponse]
 
-  def getUserData(
+  def getUserGitData(
       authHeader: Authorization
   ): ZIO[Client, AuthUserDataError, GitHubUser]
+
+  def getKanjiUserData(
+      authHeader: Authorization
+  ): ZIO[Client & UserRepo, AuthUserDataError, KanjiUser]
 }
 
 object AuthService {
@@ -69,8 +100,13 @@ object AuthService {
   ): ZIO[AuthService & Client, AuthTokenError, AccessTokenResponse] =
     ZIO.serviceWithZIO[AuthService](_.getAccessToken(code))
 
-  def getUserData(
+  def getUserGitData(
       authHeader: Authorization
   ): ZIO[AuthService & Client, AuthUserDataError, GitHubUser] =
-    ZIO.serviceWithZIO[AuthService](_.getUserData(authHeader))
+    ZIO.serviceWithZIO[AuthService](_.getUserGitData(authHeader))
+
+  def getKanjiUserData(
+      authHeader: Authorization
+  ): ZIO[Client & UserRepo & AuthService, AuthUserDataError, KanjiUser] =
+    ZIO.serviceWithZIO[AuthService](_.getKanjiUserData(authHeader))
 }

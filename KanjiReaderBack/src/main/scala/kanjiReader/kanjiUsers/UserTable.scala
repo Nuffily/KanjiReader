@@ -6,7 +6,7 @@ import zio.schema.{DeriveSchema, Schema}
 import java.time.LocalDateTime
 
 case class UserTable(
-    id: Int,
+    id: Long,
     experience: Int,
     refill: LocalDateTime
 )

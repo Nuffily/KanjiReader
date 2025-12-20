@@ -1,19 +1,33 @@
 package kanjiReader.auth
 
+import kanjiReader.KanjiStructures.KanjiCache
 import kanjiReader.config.GitHubConfig
+import kanjiReader.kanjiUsers.UserRepo
 import zio.http.Header.Authorization
-import zio.http.{Client, Header, Request, _}
+import zio.http._
 import zio.json.DecoderOps
-import zio.{ZIO, ZLayer}
+import zio.{&, Scope, ZIO, ZLayer, durationInt, _}
+//case class GitInfo(login: String, id: Int, avatar_url: String)
 
-case class GitHubService(config: GitHubConfig) extends AuthService {
+case class GitHubService(
+    config: GitHubConfig,
+    cache: KanjiCache[Authorization, GitHubUser]
+) extends AuthService {
 
-  private lazy val tokenURL = URL.decode(config.gitHubTokenServer).getOrElse(
-    throw new IllegalArgumentException("Wrong url for token")
-  )
-  private lazy val userURL = URL.decode(config.gitHubUserServer).getOrElse(
-    throw new IllegalArgumentException("Wrong url for user service")
-  )
+  private lazy val tokenURL = URL
+    .decode(config.gitHubTokenServer)
+    .getOrElse(
+      throw new IllegalArgumentException("Wrong url for token")
+    )
+  private lazy val userURL = URL
+    .decode(config.gitHubUserServer)
+    .getOrElse(
+      throw new IllegalArgumentException("Wrong url for user service")
+    )
+
+//  private val cache = SimpleCache.make[Authorization, GitHubUser](1.hour)
+
+//  private val test = SimpleCache.make[Secret, Int](1.hour)
 
   override def getAccessToken(
       code: String
@@ -67,11 +81,32 @@ case class GitHubService(config: GitHubConfig) extends AuthService {
       } yield tokenResponse
     }
 
-  override def getUserData(
+  override def getUserGitData(
       authHeader: Authorization
-  ): ZIO[Client, AuthUserDataError, GitHubUser] =
-    ZIO.scoped {
+  ): ZIO[Client, AuthUserDataError, GitHubUser] = ZIO.scoped {
 
+    cache.getOrElseZIO(authHeader)(
+      Console.printLine("Non hit!").ignore *> requestUserData(authHeader)
+    )
+  }
+
+  override def getKanjiUserData(
+      authHeader: Authorization
+  ): ZIO[Client & UserRepo, AuthUserDataError, KanjiUser] = for {
+
+    gitUser <- getUserGitData(authHeader)
+
+    user <- UserRepo
+      .lookupOrRegister(gitUser.id)
+      .mapError(e => AuthDunnoUserError(e.getMessage))
+
+  } yield KanjiUser(gitUser, user)
+
+
+  private def requestUserData(
+      authHeader: Authorization
+  ): ZIO[Client & Scope, AuthUserDataError, GitHubUser] =
+    ZIO.scoped {
       for {
         client <- ZIO.service[Client]
 
@@ -109,10 +144,16 @@ case class GitHubService(config: GitHubConfig) extends AuthService {
           .mapError(e => AuthDunnoUserError(s"Failed to parse JSON: $e"))
 
       } yield user
+
     }
+
 }
 
 object GitHubService {
-  def layer: ZLayer[GitHubConfig, Throwable, AuthService] =
-    ZLayer.fromFunction(GitHubService(_))
+  def layer: ZLayer[GitHubConfig, Throwable, AuthService] = ZLayer.scoped {
+    for {
+      config <- ZIO.service[GitHubConfig]
+      cache  <- KanjiCache.make[Authorization, GitHubUser](1.hour)
+    } yield GitHubService(config, cache)
+  }
 }
