@@ -79,3 +79,4 @@ project/project/
 target/
 *.class
 *.cache
+*/application.conf

@@ -19,12 +19,6 @@ object KanjiResponse {
         .status(Status.Unauthorized)
     )
 
-  def internalError(message: String): ZIO[Any, Nothing, Response] =
-    ZIO.succeed(
-      Response
-        .text(message)
-        .status(Status.InternalServerError)
-    )
 
   def getIntBodyOrBad(req: Request): ZIO[Any, Response, Int] = for {
     bodyString <- req.body.asString.orElseFail(Response.badRequest)

@@ -9,7 +9,6 @@ trait UserError {
   val message: String
 }
 
-case class NotFound(message: String) extends UserError
 case class OtherUserError(message: String) extends UserError
 case class DBUserError(message: String) extends UserError
 

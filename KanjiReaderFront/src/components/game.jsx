@@ -87,19 +87,15 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
   };
 
   const sendResult = async () => {
-    // Блокируем повторную отправку
     if (hasSentResult.current) return;
     hasSentResult.current = true;
 
-    // Формируем JSON согласно Scala Case Class
     const payload = {
-      // Вытаскиваем число из строки (например "WK11" -> 11)
       wordList: vocaNum + 1,
-      // questType: 0, // Укажите здесь актуальный ID типа квеста
       time: duration / 60,
       count: num,
       correctCount: correct,
-      maxInRow: getMaxStreak(answers) // Вычисляем из вашего массива
+      maxInRow: getMaxStreak(answers) 
     };
 
     const token = localStorage.getItem("accessToken");
@@ -115,7 +111,7 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
 
       const isLevelUpdated = await response.json();
       console.log(`fat cocks ${isLevelUpdated}`)
-      // Если бэкенд вернул true, обновляем данные пользователя в приложении
+
       if (isLevelUpdated === true && dataUpdate) {
         await dataUpdate();
       }
@@ -124,9 +120,7 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
     }
   };
 
-  // Триггер завершения игры
   useEffect(() => {
-    // Условие: время вышло ИЛИ все слова пройдены (и их было больше 0)
     const isFinished = timeIsUp || (!wrong && num >= words.length && words.length > 0);
 
     if (isFinished) {

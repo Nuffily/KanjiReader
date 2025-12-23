@@ -13,20 +13,7 @@ object LevelRoutes {
   def apply(): Routes[Random & LevelService & UserRepo & AuthService & Client, Response] =
     Routes(
       Method.GET / "getQuests" -> handler { (req: Request) =>
-//        for {
-//
-//          bodyString <- req.body.asString
-//            .mapError(e => Response.badRequest(s"Invalid json: $e"))
-//
-//          id <- ZIO.fromEither(bodyString.fromJson[Long])
-//            .mapError(e => Response.badRequest(s"Invalid number: $e"))
-//
-//          quests <- LevelService.getQuests(id)
-//            .mapError(e => Response.badRequest(s"LevelService Error: $e"))
-//
-//          printable = quests.map(QuestHandler.toPrintable)
-//
-//        } yield Response.json(printable.toJson)
+
         req.header(Header.Authorization) match {
 
           case Some(Bearer(token)) =>
@@ -38,7 +25,7 @@ object LevelRoutes {
               quests <- LevelService
                 .getQuests(user.id)
                 .mapError(e => Response.badRequest(s"LevelService Error: $e"))
-              printable = quests.map(QuestHandler.toPrintable)
+              printable = quests.map(KanjiQuestHandler.toPrintable)
 
             } yield Response.json(printable.toJson))
               .catchAll {
@@ -72,15 +59,7 @@ object LevelRoutes {
               gameResult <- ZIO.fromEither(bodyString.fromJson[WordGameResult])
                 .mapError(e => Response.badRequest(s"Invalid game result: $e"))
 
-//              gameResult <- req.body.as[WordGameResult]
-//                .mapError(e => Response.badRequest(s"Invalid JSON: ${e.getMessage}"))
-
-              _ <- Console.printLine(gameResult)
-
               isChanged <- LevelService.checkResult(user.id, gameResult)
-
-              _ <- Console.printLine(isChanged)
-
 
             } yield Response.json(isChanged.toJson))
               .catchAll {
@@ -106,15 +85,10 @@ object LevelRoutes {
             (for {
               service <- ZIO.service[AuthService]
 
-
               user <- service.getUserGitData(Bearer(token))
 
-              quests <- LevelService.refillQuests(user.id)
+              _ <- LevelService.refillQuests(user.id)
                 .mapError(e => Response.badRequest("wrong id"))
-
-//              _ <- Console.printLine(quests)
-//              _ <- Console.printLine("AAGHGAG2")
-
 
             } yield Response.ok)
               .catchAll {

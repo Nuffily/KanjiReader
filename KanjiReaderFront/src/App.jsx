@@ -33,7 +33,7 @@ function App() {
 
   async function getUserData() {
     const token = localStorage.getItem("accessToken");
-    console.log("Bearer " + token);
+    // console.log("Bearer " + token);
 
     try {
       const response = await fetch("http://localhost:8099/getKanjiUserData", {
@@ -65,7 +65,7 @@ function App() {
 
   async function getQuests() {
     const token = localStorage.getItem("accessToken");
-    console.log("Bearer " + token);
+    // console.log("Bearer " + token);
 
     try {
       const response = await fetch("http://localhost:8099/getQuests", {
@@ -101,7 +101,7 @@ function App() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString)
     const codeParam = urlParams.get("code")
-    console.log(codeParam)
+    // console.log(codeParam)
 
     if (codeParam && (localStorage.getItem("accessToken") === null)) {
 
@@ -111,10 +111,9 @@ function App() {
         await fetch("http://localhost:8099/getAccessToken?code=" + codeParam, {
           method: "GET"
         }).then((response) => {
-          console.log("asdas" + response)
           return response.json();
         }).then((data) => {
-          console.log(data);
+          // console.log(data);
           if (data.access_token) {
             localStorage.setItem("accessToken", data.access_token);
             getUserData();
@@ -195,7 +194,7 @@ function App() {
       <div className={submenu == 0 ? 'mainMenu' : (!listPick ? 'slide-in-blurred-left' : 'slide-out-blurred-left')}
         style={{
           position: 'absolute',
-          width: '50%',
+          width: '100%',
           height: '100%',
           display: 'flex',
           flexDirection: 'column',

@@ -1,32 +1,18 @@
 package kanjiReader.leveling
 
 import io.getquill.jdbczio.Quill
-import io.getquill.{Escape, H2ZioJdbcContext, Literal}
-import kanjiReader.kanjiUsers.{
-  OtherUserError,
-  PersistentUserRepo,
-  UserRepo,
-  UserTable
-}
+import io.getquill.{H2ZioJdbcContext, Literal}
+import kanjiReader.kanjiUsers.UserRepo
 import kanjiReader.leveling.QuestType._
 import zio._
 
 import javax.sql.DataSource
 
-case class KanjiLevelService(ds: DataSource) extends LevelService {
+case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
+    extends LevelService {
 
-//  val ctx = new H2ZioJdbcContext(Escape)
   val ctx = new H2ZioJdbcContext(Literal)
   import ctx._
-
-//  implicit val questMeta = schemaMeta[Quest](
-//    "Quest",
-//    _.entry_id    -> "entry_id",
-//    _.user_id     -> "user_id",
-//    _.quest_type  -> "quest_type",
-//    _.word_list   -> "word_list",
-//    _.is_complete -> "is_complete"
-//  )
 
   implicit val questInsertMeta = insertMeta[Quest](_.entry_id)
 
@@ -35,25 +21,21 @@ case class KanjiLevelService(ds: DataSource) extends LevelService {
   private def createQuest(id: Long): ZIO[UserRepo, LevelError, Quest] =
     for {
       random    <- ZIO.random
-      questType <- random.nextIntBetween(0, QuestType.maxId + 1)
+      questType <- random.nextIntBetween(0, QuestType.maxId)
       wordList  <- random.nextIntBetween(1, WORD_LIST_COUNT)
 
       parameter <- QuestType(questType) match {
-//        case CorrectPer1M => random.nextIntBetween(10, 15)
-        case CorrectPer1M => random.nextIntBetween(2, 5)
-//        case CorrectPer2M => random.nextIntBetween(20, 25)
-        case CorrectPer2M => random.nextIntBetween(2, 5)
-        case PercentIn1M  => random.nextIntBetween(60, 80)
-        case PercentIn2M  => random.nextIntBetween(60, 80)
+        case CorrectPer1M => random.nextIntBetween(9, 12)
+        case CorrectPer2M => random.nextIntBetween(15, 20)
+        case Percent      => random.nextIntBetween(60, 80)
         case InRow1M      => random.nextIntBetween(5, 7)
         case InRow2M      => random.nextIntBetween(7, 9)
-        case SumCorrect   => random.nextIntBetween(50, 70)
+        case SumCorrect   => random.nextIntBetween(40, 70)
       }
 
       parameter2 <- QuestType(questType) match {
-        case PercentIn1M => random.nextIntBetween(10, 15)
-        case PercentIn2M => random.nextIntBetween(15, 20)
-        case _           => ZIO.succeed(0)
+        case Percent => random.nextIntBetween(10, 15)
+        case _       => ZIO.succeed(0)
       }
 
     } yield Quest(
@@ -72,19 +54,21 @@ case class KanjiLevelService(ds: DataSource) extends LevelService {
         .provide(ZLayer.succeed(ds))
         .mapError(e => DBLevelError(e.getMessage))
 
-//      _ <- Console.printLine("AAGHGAG").ignore
-
       quest1 <- createQuest(id)
+
       quest2 <- createQuest(id).repeatWhile(q =>
         quest1.quest_type == q.quest_type
       )
 
-//      _ <- Console.printLine("Refill!").ignore
-//      _ <- Console.printLine("AAGHGAG3").ignore
+      quest3 <- createQuest(id).repeatWhile(q =>
+        quest2.quest_type == q.quest_type &&
+          quest1.quest_type == q.quest_type
+      )
+
       _ <- ctx
         .run {
           quote {
-            liftQuery(List(quest1, quest2)).foreach { q =>
+            liftQuery(List(quest1, quest2, quest3)).foreach { q =>
               query[Quest].insertValue(q)
             }
           }
@@ -92,13 +76,11 @@ case class KanjiLevelService(ds: DataSource) extends LevelService {
         .provide(ZLayer.succeed(ds))
         .mapError(e => SomeLevelError(e.getMessage))
 
-      _ <- Console.printLine(List(quest1, quest2)).ignore
-
       _ <- UserRepo
         .refill(id)
         .mapError(e => SomeLevelError(e.message))
 
-    } yield List(quest1, quest2)
+    } yield List(quest1, quest2, quest3)
 
   override def addExperience(
       id: Long,
@@ -118,11 +100,8 @@ case class KanjiLevelService(ds: DataSource) extends LevelService {
 
       now <- Clock.localDateTime
 
-//      _ <- Console.printLine(s"GEt! $now $elapse").ignore
-
       quests <- (if (elapse.isBefore(now)) {
                    UserRepo.refill(id) *>
-                     Console.printLine("Elapse!!").ignore *>
                      refillQuests(id)
                  } else {
                    ctx
@@ -144,31 +123,13 @@ case class KanjiLevelService(ds: DataSource) extends LevelService {
 
   } yield updated.contains(true)
 
-  override def markComplete(
-      id: Long,
-      quest: Long
-  ): ZIO[UserRepo, LevelError, Boolean] = for {
-    updated <- ctx
-      .run {
-        query[Quest]
-          .filter(q => q.user_id == lift(id) && q.is_complete == lift(false))
-          .update(_.is_complete -> lift(true))
-      }
-      .provide(ZLayer.succeed(ds))
-      .mapError(e => DBLevelError(e.getMessage))
-  } yield updated > 0
-
   override def handleQuest(
       id: Long,
       quest: Quest,
       res: WordGameResult
   ): ZIO[UserRepo, LevelError, Boolean] = {
 
-    val newQuest = QuestHandler.handleQuest(quest, res)
-
-//    println(quest)
-//    println(newQuest)
-
+    val newQuest = qh.handleQuest(quest, res)
     if (newQuest == quest) ZIO.succeed(false)
     else
       for {
@@ -181,12 +142,18 @@ case class KanjiLevelService(ds: DataSource) extends LevelService {
           }
           .provide(ZLayer.succeed(ds))
           .mapError(e => DBLevelError(e.getMessage))
+
+        _ <-
+          if (updated > 0 && newQuest.is_complete != quest.is_complete)
+            addExperience(id, 10)
+          else ZIO.unit
+
       } yield updated > 0
   }
 }
 
 object KanjiLevelService {
-  def layer: ZLayer[Any, Throwable, KanjiLevelService] =
+  def layer(qh: QuestHandler): ZLayer[Any, Throwable, KanjiLevelService] =
     Quill.DataSource.fromPrefix("Quest") >>>
-      ZLayer.fromFunction(KanjiLevelService(_))
+      ZLayer.fromFunction(KanjiLevelService(_, qh))
 }

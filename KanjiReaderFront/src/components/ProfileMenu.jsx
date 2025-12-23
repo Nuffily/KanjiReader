@@ -1,74 +1,21 @@
 import "../css/app.css";
 import "../css/ProfileMenu.css"
-import { useRef } from 'react';
 
 const CLIENT_ID = "Ov23liOda3qqFTKeKow1";
 
-function questIcon(type) {
-  if (type === "CorrectPer1M" || type === "CorrectPer2M") return "時"
-  else if (type === "PercentIn1M" || type === "PercentIn2M") return "率"
-  else if (type === "InRow1M" || type === "InRow2M") return "列"
-  else if (type === "CorrectSum") return "総"
-  else return "那"
-}
 
-function getLevel(x) {
-  if (x < 0) throw new Error("x must be non-negative");
+import {
+  questIcon,
+  getLevel,
+  getRemainXP,
+  getLevelXP,
+  loginGit,
+  unlogin
+} from "../functions/JSFuncs";
 
-  const k = Math.ceil((1 + Math.sqrt(1 + 4 * x / 5)) / 2);
-
-  return k - 1;
-}
-
-function getRemainXP(x, k) {
-  if (x < 0) throw new Error("x must be non-negative");
-
-  const threshold = 5 * k * (k - 1);
-  return x - threshold;
-}
-
-function getMaxXPForLevel(level) {
-  if (level < 0) throw new Error("level must be non-negative");
-
-  const nextLevelMinXP = 5 * (level + 1) * level;
-  return nextLevelMinXP;
-}
-
-function getLevelXP(level) {
-  return getMaxXPForLevel(level) - getMaxXPForLevel(level - 1);
-}
-
-
-
-function loginGit() {
-  window.location.assign("https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID);
-}
-
-function unlogin() {
-  localStorage.removeItem("accessToken");
-  window.location.reload();
-}
+import { HighlightedDescription } from "../functions/ReactFuncs";
 
 const ProfileMenu = ({ userData, quests, vocs, isPicked, back }) => {
-
-  const level = getLevel(userData.experience);
-  const remainXP = getRemainXP(userData.experience, level);
-  const maxXP = getMaxXPForLevel(level);
-  const ratio = remainXP / maxXP;
-  const width = 300 * (
-    getRemainXP(userData.experience, getLevel(userData.experience))
-    / getLevelXP(getLevel(userData.experience)))
-
-  console.log({
-    experience: userData.experience,
-    level,
-    remainXP,
-    maxXP,
-    ratio,
-    width
-  });
-  // const level = useRef(getLevel(userData.experience));
-  // const remainXP = useRef(getRemainXP(userData.experience, level));
 
   return (
     <div className={`${isPicked ? 'slide-in-blurred-right' : 'slide-out-blurred-right'} list-menu-container`}>
@@ -108,14 +55,13 @@ const ProfileMenu = ({ userData, quests, vocs, isPicked, back }) => {
                   </a>
                 </div>
 
-
                 <div>
 
                   {quests.map((quest, index) => (
                     <div className="quest-block" key={index}
                       style={{
                         '--progress': `${quest.progress == 0 || quest.isCompleted ? 0 :
-                          quest.current / quest.progress * 100 - 3
+                          quest.current / quest.progress * 100
                           }%`
                       }}>
 
@@ -124,9 +70,8 @@ const ProfileMenu = ({ userData, quests, vocs, isPicked, back }) => {
 
                       <div className="quest-desc-block">
                         <p className={`quest-description ${quest.isCompleted ? "completed-desc" : ""}`}>
-                          {quest.description.replace("@", vocs[quest.wordList - 1].title)}</p>
-
-                        {quest.progress != 0}
+                          <HighlightedDescription quest={quest} vocs={vocs} />
+                        </p>
                       </div>
 
                     </div>

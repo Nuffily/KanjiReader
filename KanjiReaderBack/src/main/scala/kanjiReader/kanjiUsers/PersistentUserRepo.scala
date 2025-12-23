@@ -94,18 +94,6 @@ case class PersistentUserRepo(ds: DataSource) extends UserRepo {
     } yield user
   }
 
-//  def addExp(id: Int, exp: Int): Task[Boolean] =
-//    ctx
-//      .run {
-//        quote {
-//          query[UserTable]
-//            .filter(p => p.id == lift(id))
-//            .updateValue(   )
-//        }
-//      }
-//      .provide(ZLayer.succeed(ds))
-//      .map(_.is)
-
   override def refill(id: Long): IO[UserError, Boolean] = for {
     now <- Clock.localDateTime
     elapseTime = now.plusHours(4)

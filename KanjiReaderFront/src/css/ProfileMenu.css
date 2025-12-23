@@ -43,24 +43,26 @@
   background: #c00c75;
   height: 100%;
   border-radius: 15px;
+
+  box-shadow: 0 0 20px #c00c75;
+
 }
 
 .main-container {
   display: grid;
-  /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
-  /* или фиксированное количество колонок */
+
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
   gap: 15px;
   padding-top: 0px;
   margin: 0px 0px 40px;
   justify-items: center;
-  /* центрирует элементы внутри ячеек */
 }
 
 .quest-block {
-  font-size: 20px;
-  height: 80px;
+  font-size: 18px;
+
+  height: 90px;
   width: 500px;
   display: flex;
 
@@ -72,10 +74,8 @@
 
   float: left;
   transition: all 0.3s ease;
-  /* transform-origin: left center; */
 
 }
-
 
 .quest-block:hover {
   scale: 1.05;
@@ -92,7 +92,7 @@
 }
 
 .quest-description {
-  margin: 10px 12px;
+  margin: 8px 12px;
   text-align: left;
 }
 
@@ -105,19 +105,26 @@
   margin: 0px;
   margin-left: -1px;
 
+  user-select: none;
+
   border: 2px solid #333;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 
   background-color: #333;
-  font-size: 40px;
+  font-size: 45px;
   font-weight: 600;
   color: #c00c75;
   text-shadow: 0 0 20px #c00c75;
-  padding: 10px 19px;
+  padding: 11px 20px;
 }
 
 .completed-icon {
   color: rgb(12, 192, 123);
   text-shadow: 0 0 20px rgb(12, 192, 123);
+}
+
+.highlight {
+  color: #ad146d;
+  text-shadow: 0 0 20px #ad0567;
 }
