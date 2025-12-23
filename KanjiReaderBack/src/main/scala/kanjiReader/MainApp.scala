@@ -7,6 +7,7 @@ import zio.http._
 import zio.http.netty.NettyConfig
 import zio.{Random, _}
 import kanjiReader.config.{GitHubConfig, HttpServerConfig}
+import kanjiReader.leveling.{KanjiLevelService, LevelRoutes}
 import kanjiReader.vocabulary.VocabularyRoutes
 
 object MainApp extends ZIOAppDefault {
@@ -51,7 +52,9 @@ object MainApp extends ZIOAppDefault {
 
     (Server
       .install(
-        kanjiUsers.UserRoutes() ++ VocabularyRoutes() @@ simpleCors ++ AuthRoutes() @@ simpleCors
+        kanjiUsers
+          .UserRoutes() ++ VocabularyRoutes() @@ simpleCors ++ AuthRoutes() @@ simpleCors
+          ++ LevelRoutes() @@ simpleCors
       )
       .flatMap(port =>
         Console.printLine(s"Started server on port: $port")
@@ -62,7 +65,9 @@ object MainApp extends ZIOAppDefault {
 
         Client.default,
         kanjiUsers.PersistentUserRepo.layer,
-        randomLayer
+        randomLayer,
+
+        KanjiLevelService.layer
       )
   }
 }

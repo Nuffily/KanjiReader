@@ -5,6 +5,14 @@ import zio.schema.{DeriveSchema, Schema}
 
 import java.time.LocalDateTime
 
+trait UserError {
+  val message: String
+}
+
+case class NotFound(message: String) extends UserError
+case class OtherUserError(message: String) extends UserError
+case class DBUserError(message: String) extends UserError
+
 case class UserTable(
     id: Long,
     experience: Int,

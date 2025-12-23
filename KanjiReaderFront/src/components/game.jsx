@@ -41,7 +41,7 @@ function useVocabulary(set = 'WK51-55', number = 10) {
 
 
 
-const Game = ({ timerKey, duration, isGameGoes, count, voca, resultSetter }) => {
+const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSetter, dataUpdate }) => {
 
   const vocabularyParams = useMemo(() => ({
     set: voca,
@@ -60,27 +60,88 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, resultSetter }) => 
   const [enter, setEnter] = useState(false);
 
   const [inputValue, setInputValue] = useState('');
-
   const [flash, setFlash] = useState("neuturalBg");
-  const [correct, setCorrect] = useState(0)
 
+  const [correct, setCorrect] = useState(0)
   const [timeIsUp, setTimeIsUp] = useState(false)
 
-
   const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (inputRef.current && !wrong) {
-      inputRef.current.focus();
-    }
-  }, [num]);
-
   const containerRef = useRef(null);
 
-  useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.focus();
+
+
+  const hasSentResult = useRef(false);
+
+  const getMaxStreak = (answersArray) => {
+    let max = 0;
+    let current = 0;
+    for (const isCorrect of answersArray) {
+      if (isCorrect) {
+        current++;
+        max = Math.max(max, current);
+      } else {
+        current = 0;
+      }
     }
+    return max;
+  };
+
+  const sendResult = async () => {
+    // Блокируем повторную отправку
+    if (hasSentResult.current) return;
+    hasSentResult.current = true;
+
+    // Формируем JSON согласно Scala Case Class
+    const payload = {
+      // Вытаскиваем число из строки (например "WK11" -> 11)
+      wordList: vocaNum + 1,
+      // questType: 0, // Укажите здесь актуальный ID типа квеста
+      time: duration / 60,
+      count: num,
+      correctCount: correct,
+      maxInRow: getMaxStreak(answers) // Вычисляем из вашего массива
+    };
+
+    const token = localStorage.getItem("accessToken");
+
+    try {
+      const response = await fetch(`${config.apiUrl}/checkResult`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "Authorization": "Bearer " + token },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) throw new Error("Server error");
+
+      const isLevelUpdated = await response.json();
+      console.log(`fat cocks ${isLevelUpdated}`)
+      // Если бэкенд вернул true, обновляем данные пользователя в приложении
+      if (isLevelUpdated === true && dataUpdate) {
+        await dataUpdate();
+      }
+    } catch (err) {
+      console.error("Failed to sync game results:", err);
+    }
+  };
+
+  // Триггер завершения игры
+  useEffect(() => {
+    // Условие: время вышло ИЛИ все слова пройдены (и их было больше 0)
+    const isFinished = timeIsUp || (!wrong && num >= words.length && words.length > 0);
+
+    if (isFinished) {
+      sendResult();
+    }
+  }, [timeIsUp, num, wrong, words.length]);
+
+
+
+  useEffect(() => {
+    if (inputRef.current && !wrong) inputRef.current.focus();
+  }, [num, wrong]);
+
+  useEffect(() => {
+    if (containerRef.current) containerRef.current.focus();
   }, []);
 
   useGlobalKeyPress({
@@ -90,36 +151,24 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, resultSetter }) => 
       if (!timeIsUp) {
         if (wrong) setNum(n => n + 1)
         setTimeIsUp(true)
-      }
-      else
-        isGameGoes(false)
+      } else isGameGoes(false)
     },
     'Enter': () => setEnter(true)
   });
 
+  if (loading) return (
+    <div className="preloader main_cont">
+      <span className="spinner">字</span>
+    </div>
+  );
 
+  if (error) return <div className="main_cont">Error: {error}</div>;
 
-  if (loading) return (<div class="preloader main_cont" style={{
-    width: '100vw',
-    height: '100vh',
-    position: 'fixed',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }}>
-    <span class="spinner">字</span>
-  </div>);
+  // Экран завершения игры
+  if ((!wrong && num >= words.length) || timeIsUp) {
+    if (!timeIsUp) setTimeIsUp(true)
 
-  if (error) return <div>Error: {error}</div>;
-
-
-
-  if (!wrong && num >= words.length || timeIsUp) {
-
-    if (!timeIsUp)
-      setTimeIsUp(true)
-
-    if (enter || num == 0) {
+    if (enter || num === 0) {
       resultSetter({ correct: correct, total: num });
       isGameGoes(false);
     }
@@ -131,50 +180,31 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, resultSetter }) => 
         tabIndex={0}
         className='mainMenu main_cont'
         style={{
-          width: '100vw',
-          height: '100vh',
-          position: 'fixed',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
           animation: `${flash} 0.8s ease-out, ${flash.replace("Bg", "Text")} 0.8s ease-out`,
         }}
       >
-        <h1 className='mainMenu'>Result: {correct} / {num}</h1>
-        <ResultList items={words} answers={answers}></ResultList>
+        <h1 className='mainMenu result-header'>Result: {correct} / {num}</h1>
+        <ResultList items={words} answers={answers} />
       </div>
     )
   }
 
-
+  // Enter
   if (enter) {
-
     setFlash("neuturalBg")
-
     if (wrong) {
-      setWrong(false)
-      setNum(num + 1)
-      setEnter(false)
-      setInputValue("")
-    }
-
-    else {
-      setWrong(words[num].roman !== inputValue)
-      setEnter(false)
-
+      setWrong(false); setNum(num + 1); setEnter(false); setInputValue("")
+    } else {
       if (words[num].roman === inputValue) {
-        setNum(num + 1)
-        setInputValue("")
-        setFlash("correctBg")
-        setCorrect(c => c + 1)
-        setAnswers(a => [...a, true]);
+        setNum(num + 1); setInputValue(""); setFlash("correctBg");
+        setCorrect(c => c + 1); setAnswers(a => [...a, true]);
       } else {
-        setFlash("incorrectBg")
-        setAnswers(a => [...a, false]);
+        setWrong(true); setFlash("incorrectBg"); setAnswers(a => [...a, false]);
       }
+      setEnter(false)
     }
   }
+
 
   return (
     <div
@@ -183,52 +213,33 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, resultSetter }) => 
       tabIndex={0}
       className='main_cont'
       style={{
-        width: '100vw',
-        height: '100vh',
-        position: 'fixed',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
         animation: `${flash} 0.8s ease-out, ${flash.replace("Bg", "Text")} 0.8s ease-out`,
-
       }}
     >
       <CountdownTimer
         resetKey={timerKey}
         time={duration}
-        timeIsUp={(isUp) => {
-          if (isUp) {
-            setTimeIsUp(true)
-          }
-        }}
+        timeIsUp={(isUp) => isUp && setTimeIsUp(true)}
       />
 
-      <p style={{
-        fontSize: "40px",
-        margin: "0px",
-        opacity: `${wrong ? "1" : "0"}`,
-      }}>{wrong ? words[num].furigana : " x"}</p>
+      <p className="game-text-furigana" style={{ opacity: wrong ? "1" : "0" }}>
+        {wrong ? words[num].furigana : " x"}
+      </p>
 
-      <h1 style={{
-        margin: "10px",
-        padding: "10px",
-        fontSize: "6em",
-        fontWeight: "550"
-      }}>{words[num].kanji}</h1>
+      <h1 className="kanji-main">{words[num].kanji}</h1>
 
-      <p style={{
-        fontSize: "25px",
-        margin: "0px",
-        opacity: `${wrong ? "1" : "0"}`,
-      }}>{wrong ? words[num].english : "x "}</p>
-      <input autoFocus={!wrong} className="neon-input" ref={inputRef} value={inputValue} onChange={(e) => setInputValue(e.target.value)} disabled={wrong}
-        style={{
-          fontSize: "25px",
-          margin: "70px"
-        }}
-      ></input>
+      <p className="game-text-english" style={{ opacity: wrong ? "1" : "0" }}>
+        {wrong ? words[num].english : "x "}
+      </p>
 
+      <input
+        autoFocus={!wrong}
+        className="neon-input game-input-neon"
+        ref={inputRef}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        disabled={wrong}
+      />
     </div>
   );
 };

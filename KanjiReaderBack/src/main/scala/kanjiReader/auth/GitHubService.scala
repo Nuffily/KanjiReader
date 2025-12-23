@@ -98,7 +98,7 @@ case class GitHubService(
 
     user <- UserRepo
       .lookupOrRegister(gitUser.id)
-      .mapError(e => AuthDunnoUserError(e.getMessage))
+      .mapError(e => AuthDunnoUserError(e.message))
 
   } yield KanjiUser(gitUser, user)
 

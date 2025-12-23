@@ -29,18 +29,21 @@ CREATE TABLE IF NOT EXISTS "UserTable" (
     "id" BIGINT NOT NULL PRIMARY KEY,
     "experience" INT NOT NULL,
     "refill" DATETIME NOT NULL
+
 );
 
-CREATE TABLE IF NOT EXISTS "Quest" (
-    "entry_id" BIGSERIAL PRIMARY KEY,
-    "user_id" BIGINT NOT NULL,
-    "quest_type" TINYINT NOT NULL,
-    "word_list" TINYINT NOT NULL,
-    "progress" TINYINT,
-    "parameter" TINYINT,
-    "is_complete" BIT NOT NULL,
+CREATE TABLE IF NOT EXISTS Quest (
+    entry_id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    quest_type TINYINT NOT NULL,
+    word_list TINYINT NOT NULL,
+    progress TINYINT,
+    parameter TINYINT,
+    parameter2 TINYINT,
+    is_complete BIT NOT NULL,
 
-CONSTRAINT fk_quest_user
-        FOREIGN KEY ("user_id")  -- Added quotes here
-        REFERENCES "UserTable"("id") -- Added quotes to "id" for safety too
+
+    CONSTRAINT fk_quest_user
+        FOREIGN KEY (user_id)
+        REFERENCES "UserTable"("id")
 );

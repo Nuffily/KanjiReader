@@ -2,10 +2,9 @@ package kanjiReader.auth
 
 import kanjiReader.KanjiResponse
 import kanjiReader.kanjiUsers.UserRepo
-import zio.Config.Secret
-import zio.http.{Method, _}
 import zio._
 import zio.http.Header.Authorization.Bearer
+import zio.http.{Method, _}
 import zio.json.EncoderOps
 
 object AuthRoutes {
@@ -52,7 +51,6 @@ object AuthRoutes {
         }
       }
     },
-
     Method.GET / "getKanjiUserData" -> handler { (req: Request) =>
       {
         req.header(Header.Authorization) match {

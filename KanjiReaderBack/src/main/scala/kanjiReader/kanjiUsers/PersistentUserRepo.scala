@@ -11,7 +11,7 @@ case class PersistentUserRepo(ds: DataSource) extends UserRepo {
 
   import ctx._
 
-  override def register(id: Long): Task[Boolean] = {
+  override def register(id: Long): IO[UserError, Boolean] = {
     for {
       existing <- ctx
         .run {
@@ -20,29 +20,33 @@ case class PersistentUserRepo(ds: DataSource) extends UserRepo {
           }
         }
         .provide(ZLayer.succeed(ds))
+        .mapError(e => DBUserError(e.getMessage))
 
       result <-
         if (existing.nonEmpty) {
           ZIO.succeed(false)
         } else {
           for {
-            date <- Clock.localDateTime
+            now <- Clock.localDateTime
+
             _ <- ctx
               .run {
                 quote {
                   query[UserTable].insertValue {
-                    lift(UserTable(id, 45, date))
+                    lift(UserTable(id, 45, now))
                   }
                 }
               }
               .provide(ZLayer.succeed(ds))
+              .mapError(e => DBUserError(e.getMessage))
+
           } yield true
         }
 
     } yield result
   }
 
-  override def lookupId(id: Long): Task[Option[UserTable]] =
+  override def lookupId(id: Long): IO[UserError, Option[UserTable]] =
     ctx
       .run {
         quote {
@@ -52,9 +56,9 @@ case class PersistentUserRepo(ds: DataSource) extends UserRepo {
       }
       .provide(ZLayer.succeed(ds))
       .map(_.headOption)
+      .mapError(e => DBUserError(e.getMessage))
 
-
-  override def lookupOrRegister(id: Long): Task[UserTable] = {
+  override def lookupOrRegister(id: Long): IO[UserError, UserTable] = {
     for {
       maybeUser <- lookupId(id)
       user <- maybeUser match {
@@ -67,30 +71,28 @@ case class PersistentUserRepo(ds: DataSource) extends UserRepo {
 
               lookupId(id).flatMap {
                 case Some(user) => ZIO.succeed(user)
-                case None => ZIO.fail(new Exception(s"User $id not found after registration"))
+                case None =>
+                  ZIO.fail(
+                    DBUserError(s"User $id not found after registration")
+                  )
               }
             } else {
 
               lookupId(id).flatMap {
                 case Some(user) => ZIO.succeed(user)
-                case None => ZIO.fail(new Exception(s"User $id disappeared after registration attempt"))
+                case None =>
+                  ZIO.fail(
+                    DBUserError(
+                      s"User $id disappeared after registration attempt"
+                    )
+                  )
+
               }
             }
           }
       }
     } yield user
   }
-
-//  def lookupToken(token: String): Task[Option[UserTable]] =
-//    ctx
-//      .run {
-//        quote {
-//          query[UserTable]
-//            .filter(p => p.id == lift(id))
-//        }
-//      }
-//      .provide(ZLayer.succeed(ds))
-//      .map(_.headOption)
 
 //  def addExp(id: Int, exp: Int): Task[Boolean] =
 //    ctx
@@ -103,6 +105,32 @@ case class PersistentUserRepo(ds: DataSource) extends UserRepo {
 //      }
 //      .provide(ZLayer.succeed(ds))
 //      .map(_.is)
+
+  override def refill(id: Long): IO[UserError, Boolean] = for {
+    now <- Clock.localDateTime
+    elapseTime = now.plusHours(4)
+
+    updated <- ctx
+      .run {
+        query[UserTable]
+          .filter(_.id == lift(id))
+          .update(_.refill -> lift(elapseTime))
+      }
+      .provide(ZLayer.succeed(ds))
+      .mapError(e => DBUserError(e.getMessage))
+  } yield updated > 0
+
+  override def addExp(id: Long, exp: Int): IO[UserError, Boolean] = for {
+
+    updated <- ctx
+      .run {
+        query[UserTable]
+          .filter(_.id == lift(id))
+          .update(u => u.experience -> (u.experience + lift(exp)))
+      }
+      .provide(ZLayer.succeed(ds))
+      .mapError(e => OtherUserError(e.getMessage))
+  } yield updated > 0
 
 }
 
