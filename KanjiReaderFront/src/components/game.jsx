@@ -110,7 +110,6 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
       if (!response.ok) throw new Error("Server error");
 
       const isLevelUpdated = await response.json();
-      console.log(`fat cocks ${isLevelUpdated}`)
 
       if (isLevelUpdated === true && dataUpdate) {
         await dataUpdate();

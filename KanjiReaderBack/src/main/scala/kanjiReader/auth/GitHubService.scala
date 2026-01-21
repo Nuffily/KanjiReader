@@ -7,7 +7,6 @@ import zio.http.Header.Authorization
 import zio.http._
 import zio.json.DecoderOps
 import zio.{&, Scope, ZIO, ZLayer, durationInt, _}
-//case class GitInfo(login: String, id: Int, avatar_url: String)
 
 case class GitHubService(
     config: GitHubConfig,
@@ -19,15 +18,12 @@ case class GitHubService(
     .getOrElse(
       throw new IllegalArgumentException("Wrong url for token")
     )
+
   private lazy val userURL = URL
     .decode(config.gitHubUserServer)
     .getOrElse(
       throw new IllegalArgumentException("Wrong url for user service")
     )
-
-//  private val cache = SimpleCache.make[Authorization, GitHubUser](1.hour)
-
-//  private val test = SimpleCache.make[Secret, Int](1.hour)
 
   override def getAccessToken(
       code: String
@@ -101,7 +97,6 @@ case class GitHubService(
       .mapError(e => AuthDunnoUserError(e.message))
 
   } yield KanjiUser(gitUser, user)
-
 
   private def requestUserData(
       authHeader: Authorization

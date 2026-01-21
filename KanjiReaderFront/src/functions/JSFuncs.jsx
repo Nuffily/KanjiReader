@@ -34,6 +34,7 @@ export function getLevelXP(level) {
 }
 
 
+const CLIENT_ID = "Ov23liOda3qqFTKeKow1";
 
 export function loginGit() {
   window.location.assign("https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID);

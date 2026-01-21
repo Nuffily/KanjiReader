@@ -1,9 +1,6 @@
 import "../css/app.css";
 import "../css/ProfileMenu.css"
 
-const CLIENT_ID = "Ov23liOda3qqFTKeKow1";
-
-
 import {
   questIcon,
   getLevel,
@@ -55,29 +52,37 @@ const ProfileMenu = ({ userData, quests, vocs, isPicked, back }) => {
                   </a>
                 </div>
 
-                <div>
-
-                  {quests.map((quest, index) => (
-                    <div className="quest-block" key={index}
-                      style={{
-                        '--progress': `${quest.progress == 0 || quest.isCompleted ? 0 :
-                          quest.current / quest.progress * 100
-                          }%`
-                      }}>
-
-                      <p className={`quest-icon ${quest.isCompleted ? "completed-icon" : ""}`}>
-                        {questIcon(quest.questType)}</p>
-
-                      <div className="quest-desc-block">
-                        <p className={`quest-description ${quest.isCompleted ? "completed-desc" : ""}`}>
-                          <HighlightedDescription quest={quest} vocs={vocs} />
-                        </p>
-                      </div>
-
+                {quests === undefined ?
+                  (
+                    <div>
+                      <span className="spinner">字</span>
                     </div>
-                  ))}
+                  )
+                  :
+                  (<div>
 
-                </div>
+                    {quests.map((quest, index) => (
+                      <div className="quest-block" key={index}
+                        style={{
+                          '--progress': `${quest.progress == 0 || quest.isCompleted ? 0 :
+                            quest.current / quest.progress * 100
+                            }%`
+                        }}>
+
+                        <p className={`quest-icon ${quest.isCompleted ? "completed-icon" : ""}`}>
+                          {questIcon(quest.questType)}
+                        </p>
+
+                        <div className="quest-desc-block">
+                          <div className={`quest-description ${quest.isCompleted ? "completed-desc" : ""}`}>
+                            <HighlightedDescription quest={quest} vocs={vocs} />
+                          </div>
+                        </div>
+
+                      </div>
+                    ))}
+
+                  </div>)}
 
 
               </div>

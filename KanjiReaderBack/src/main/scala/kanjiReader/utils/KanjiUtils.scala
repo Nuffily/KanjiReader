@@ -19,7 +19,6 @@ object KanjiResponse {
         .status(Status.Unauthorized)
     )
 
-
   def getIntBodyOrBad(req: Request): ZIO[Any, Response, Int] = for {
     bodyString <- req.body.asString.orElseFail(Response.badRequest)
 

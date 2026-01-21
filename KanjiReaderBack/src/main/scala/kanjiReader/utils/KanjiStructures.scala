@@ -1,6 +1,7 @@
 package kanjiReader
 
 import zio._
+
 import java.time.Instant
 
 object KanjiStructures {

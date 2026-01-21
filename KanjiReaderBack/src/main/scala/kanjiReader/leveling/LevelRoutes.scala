@@ -10,10 +10,12 @@ import zio.json.{DecoderOps, EncoderOps}
 
 object LevelRoutes {
 
-  def apply(): Routes[Random & LevelService & UserRepo & AuthService & Client, Response] =
+  def apply(): Routes[
+    Random & LevelService & UserRepo & AuthService & Client,
+    Response
+  ] =
     Routes(
       Method.GET / "getQuests" -> handler { (req: Request) =>
-
         req.header(Header.Authorization) match {
 
           case Some(Bearer(token)) =>
@@ -42,9 +44,7 @@ object LevelRoutes {
             KanjiResponse.noAuthorization
         }
       },
-
       Method.POST / "checkResult" -> handler { (req: Request) =>
-
         req.header(Header.Authorization) match {
 
           case Some(Bearer(token)) =>
@@ -56,7 +56,8 @@ object LevelRoutes {
               bodyString <- req.body.asString
                 .mapError(_ => Response.badRequest("Empty request body"))
 
-              gameResult <- ZIO.fromEither(bodyString.fromJson[WordGameResult])
+              gameResult <- ZIO
+                .fromEither(bodyString.fromJson[WordGameResult])
                 .mapError(e => Response.badRequest(s"Invalid game result: $e"))
 
               isChanged <- LevelService.checkResult(user.id, gameResult)
@@ -76,9 +77,7 @@ object LevelRoutes {
             KanjiResponse.noAuthorization
         }
       },
-
       Method.GET / "refill" -> handler { (req: Request) =>
-
         req.header(Header.Authorization) match {
 
           case Some(Bearer(token)) =>
@@ -87,7 +86,8 @@ object LevelRoutes {
 
               user <- service.getUserGitData(Bearer(token))
 
-              _ <- LevelService.refillQuests(user.id)
+              _ <- LevelService
+                .refillQuests(user.id)
                 .mapError(e => Response.badRequest("wrong id"))
 
             } yield Response.ok)
@@ -105,7 +105,6 @@ object LevelRoutes {
             KanjiResponse.noAuthorization
         }
       }
-
     )
 
 }

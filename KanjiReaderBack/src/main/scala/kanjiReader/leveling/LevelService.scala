@@ -2,10 +2,6 @@ package kanjiReader.leveling
 
 import kanjiReader.kanjiUsers.UserRepo
 import zio._
-import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
-
-import java.time.LocalDateTime
-
 
 trait LevelService {
 
