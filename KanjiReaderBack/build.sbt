@@ -8,19 +8,22 @@ lazy val root = (project in file("."))
   )
 
 libraryDependencies ++= Seq(
-  "dev.zio"       %% "zio"                 % "2.0.21",
-  "dev.zio"       %% "zio-json"            % "0.6.2",
-  "dev.zio"       %% "zio-http"            % "3.0.0",
-  "io.getquill"   %% "quill-zio"           % "4.7.0",
-  "io.getquill"   %% "quill-jdbc-zio"      % "4.7.0",
-  "com.h2database" % "h2"                  % "2.2.224",
-  "dev.zio"       %% "zio-config"          % "4.0.0-RC16",
-  "dev.zio"       %% "zio-config-typesafe" % "4.0.0-RC16",
-  "dev.zio"       %% "zio-config-magnolia" % "4.0.0-RC16",
-  "org.slf4j"      % "slf4j-api"           % "2.0.7",
-  "ch.qos.logback" % "logback-classic"     % "1.4.11"
+  "dev.zio"       %% "zio"                 % "2.1.23",
+  "dev.zio"       %% "zio-json"            % "0.7.3",
+  "dev.zio"       %% "zio-http"            % "3.7.4",
+//  "dev.zio" %% "zio-http-client" % "3.7.4",
+  "io.getquill"   %% "quill-zio"           % "4.8.5",
+  "io.getquill"   %% "quill-jdbc-zio"      % "4.8.5",
+  "com.h2database" % "h2"                  % "2.4.240",
+  "dev.zio"       %% "zio-config"          % "4.0.6",
+  "dev.zio"       %% "zio-config-typesafe" % "4.0.6",
+  "dev.zio"       %% "zio-config-magnolia" % "4.0.6",
+  "org.slf4j"      % "slf4j-api"           % "2.0.17",
+  "ch.qos.logback" % "logback-classic"     % "1.5.22",
+  "dev.zio" %% "zio-cache" % "0.2.5"
 )
 
+ThisBuild / libraryDependencySchemes += "dev.zio" %% "zio-json" % "always"
 
 resolvers ++= Resolver.sonatypeOssRepos("snapshots")
 semanticdbEnabled := true

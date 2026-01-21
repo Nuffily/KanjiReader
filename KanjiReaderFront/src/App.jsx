@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './css/App.css'
 import Game from './components/game'
 import ListMenu from './components/ListMenu'
+import ProfileMenu from './components/Profilemenu'
 
 const vocs = [
   { title: "WaniKani 11 - 15", name: "WK11-15" },
@@ -25,6 +26,113 @@ const timeVars = [
 ]
 
 function App() {
+
+  const [rerender, setRerender] = useState(false);
+  const [userData, setUserData] = useState({});
+  const [quests, setQuests] = useState({});
+
+  async function getUserData() {
+    const token = localStorage.getItem("accessToken");
+    // console.log("Bearer " + token);
+
+    try {
+      const response = await fetch("http://localhost:8099/getKanjiUserData", {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      });
+
+      if (!response.ok || response.status === 401) {
+
+        console.error("Unauthorized (401): Token expired or invalid");
+
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("userData");
+
+        return;
+
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setUserData(data);
+
+    } catch (error) {
+      console.error("Failed to fetch user data:", error);
+    }
+  }
+
+  async function getQuests() {
+    const token = localStorage.getItem("accessToken");
+    // console.log("Bearer " + token);
+
+    try {
+      const response = await fetch("http://localhost:8099/getQuests", {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      });
+
+      if (!response.ok || response.status === 401) {
+
+        console.error("Unauthorized (401): Token expired or invalid");
+
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("userData");
+
+        return;
+
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setQuests(data);
+      // console.log(quests);
+
+    } catch (error) {
+      console.error("Failed to fetch user data:", error);
+    }
+  }
+
+  useEffect(() => {
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString)
+    const codeParam = urlParams.get("code")
+    // console.log(codeParam)
+
+    if (codeParam && (localStorage.getItem("accessToken") === null)) {
+
+      console.log("no local")
+
+      async function getAccessToken() {
+        await fetch("http://localhost:8099/getAccessToken?code=" + codeParam, {
+          method: "GET"
+        }).then((response) => {
+          return response.json();
+        }).then((data) => {
+          // console.log(data);
+          if (data.access_token) {
+            localStorage.setItem("accessToken", data.access_token);
+            getUserData();
+            getQuests();
+          }
+          setRerender(!rerender);
+        })
+      }
+
+      getAccessToken()
+    }
+
+    if (localStorage.getItem("accessToken")) {
+      getUserData();
+      getQuests();
+    }
+
+  }, []);
+
 
   const [wordList, setWordList] = useState(0)
   const [gameTime, setGameTime] = useState(0)
@@ -62,6 +170,11 @@ function App() {
       isGameGoes={setGameGoes}
       count={(gameTime + 1) * 50}
       voca={vocs[wordList].name}
+      vocaNum={wordList}
+      dataUpdate={() => {
+        getUserData();
+        getQuests();
+      }}
     />)
 
 
@@ -81,7 +194,7 @@ function App() {
       <div className={submenu == 0 ? 'mainMenu' : (!listPick ? 'slide-in-blurred-left' : 'slide-out-blurred-left')}
         style={{
           position: 'absolute',
-          width: '50%',
+          width: '100%',
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
@@ -95,14 +208,20 @@ function App() {
 
         <div className="card">
           <p>
-            Words: <a onClick={() => { setSubmenu(1); setListPick(!listPick) }} style={{ cursor: 'pointer' }}>{vocs[wordList].title}</a>
+            Words: <a onClick={() => { setSubmenu(1); setListPick(!listPick) }}>{vocs[wordList].title}</a>
           </p>
           <p>
-            Timer: <a onClick={() => { setSubmenu(2); setListPick(!listPick) }} style={{ cursor: 'pointer' }}>{timeVars[gameTime].title}</a>
+            Timer: <a onClick={() => { setSubmenu(2); setListPick(!listPick) }}>{timeVars[gameTime].title}</a>
+          </p>
+
+          <p>
+            Profile: <a onClick={() => { setSubmenu(3); setListPick(!listPick) }}>
+              {userData.login || "Guest"}
+            </a>
           </p>
 
         </div>
-        <button onClick={() => { setSubmenu(0); setTimerKey(n => n + 1); setGameGoes(true) }}>Play</button>
+        <button onClick={() => { setSubmenu(0); setTimerKey(n => n + 1); setGameGoes(true) }}>始</button>
       </div>
 
       {submenu === 1 &&
@@ -110,6 +229,13 @@ function App() {
       }
       {submenu === 2 &&
         <ListMenu title={"Pick a game time"} getter={gameTime} setter={setGameTime} isPicked={listPick} back={setListPick} collec={timeVars} />
+      }
+      {submenu === 3 &&
+        <ProfileMenu userData={userData} 
+        quests={quests} 
+        vocs={vocs}
+        isPicked={listPick} 
+        back={setListPick} />
       }
     </div >
   )

@@ -22,10 +22,14 @@
   color: white;
 }
 
+href {
+  color: inherit
+}
+
 a {
   cursor: pointer;
   font-weight: 500;
-
+  color: rgba(255, 255, 255, 0.87);
   text-decoration: inherit;
   transition: all 0.3s ease;
   position: relative;
@@ -96,12 +100,16 @@ h1 {
 
 button {
   background: #1f1f1f;
-
+  font-family:
+    "Yu Mincho",
+    "Meiryo",
+    Yu Gothic UI;
+  color: rgba(221, 215, 219, 0.445);
   border: none;
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  font-size: 20px;
+  font-size: 40px;
   cursor: pointer;
   display: flex;
   align-items: center;

@@ -1,0 +1,130 @@
+.git-image {
+
+  height: auto;
+
+  max-width: 75px;
+  min-width: 75px;
+
+  border: 2px solid #333;
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+
+  float: left;
+
+}
+
+.git-login {
+  flex: 1;
+  font-size: 30px;
+}
+
+.unlogin {
+  opacity: 0.7;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-top: 0px;
+  margin: 0px 0px 40px;
+}
+
+.level-bar {
+  border: 2px solid #333;
+  padding: 5px;
+  width: 200px;
+  height: 15px;
+  border-radius: 15px;
+  margin: 0px 0px 40px;
+}
+
+.level-bar-pro {
+  background: #c00c75;
+  height: 100%;
+  border-radius: 15px;
+
+  box-shadow: 0 0 20px #c00c75;
+
+}
+
+.main-container {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  gap: 15px;
+  padding-top: 0px;
+  margin: 0px 0px 40px;
+  justify-items: center;
+}
+
+.quest-block {
+  font-size: 18px;
+
+  height: 90px;
+  width: 500px;
+  display: flex;
+
+  margin: 20px 0px;
+
+  border: 2px solid #333;
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+
+  float: left;
+  transition: all 0.3s ease;
+
+}
+
+.quest-block:hover {
+  scale: 1.05;
+}
+
+.quest-desc-block {
+  overflow: hidden;
+  background-image: linear-gradient(to right, #c00c758a var(--progress, 0%), transparent 0%);
+  background-position: bottom;
+  background-size: 100% 3px;
+  background-repeat: no-repeat;
+  padding-bottom: 0px;
+  z-index: -1;
+}
+
+.quest-description {
+  margin: 8px 12px;
+  text-align: left;
+}
+
+.completed-desc {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+.quest-icon {
+  margin: 0px;
+  margin-left: -1px;
+
+  user-select: none;
+
+  border: 2px solid #333;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+
+  background-color: #333;
+  font-size: 45px;
+  font-weight: 600;
+  color: #c00c75;
+  text-shadow: 0 0 20px #c00c75;
+  padding: 11px 20px;
+}
+
+.completed-icon {
+  color: rgb(12, 192, 123);
+  text-shadow: 0 0 20px rgb(12, 192, 123);
+}
+
+.highlight {
+  color: #ad146d;
+  text-shadow: 0 0 20px #ad0567;
+}

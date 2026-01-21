@@ -1,84 +1,36 @@
 import "../css/app.css";
+import "../css/ListMenu.css";
 
 const ListMenu = ({ getter, setter, isPicked, title, collec, back }) => {
-
   return (
-
-    <div className={isPicked ? 'slide-in-blurred-right' : 'slide-out-blurred-right'}
-      style={{
-        position: 'absolute',
-        width: '50%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden',
-      }}>
+    <div className={`${isPicked ? 'slide-in-blurred-right' : 'slide-out-blurred-right'} list-menu-container`}>
       <h1>{title}</h1>
 
       <div className="card">
-
-        <ol style={{
-          listStyle: "none",
-          paddingLeft: "0",
-          textAlign: "left",
-          width: "400px",
-          margin: 0
-        }}>
-
+        <ol className="list-menu-list">
           {collec.map((e, index) => (
-            <li key={index} style={{
-              marginBottom: "10px",
-              display: "flex",
-              alignItems: "center",
-              position: "relative"
-            }}>
-
-              <span style={{
-                marginRight: "12px",
-                color: getter === index ? "#c00c75" : "#666",
-                fontWeight: getter === index ? "600" : "400",
-                minWidth: "20px",
-                textAlign: "right"
-              }}>
+            <li key={index} className="list-menu-item">
+              <span className={`list-menu-number ${getter === index ? 'selected' : ''}`}>
                 {String.fromCharCode(0x2160 + index)}
               </span>
 
               <a
                 onClick={() => setter(index)}
-                style={{
-                  opacity: getter === index ? "1" : "0.8",
-                  color: getter === index ? "#c00c75" : "",
-                  cursor: "pointer",
-                  textDecoration: "none",
-                  flex: 1,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center"
-                }}
+                className={`list-menu-link ${getter === index ? 'selected' : ''}`}
               >
                 <span>{e.title}</span>
 
-                <span style={{
-                  visibility: getter === index ? "visible" : "hidden",
-                  color: "#c00c75",
-                  fontWeight: "bold",
-                  width: "20px",
-                  textAlign: "center"
-                }}>
+                <span className="list-menu-indicator">
                   此
                 </span>
               </a>
             </li>
           ))}
         </ol>
-
       </div>
-      <button onClick={() => back(!isPicked)}>Back</button>
-
+      <button className="list-menu-button" onClick={() => back(!isPicked)}>帰</button>
     </div>
   );
 }
 
-export default ListMenu
+export default ListMenu;
