@@ -32,3 +32,4 @@ export function HighlightedDescription({ quest, vocs }) {
     </div>
   );
 }
+

@@ -8,17 +8,48 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+
   background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --background-color: #242424;
+
+  --text-color: rgba(255, 255, 255, 0.87);
+  --red-color: #c00c75;
+
+  --redder-color: #fa0092;
+
+  --second-back: #333;
+  --list-gradient: linear-gradient(145deg, #242424, #1a1a1a);
+
+  --incorrect-text: rgba(253, 220, 220, 0.87);
+  --correct-text: rgba(220, 253, 223, 0.87);
+
+  --incorrect-back: #402424;
+  --correct-back: #244424;
+  --neutural-back: #242430;
+
+  --result-border: #374151;
+
+  --item-correct: #1a2e1a;
+  --item-incorrect: #2e1a1a;
+
+  --text-correct: #4ade80;
+  --text-incorrect: #f87171;
+
+  --button-color: #1f1f1f;
+  --button-text: rgba(221, 215, 219, 0.445);
+
+  color: var(--text-color);
+
 }
 
 *::selection {
-  background-color: #c00c75;
+  background-color: var(--red-color);
   color: white;
 }
 
@@ -29,22 +60,22 @@ href {
 a {
   cursor: pointer;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.87);
+  color: var(--text-color);
   text-decoration: inherit;
   transition: all 0.3s ease;
   position: relative;
 }
 
 a:hover {
-  color: #c00c75;
-  text-shadow: 0 0 20px #c00c75;
+  color: var(--red-color);
+  text-shadow: 0 0 15px var(--red-color);
   transition: all 0.5s ease;
 }
 
 a:active {
   transform: scale(1.05);
-  color: #fa0092;
-  text-shadow: 0 0 30px #fa0092;
+  color: var(--redder-color);
+  text-shadow: 0 0 20px var(--redder-color);
   transition: all 0.1s ease;
 }
 
@@ -56,7 +87,7 @@ a::after {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #c00c75, transparent);
+  background: linear-gradient(90deg, transparent, var(--red-color), transparent);
   transition: width 0.3s ease;
 }
 
@@ -66,21 +97,21 @@ a:hover::after {
 
 @keyframes textGlow {
   0% {
-    text-shadow: 0 0 15px #c00c75;
+    text-shadow: 0 0 15px var(--red-color);
   }
 
   100% {
-    text-shadow: 0 0 25px #c00c75;
+    text-shadow: 0 0 25px var(--red-color);
   }
 }
 
 @keyframes textGlowHigher {
   0% {
-    text-shadow: 0 0 20px #fa0092;
+    text-shadow: 0 0 20px var(--redder-color);
   }
 
   100% {
-    text-shadow: 0 0 30px #fa0092;
+    text-shadow: 0 0 30px var(--redder-color);
   }
 }
 
@@ -99,15 +130,17 @@ h1 {
 }
 
 button {
-  background: #1f1f1f;
+  background: var(--button-color);
   font-family:
     "Yu Mincho",
     "Meiryo",
     Yu Gothic UI;
-  color: rgba(221, 215, 219, 0.445);
+  color: var(--button-text);
   border: none;
   width: 100px;
   height: 100px;
+  font-weight: 500;
+
   border-radius: 50%;
   font-size: 40px;
   cursor: pointer;
@@ -127,7 +160,7 @@ button::before {
   bottom: -2px;
   border-radius: 50%;
   border: 1px solid transparent;
-  background: linear-gradient(45deg, #c00c75, transparent) border-box;
+  background: linear-gradient(45deg, var(--red-color), transparent) border-box;
   mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   opacity: 0;
@@ -139,7 +172,7 @@ button:hover::before {
 }
 
 button:hover {
-  color: #c00c75;
+  color: var(--red-color);
   box-shadow: 0 0 20px #c00c7569;
   transform: scale(1.1);
 }

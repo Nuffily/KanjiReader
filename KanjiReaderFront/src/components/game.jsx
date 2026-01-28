@@ -5,6 +5,7 @@ import CountdownTimer from './CountDownTimer';
 import { useGlobalKeyPress } from './Some';
 import ResultList from './ResultList';
 import config from "../config.js"
+import { checkReading } from '../functions/JSFuncs.jsx';
 
 function useVocabulary(set = 'WK51-55', number = 10) {
   const [data, setData] = useState([]);
@@ -41,7 +42,7 @@ function useVocabulary(set = 'WK51-55', number = 10) {
 
 
 
-const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSetter, dataUpdate }) => {
+const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSetter, dataUpdate, theme }) => {
 
   const vocabularyParams = useMemo(() => ({
     set: voca,
@@ -95,7 +96,7 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
       time: duration / 60,
       count: num,
       correctCount: correct,
-      maxInRow: getMaxStreak(answers) 
+      maxInRow: getMaxStreak(answers)
     };
 
     const token = localStorage.getItem("accessToken");
@@ -188,7 +189,8 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
     if (wrong) {
       setWrong(false); setNum(num + 1); setEnter(false); setInputValue("")
     } else {
-      if (words[num].roman === inputValue) {
+      // if (words[num].roman === inputValue) {
+      if (checkReading(inputValue, words[num].kanji, words[num].roman)) {
         setNum(num + 1); setInputValue(""); setFlash("correctBg");
         setCorrect(c => c + 1); setAnswers(a => [...a, true]);
       } else {
@@ -206,7 +208,7 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
       tabIndex={0}
       className='main_cont'
       style={{
-        animation: `${flash} 0.8s ease-out, ${flash.replace("Bg", "Text")} 0.8s ease-out`,
+        animation: `${flash} 0.8s ease-out, ${flash.replace("Bg", "Text")} 1.8s ease-out`,
       }}
     >
       <CountdownTimer
@@ -227,7 +229,8 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
 
       <input
         autoFocus={!wrong}
-        className="neon-input game-input-neon"
+        // className="neon-input"
+        className={theme ? 'neon-input' : "neon-line"}
         ref={inputRef}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
