@@ -1,6 +1,7 @@
 package kanjiReader.leveling
 
 import kanjiReader.kanjiUsers.UserRepo
+import kanjiReader.statistics.StatisticsService
 import zio._
 
 trait LevelService {
@@ -20,7 +21,7 @@ trait LevelService {
   def checkResult(
       id: Long,
       res: WordGameResult
-  ): ZIO[UserRepo, LevelError, Boolean]
+  ): ZIO[UserRepo & StatisticsService, LevelError, Boolean]
 
 }
 
@@ -51,6 +52,6 @@ object LevelService {
   def checkResult(
       id: Long,
       res: WordGameResult
-  ): ZIO[UserRepo & LevelService, LevelError, Boolean] =
+  ): ZIO[UserRepo & LevelService & StatisticsService, LevelError, Boolean] =
     ZIO.serviceWithZIO[LevelService](_.checkResult(id, res))
 }

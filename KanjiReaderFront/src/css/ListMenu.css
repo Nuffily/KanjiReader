@@ -33,7 +33,7 @@
 }
 
 .list-menu-number.selected {
-  color: #c00c75;
+  color: var(--red-color);
   font-weight: 600;
 }
 
@@ -50,12 +50,12 @@
 
 .list-menu-link.selected {
   opacity: 1;
-  color: #c00c75;
+  color: var(--red-color);
 }
 
 .list-menu-indicator {
   visibility: hidden;
-  color: #c00c75;
+  color: var(--red-color);
   font-weight: bold;
   width: 20px;
   text-align: center;
@@ -65,3 +65,12 @@
   visibility: visible;
 }
 
+.secondary {
+  opacity: 0.4;
+  margin-left: 50px;
+  font-size: 90%;
+}
+
+.percent {
+  font-size: 80%;
+}

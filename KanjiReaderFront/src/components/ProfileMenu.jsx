@@ -7,12 +7,14 @@ import {
   getRemainXP,
   getLevelXP,
   loginGit,
-  unlogin
+  unlogin,
+  getTimeRemaining
 } from "../functions/JSFuncs";
 
 import { HighlightedDescription } from "../functions/ReactFuncs";
+import QuestTimer from "./QuestTimer";
 
-const ProfileMenu = ({ userData, quests, vocs, isPicked, back }) => {
+const ProfileMenu = ({ userData, quests, vocs, isPicked, back, setTheme, theme }) => {
 
   return (
     <div className={`${isPicked ? 'slide-in-blurred-right' : 'slide-out-blurred-right'} list-menu-container`}>
@@ -47,12 +49,18 @@ const ProfileMenu = ({ userData, quests, vocs, isPicked, back }) => {
                     }}></div>
                   </div>
 
+                  <div className="theme-change">
+                    <a  onClick={() => setTheme(!theme)}>
+                      Set {theme ? "light" : "dark"} theme 
+                    </a>
+                  </div>
+
                   <a className="unlogin" onClick={unlogin}>
                     Unlogin
                   </a>
                 </div>
 
-                {quests === undefined ?
+                {quests.length == 0 ?
                   (
                     <div>
                       <span className="spinner">字</span>
@@ -60,29 +68,35 @@ const ProfileMenu = ({ userData, quests, vocs, isPicked, back }) => {
                   )
                   :
                   (<div>
+                    <div className="container2">
 
-                    {quests.map((quest, index) => (
-                      <div className="quest-block" key={index}
-                        style={{
-                          '--progress': `${quest.progress == 0 || quest.isCompleted ? 0 :
-                            quest.current / quest.progress * 100
-                            }%`
-                        }}>
+                      {quests.map((quest, index) => (
+                        <div className="quest-block" key={index}
+                          style={{
+                            '--progress': `${quest.progress == 0 || quest.isCompleted ? 0 :
+                              quest.current / quest.progress * 100
+                              }%`
+                          }}>
 
-                        <p className={`quest-icon ${quest.isCompleted ? "completed-icon" : ""}`}>
-                          {questIcon(quest.questType)}
-                        </p>
+                          <p className={`quest-icon ${quest.isCompleted ? "completed-icon" : ""}`}>
+                            {questIcon(quest.questType)}
+                          </p>
 
-                        <div className="quest-desc-block">
-                          <div className={`quest-description ${quest.isCompleted ? "completed-desc" : ""}`}>
-                            <HighlightedDescription quest={quest} vocs={vocs} />
+                          <div className="quest-desc-block">
+                            <div className={`quest-description ${quest.isCompleted ? "completed-desc" : ""}`}>
+                              <HighlightedDescription quest={quest} vocs={vocs} />
+                            </div>
                           </div>
-                        </div>
 
-                      </div>
-                    ))}
+                        </div>
+                      ))}
+
+                    </div>
+
+                    <div className="refill">Until quest refill: <QuestTimer targetDate={userData.refill} /></div>
 
                   </div>)}
+
 
 
               </div>

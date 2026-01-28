@@ -5,7 +5,7 @@
   max-width: 75px;
   min-width: 75px;
 
-  border: 2px solid #333;
+  border: 2px solid var(--second-back);
   border-radius: 10px;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 
@@ -22,6 +22,25 @@
   opacity: 0.7;
 }
 
+.theme-change {
+  margin: 20px;
+  user-select: none;
+}
+
+.refill {
+  opacity: 0.3;
+  user-select: none;
+
+  height: auto;
+  pointer-events: none;
+
+  grid-column: 2;
+  justify-self: end;
+  align-self: end;
+  width: 100%;
+  margin-top: 10px;
+}
+
 .container {
   display: flex;
   align-items: center;
@@ -31,7 +50,7 @@
 }
 
 .level-bar {
-  border: 2px solid #333;
+  border: 2px solid var(--second-back);
   padding: 5px;
   width: 200px;
   height: 15px;
@@ -40,11 +59,11 @@
 }
 
 .level-bar-pro {
-  background: #c00c75;
+  background: var(--red-color);
   height: 100%;
   border-radius: 15px;
 
-  box-shadow: 0 0 20px #c00c75;
+  box-shadow: 0 0 20px var(--red-color);
 
 }
 
@@ -68,7 +87,7 @@
 
   margin: 20px 0px;
 
-  border: 2px solid #333;
+  border: 2px solid var(--second-back);
   border-radius: 10px;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 
@@ -83,7 +102,7 @@
 
 .quest-desc-block {
   overflow: hidden;
-  background-image: linear-gradient(to right, #c00c758a var(--progress, 0%), transparent 0%);
+  background-image: linear-gradient(to right, var(--redder-color) var(--progress, 0%), transparent 0%);
   background-position: bottom;
   background-size: 100% 3px;
   background-repeat: no-repeat;
@@ -107,24 +126,25 @@
 
   user-select: none;
 
-  border: 2px solid #333;
+  border: 2px solid var(--second-back);
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 
-  background-color: #333;
+  background-color: var(--second-back);
   font-size: 45px;
   font-weight: 600;
-  color: #c00c75;
-  text-shadow: 0 0 20px #c00c75;
+  color: var(--red-color);
+  text-shadow: 0 0 20px var(--red-color);
   padding: 11px 20px;
 }
 
 .completed-icon {
-  color: rgb(12, 192, 123);
-  text-shadow: 0 0 20px rgb(12, 192, 123);
+  color: rgb(22, 187, 77);
+  text-shadow: 0 0 20px rgb(23, 182, 102);
 }
 
 .highlight {
-  color: #ad146d;
-  text-shadow: 0 0 20px #ad0567;
+  color: var(--red-color);
+  text-shadow: 0 0 20px var(--red-color);
+  font-weight: 600;
 }

@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
-import "../css/game.css"
+import "../css/Game.css"
 import "../css/App.css"
-import CountdownTimer from './CountDownTimer';
-import { useGlobalKeyPress } from './Some';
-import ResultList from './ResultList';
+import CountdownTimer from './CountDownTimer.jsx';
+import { useGlobalKeyPress } from './Some.jsx';
+import ResultList from './ResultList.jsx';
 import config from "../config.js"
+import { checkReading } from '../functions/JSFuncs.jsx';
 
 function useVocabulary(set = 'WK51-55', number = 10) {
   const [data, setData] = useState([]);
@@ -41,7 +42,7 @@ function useVocabulary(set = 'WK51-55', number = 10) {
 
 
 
-const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSetter, dataUpdate }) => {
+const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSetter, dataUpdate, theme, updateStats }) => {
 
   const vocabularyParams = useMemo(() => ({
     set: voca,
@@ -95,7 +96,7 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
       time: duration / 60,
       count: num,
       correctCount: correct,
-      maxInRow: getMaxStreak(answers) 
+      maxInRow: getMaxStreak(answers)
     };
 
     const token = localStorage.getItem("accessToken");
@@ -141,10 +142,14 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
     'Escape': (event) => {
       event.preventDefault();
       resultSetter({ correct: correct, total: num });
+
       if (!timeIsUp) {
         if (wrong) setNum(n => n + 1)
         setTimeIsUp(true)
-      } else isGameGoes(false)
+      } else {
+        updateStats()
+        isGameGoes(false)
+      }
     },
     'Enter': () => setEnter(true)
   });
@@ -162,9 +167,13 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
     if (!timeIsUp) setTimeIsUp(true)
 
     if (enter || num === 0) {
+
+      updateStats()
       resultSetter({ correct: correct, total: num });
+
       isGameGoes(false);
     }
+
 
     return (
       <div
@@ -188,7 +197,8 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
     if (wrong) {
       setWrong(false); setNum(num + 1); setEnter(false); setInputValue("")
     } else {
-      if (words[num].roman === inputValue) {
+      // if (words[num].roman === inputValue) {
+      if (checkReading(inputValue, words[num].kanji, words[num].roman)) {
         setNum(num + 1); setInputValue(""); setFlash("correctBg");
         setCorrect(c => c + 1); setAnswers(a => [...a, true]);
       } else {
@@ -227,7 +237,7 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
 
       <input
         autoFocus={!wrong}
-        className="neon-input game-input-neon"
+        className={theme ? 'neon-input' : "neon-line"}
         ref={inputRef}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}

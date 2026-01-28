@@ -4,6 +4,7 @@ import io.getquill.jdbczio.Quill
 import io.getquill.{H2ZioJdbcContext, Literal}
 import kanjiReader.kanjiUsers.UserRepo
 import kanjiReader.leveling.QuestType._
+import kanjiReader.statistics.StatisticsService
 import zio._
 
 import javax.sql.DataSource
@@ -116,10 +117,12 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
   override def checkResult(
       id: Long,
       res: WordGameResult
-  ): ZIO[UserRepo, LevelError, Boolean] = for {
+  ): ZIO[UserRepo & StatisticsService, LevelError, Boolean] = for {
     quests <- getQuests(id)
 
     updated <- ZIO.foreach(quests)(handleQuest(id, _, res))
+    _ <- StatisticsService.update(id, res)
+      .mapError(e => {println(e); SomeLevelError(e.message)})
 
   } yield updated.contains(true)
 

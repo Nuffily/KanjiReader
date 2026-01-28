@@ -3,6 +3,7 @@ package kanjiReader.leveling
 import kanjiReader.KanjiResponse
 import kanjiReader.auth.{AuthBadUserError, AuthDunnoUserError, AuthService}
 import kanjiReader.kanjiUsers.UserRepo
+import kanjiReader.statistics.StatisticsService
 import zio._
 import zio.http.Header.Authorization.Bearer
 import zio.http._
@@ -11,7 +12,7 @@ import zio.json.{DecoderOps, EncoderOps}
 object LevelRoutes {
 
   def apply(): Routes[
-    Random & LevelService & UserRepo & AuthService & Client,
+    Random & LevelService & UserRepo & AuthService & Client & StatisticsService,
     Response
   ] =
     Routes(

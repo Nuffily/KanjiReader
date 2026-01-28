@@ -44,9 +44,9 @@
   max-height: 450px;
   width: 59vw;
   overflow-y: auto;
-  border: 1px solid #374151;
+  border: 1px solid var(--result-border);
   border-radius: 16px;
-  background: linear-gradient(145deg, #242424, #1a1a1a);
+  background: var(--list-gradient);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
 }
 
@@ -72,25 +72,27 @@
 }
 
 .result-item.correct {
-  color: #4ade80;
-  background-color: #1a2e1a;
+  color: var(--text-correct);
+  background-color: var(--item-correct);
   border-left: 5px solid #4ade80;
   border-right: 1px solid #2a4a2a;
 }
 
 .result-item.incorrect {
-  color: #f87171;
-  background-color: #2e1a1a;
+  color: var(--text-incorrect);
+  background-color: var(--item-incorrect);
   border-left: 5px solid #f87171;
   border-right: 1px solid #4a2a2a;
 }
 
 .result-item.correct:hover {
   background-color: #2a4a2a;
+  color: #4ade80;
 }
 
 .result-item.incorrect:hover {
   background-color: #4a2a2a;
+  color: #f87171;
 }
 
 .result-text {

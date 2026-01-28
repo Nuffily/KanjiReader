@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import './css/App.css'
-import Game from './components/game'
+import Game from './components/Game'
 import ListMenu from './components/ListMenu'
 import ProfileMenu from './components/Profilemenu'
+import { toDark, toLight } from './parts/Theme'
+import { getQuests, getStats, getUserData } from './parts/Backend'
 
 const vocs = [
   { title: "WaniKani 11 - 15", name: "WK11-15" },
@@ -28,80 +30,30 @@ const timeVars = [
 function App() {
 
   const [rerender, setRerender] = useState(false);
+
+
+  const [darkTheme, setDarkTheme] = useState(true);
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    if (darkTheme) {
+      toDark()
+    } else {
+      toLight()
+    }
+  }, [darkTheme]);
+
+
   const [userData, setUserData] = useState({});
   const [quests, setQuests] = useState({});
-
-  async function getUserData() {
-    const token = localStorage.getItem("accessToken");
-    // console.log("Bearer " + token);
-
-    try {
-      const response = await fetch("http://localhost:8099/getKanjiUserData", {
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + token
-        }
-      });
-
-      if (!response.ok || response.status === 401) {
-
-        console.error("Unauthorized (401): Token expired or invalid");
-
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("userData");
-
-        return;
-
-      }
-
-      const data = await response.json();
-      console.log(data);
-      setUserData(data);
-
-    } catch (error) {
-      console.error("Failed to fetch user data:", error);
-    }
-  }
-
-  async function getQuests() {
-    const token = localStorage.getItem("accessToken");
-    // console.log("Bearer " + token);
-
-    try {
-      const response = await fetch("http://localhost:8099/getQuests", {
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + token
-        }
-      });
-
-      if (!response.ok || response.status === 401) {
-
-        console.error("Unauthorized (401): Token expired or invalid");
-
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("userData");
-
-        return;
-
-      }
-
-      const data = await response.json();
-      console.log(data);
-      setQuests(data);
-      // console.log(quests);
-
-    } catch (error) {
-      console.error("Failed to fetch user data:", error);
-    }
-  }
+  const [stats, setStats] = useState({});
 
   useEffect(() => {
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString)
     const codeParam = urlParams.get("code")
-    // console.log(codeParam)
 
     if (codeParam && (localStorage.getItem("accessToken") === null)) {
 
@@ -113,11 +65,11 @@ function App() {
         }).then((response) => {
           return response.json();
         }).then((data) => {
-          // console.log(data);
+
           if (data.access_token) {
             localStorage.setItem("accessToken", data.access_token);
-            getUserData();
-            getQuests();
+            getUserData(setUserData);
+            getQuests(setQuests);
           }
           setRerender(!rerender);
         })
@@ -127,8 +79,9 @@ function App() {
     }
 
     if (localStorage.getItem("accessToken")) {
-      getUserData();
-      getQuests();
+      getUserData(setUserData);
+      getQuests(setQuests);
+      getStats(setStats);
     }
 
   }, []);
@@ -143,13 +96,14 @@ function App() {
       const selections = JSON.parse(saved);
       setWordList(selections.wordList);
       setGameTime(selections.gameTime);
+      setDarkTheme(selections.darkTheme);
     }
   }, []);
 
   useEffect(() => {
-    const selections = { wordList, gameTime };
+    const selections = { wordList, gameTime, darkTheme };
     localStorage.setItem('selectSelections', JSON.stringify(selections));
-  }, [wordList, gameTime]);
+  }, [wordList, gameTime, darkTheme]);
 
 
   const [listPick, setListPick] = useState(false)
@@ -164,6 +118,7 @@ function App() {
 
   if (gameGoes) return (
     <Game
+      theme={darkTheme}
       timerKey={timerKey}
       duration={timeVars[gameTime].name * 60}
       resultSetter={setResult}
@@ -171,12 +126,12 @@ function App() {
       count={(gameTime + 1) * 50}
       voca={vocs[wordList].name}
       vocaNum={wordList}
+      updateStats={() => getStats(setStats)}
       dataUpdate={() => {
-        getUserData();
-        getQuests();
+        getUserData(setUserData);
+        getQuests(setQuests);
       }}
     />)
-
 
   return (
     <div style={{
@@ -204,7 +159,7 @@ function App() {
         }}>
         <h1 style={{ margin: "20px" }}>KanjiReader</h1>
 
-        <h2 style={{ margin: "0px", opacity: `${result.total == 0 ? "0" : "0.6"}` }}>Result: {result.correct} / {result.total} </h2>
+        <h2 style={{ margin: "0px", opacity: `${result.total == 0 ? "0" : "0.3"}` }}>Result: {result.correct} / {result.total} </h2>
 
         <div className="card">
           <p>
@@ -225,17 +180,19 @@ function App() {
       </div>
 
       {submenu === 1 &&
-        <ListMenu title={"Pick a list of words"} getter={wordList} setter={setWordList} isPicked={listPick} back={setListPick} collec={vocs} />
+        <ListMenu title={"Pick a list of words"} getter={wordList} secondary={stats} setter={setWordList} isPicked={listPick} back={setListPick} collec={vocs} />
       }
       {submenu === 2 &&
         <ListMenu title={"Pick a game time"} getter={gameTime} setter={setGameTime} isPicked={listPick} back={setListPick} collec={timeVars} />
       }
       {submenu === 3 &&
-        <ProfileMenu userData={userData} 
-        quests={quests} 
-        vocs={vocs}
-        isPicked={listPick} 
-        back={setListPick} />
+        <ProfileMenu userData={userData}
+          theme={darkTheme}
+          setTheme={setDarkTheme}
+          quests={quests}
+          vocs={vocs}
+          isPicked={listPick}
+          back={setListPick} />
       }
     </div >
   )
