@@ -144,7 +144,6 @@
 }
 
 .highlight {
-  /* color: #ad146d; */
   color: var(--red-color);
   text-shadow: 0 0 20px var(--red-color);
   font-weight: 600;

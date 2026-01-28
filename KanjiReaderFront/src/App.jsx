@@ -133,7 +133,6 @@ function App() {
 
   async function getQuests() {
     const token = localStorage.getItem("accessToken");
-    // console.log("Bearer " + token);
 
     try {
       const response = await fetch("http://localhost:8099/getQuests", {
@@ -157,7 +156,6 @@ function App() {
       const data = await response.json();
       console.log(data);
       setQuests(data);
-      // console.log(quests);
 
     } catch (error) {
       console.error("Failed to fetch user data:", error);
@@ -169,7 +167,6 @@ function App() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString)
     const codeParam = urlParams.get("code")
-    // console.log(codeParam)
 
     if (codeParam && (localStorage.getItem("accessToken") === null)) {
 
@@ -181,7 +178,7 @@ function App() {
         }).then((response) => {
           return response.json();
         }).then((data) => {
-          // console.log(data);
+
           if (data.access_token) {
             localStorage.setItem("accessToken", data.access_token);
             getUserData();
@@ -211,13 +208,14 @@ function App() {
       const selections = JSON.parse(saved);
       setWordList(selections.wordList);
       setGameTime(selections.gameTime);
+      setDarkTheme(selections.darkTheme);
     }
   }, []);
 
   useEffect(() => {
-    const selections = { wordList, gameTime };
+    const selections = { wordList, gameTime, darkTheme };
     localStorage.setItem('selectSelections', JSON.stringify(selections));
-  }, [wordList, gameTime]);
+  }, [wordList, gameTime, darkTheme]);
 
 
   const [listPick, setListPick] = useState(false)

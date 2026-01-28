@@ -132,6 +132,7 @@ function getTrailingKanaRomaji(word) {
 export function checkReading(input, kanji, romaji) {
 
   if (input === romaji) return true
-  else if (getTrailingKanaRomaji(kanji).length > 0 && romaji.slice(0, -getTrailingKanaRomaji(kanji).length) === input) return true
+
+  else if (getTrailingKanaRomaji(kanji).length > 0 && input.startsWith(romaji.slice(0, -getTrailingKanaRomaji(kanji).length))) return true
   else return false
 }

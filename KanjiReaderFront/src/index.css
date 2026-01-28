@@ -79,7 +79,6 @@ a:active {
   transition: all 0.1s ease;
 }
 
-/* Дополнительный эффект с псевдоэлементом для свечения */
 a::after {
   content: '';
   position: absolute;
@@ -176,3 +175,6 @@ button:hover {
   box-shadow: 0 0 20px #c00c7569;
   transform: scale(1.1);
 }
+
+
+
