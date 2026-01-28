@@ -3,7 +3,16 @@ CREATE TABLE IF NOT EXISTS "UserTable" (
     "id" BIGINT NOT NULL PRIMARY KEY,
     "experience" INT NOT NULL,
     "refill" DATETIME NOT NULL
+);
 
+CREATE TABLE IF NOT EXISTS Statistic (
+    id BIGINT NOT NULL,
+    attempt INT NOT NULL,
+    correct INT NOT NULL,
+    number INT NOT NULL,
+    word_list TINYINT NOT NULL,
+
+    CONSTRAINT pk_statistic PRIMARY KEY (id, word_list, attempt)
 );
 
 CREATE TABLE IF NOT EXISTS Quest (

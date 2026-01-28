@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
-import "../css/game.css"
+import "../css/Game.css"
 import "../css/App.css"
-import CountdownTimer from './CountDownTimer';
-import { useGlobalKeyPress } from './Some';
-import ResultList from './ResultList';
+import CountdownTimer from './CountDownTimer.jsx';
+import { useGlobalKeyPress } from './Some.jsx';
+import ResultList from './ResultList.jsx';
 import config from "../config.js"
 import { checkReading } from '../functions/JSFuncs.jsx';
 
@@ -42,7 +42,7 @@ function useVocabulary(set = 'WK51-55', number = 10) {
 
 
 
-const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSetter, dataUpdate, theme }) => {
+const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSetter, dataUpdate, theme, updateStats }) => {
 
   const vocabularyParams = useMemo(() => ({
     set: voca,
@@ -142,10 +142,14 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
     'Escape': (event) => {
       event.preventDefault();
       resultSetter({ correct: correct, total: num });
+
       if (!timeIsUp) {
         if (wrong) setNum(n => n + 1)
         setTimeIsUp(true)
-      } else isGameGoes(false)
+      } else {
+        updateStats()
+        isGameGoes(false)
+      }
     },
     'Enter': () => setEnter(true)
   });
@@ -163,9 +167,13 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
     if (!timeIsUp) setTimeIsUp(true)
 
     if (enter || num === 0) {
+
+      updateStats()
       resultSetter({ correct: correct, total: num });
+
       isGameGoes(false);
     }
+
 
     return (
       <div
@@ -208,7 +216,7 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
       tabIndex={0}
       className='main_cont'
       style={{
-        animation: `${flash} 0.8s ease-out, ${flash.replace("Bg", "Text")} 1.8s ease-out`,
+        animation: `${flash} 0.8s ease-out, ${flash.replace("Bg", "Text")} 0.8s ease-out`,
       }}
     >
       <CountdownTimer
@@ -229,7 +237,6 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
 
       <input
         autoFocus={!wrong}
-        // className="neon-input"
         className={theme ? 'neon-input' : "neon-line"}
         ref={inputRef}
         value={inputValue}

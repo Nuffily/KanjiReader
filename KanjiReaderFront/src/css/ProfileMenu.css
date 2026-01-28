@@ -102,7 +102,7 @@
 
 .quest-desc-block {
   overflow: hidden;
-  background-image: linear-gradient(to right, #c00c758a var(--progress, 0%), transparent 0%);
+  background-image: linear-gradient(to right, var(--redder-color) var(--progress, 0%), transparent 0%);
   background-position: bottom;
   background-size: 100% 3px;
   background-repeat: no-repeat;
@@ -139,8 +139,8 @@
 }
 
 .completed-icon {
-  color: rgb(12, 192, 123);
-  text-shadow: 0 0 20px rgb(12, 192, 123);
+  color: rgb(22, 187, 77);
+  text-shadow: 0 0 20px rgb(23, 182, 102);
 }
 
 .highlight {

@@ -65,3 +65,12 @@
   visibility: visible;
 }
 
+.secondary {
+  opacity: 0.4;
+  margin-left: 50px;
+  font-size: 90%;
+}
+
+.percent {
+  font-size: 80%;
+}

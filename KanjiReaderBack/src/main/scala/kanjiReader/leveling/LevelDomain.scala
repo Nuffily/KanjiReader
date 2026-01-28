@@ -42,7 +42,7 @@ object QuestType extends Enumeration {
 }
 
 case class WordGameResult(
-    wordList: Int,
+    wordList: Byte,
     time: Int,
     count: Int,
     correctCount: Int,

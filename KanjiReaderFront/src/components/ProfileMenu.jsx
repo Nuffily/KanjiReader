@@ -60,7 +60,7 @@ const ProfileMenu = ({ userData, quests, vocs, isPicked, back, setTheme, theme }
                   </a>
                 </div>
 
-                {quests === undefined ?
+                {quests.length == 0 ?
                   (
                     <div>
                       <span className="spinner">字</span>
