@@ -1,4 +1,4 @@
-import "../css/ResultList.css"
+import "../css/ResultList.css";
 
 const ResultList = ({ items, answers }) => {
   return (

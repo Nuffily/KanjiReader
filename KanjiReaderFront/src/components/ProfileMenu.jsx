@@ -1,14 +1,13 @@
 import "../css/app.css";
-import "../css/ProfileMenu.css"
+import "../css/ProfileMenu.css";
 
 import {
-  questIcon,
   getLevel,
-  getRemainXP,
   getLevelXP,
+  getRemainXP,
   loginGit,
-  unlogin,
-  getTimeRemaining
+  questIcon,
+  unlogin
 } from "../functions/JSFuncs";
 
 import { HighlightedDescription } from "../functions/ReactFuncs";
@@ -50,8 +49,8 @@ const ProfileMenu = ({ userData, quests, vocs, isPicked, back, setTheme, theme }
                   </div>
 
                   <div className="theme-change">
-                    <a  onClick={() => setTheme(!theme)}>
-                      Set {theme ? "light" : "dark"} theme 
+                    <a onClick={() => setTheme(!theme)}>
+                      Set {theme ? "light" : "dark"} theme
                     </a>
                   </div>
 
@@ -60,7 +59,7 @@ const ProfileMenu = ({ userData, quests, vocs, isPicked, back, setTheme, theme }
                   </a>
                 </div>
 
-                {quests.length == 0 ?
+                {quests === undefined || quests.length == 0 ?
                   (
                     <div>
                       <span className="spinner">字</span>

@@ -1,4 +1,7 @@
 export function toDark() {
+
+  const root = document.documentElement;
+
   document.body.style.backgroundColor = '#242424';
   document.body.style.color = '#f6f1f8ec';
   root.style.setProperty('--background-color', '#242424');
@@ -29,6 +32,9 @@ export function toDark() {
 }
 
 export function toLight() {
+
+  const root = document.documentElement;
+  
   document.body.style.backgroundColor = '#FDF5D7';
   document.body.style.color = '#333333';
   root.style.setProperty('--background-color', '#FDF5D7');
