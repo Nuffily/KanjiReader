@@ -51,6 +51,7 @@ case class PrintableQuest(
     current: Int,
     progress: Int,
     wordList: Int,
+    time: Int,
     isCompleted: Boolean
 )
 

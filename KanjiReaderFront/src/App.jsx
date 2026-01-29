@@ -181,7 +181,9 @@ function App() {
           quests={quests}
           vocs={vocs}
           isPicked={listPick}
-          back={setListPick} />
+          back={setListPick}
+          setTime={setGameTime}
+          setList={setWordList} />
       }
     </div >
   )

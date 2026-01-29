@@ -13,7 +13,15 @@ import {
 import { HighlightedDescription } from "../functions/ReactFuncs";
 import QuestTimer from "./QuestTimer";
 
-const ProfileMenu = ({ userData, quests, vocs, isPicked, back, setTheme, theme }) => {
+function setQuest(quest, setTime, setList, back) {
+  if (!quest.isCompleted) {
+    setList(quest.wordList - 1)
+    if (quest.time != 0) setTime(quest.time - 1)
+    back(0)
+  }
+}
+
+const ProfileMenu = ({ userData, quests, vocs, isPicked, back, setTheme, theme, setTime, setList }) => {
 
   return (
     <div className={`${isPicked ? 'slide-in-blurred-right' : 'slide-out-blurred-right'} list-menu-container`}>
@@ -70,11 +78,14 @@ const ProfileMenu = ({ userData, quests, vocs, isPicked, back, setTheme, theme }
                     <div className="container2">
 
                       {quests.map((quest, index) => (
-                        <div className="quest-block" key={index}
+                        <div className={`quest-block ${quest.isCompleted ? "" : "completed-quest"}`} key={index}
+                          onClick={() => setQuest(quest, setTime, setList, back)}
                           style={{
                             '--progress': `${quest.progress == 0 || quest.isCompleted ? 0 :
                               quest.current / quest.progress * 100
-                              }%`
+                              }%`,
+
+                            cursor: `${quest.isCompleted ? "none" : "pointer"}`
                           }}>
 
                           <p className={`quest-icon ${quest.isCompleted ? "completed-icon" : ""}`}>
