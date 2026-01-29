@@ -12,6 +12,12 @@ trait UserError {
 case class OtherUserError(message: String) extends UserError
 case class DBUserError(message: String) extends UserError
 
+/**
+ * Представление пользователя в БД
+ * @param id id на гитхабе
+ * @param experience очки опыта
+ * @param refill дата обновления квестов
+ */
 case class UserTable(
     id: Long,
     experience: Int,

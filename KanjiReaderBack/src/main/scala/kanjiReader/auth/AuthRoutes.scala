@@ -10,6 +10,9 @@ import zio.json.EncoderOps
 object AuthRoutes {
 
   def apply(): Routes[Client & AuthService & UserRepo, Response] = Routes(
+    /** Принимает код входа через гитхаб в url строке и с помощью него получает
+      * токен пользователя с API GitHub
+      */
     Method.GET / "getAccessToken" -> handler { (req: Request) =>
       val code = req.url.queryParams("code").head
 
@@ -26,6 +29,10 @@ object AuthRoutes {
               KanjiResponse.unauthorized(s"Failed to get user data: $message")
         }
     },
+
+    /** Принимает токен Authorization и возвращает данные пользователя с API
+      * GitHub
+      */
     Method.GET / "getUserGitData" -> handler { (req: Request) =>
       {
         req.header(Header.Authorization) match {
@@ -51,6 +58,10 @@ object AuthRoutes {
         }
       }
     },
+
+    /** Принимает токен Authorization и возвращает данные пользователя в виде
+      * KanjiUser
+      */
     Method.GET / "getKanjiUserData" -> handler { (req: Request) =>
       {
         req.header(Header.Authorization) match {

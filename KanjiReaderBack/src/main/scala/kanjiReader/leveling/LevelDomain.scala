@@ -2,6 +2,24 @@ package kanjiReader.leveling
 
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 
+/** Класс внутреннего представления квеста
+  * @param user_id
+  *   пользователь
+  * @param quest_type
+  *   тип квеста (см. QuestType)
+  * @param word_list
+  *   список слов, в котором квест действует
+  * @param progress
+  *   прогресс квеста (если есть)
+  * @param parameter
+  *   параметр 1 (зависит от типа)
+  * @param parameter2
+  *   параметр 2 (зависит от типа)
+  * @param entry_id
+  *   суррогатный ключ
+  * @param is_complete
+  *   пройден ли квест
+  */
 case class Quest(
     user_id: Long,
     quest_type: Byte,
@@ -13,6 +31,20 @@ case class Quest(
     is_complete: Boolean = false
 )
 
+/** Нужен для представления кветста на фронте
+  * @param questType
+  *   тип квеста (для иконки)
+  * @param description
+  *   описание квеста
+  * @param current
+  *   прогресс квеста
+  * @param progress
+  *   максимальный прогресс (для прогресс бара)
+  * @param wordList
+  *   список слов квеста
+  * @param isCompleted
+  *   пройден ли квест
+  */
 case class PrintableQuest(
     questType: String,
     description: String,
@@ -41,6 +73,18 @@ object QuestType extends Enumeration {
   val CorrectPer1M, CorrectPer2M, Percent, InRow1M, InRow2M, SumCorrect = Value
 }
 
+/** Представление резальтата игры, который приходит с фронта
+  * @param wordList
+  *   список слов, в котором прошла игра
+  * @param time
+  *   выбранное время
+  * @param count
+  *   количество ответов
+  * @param correctCount
+  *   количество верных ответов
+  * @param maxInRow
+  *   максимальное количество верных ответов подряд
+  */
 case class WordGameResult(
     wordList: Byte,
     time: Int,

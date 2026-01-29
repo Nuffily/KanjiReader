@@ -4,6 +4,8 @@ import zio.{Random, ZIO}
 
 object Shuffler {
 
+  /** Выдает случайные [n] элементов из списка [list]
+    */
   def getRandomItemsZIO(
       list: List[Word],
       n: Int

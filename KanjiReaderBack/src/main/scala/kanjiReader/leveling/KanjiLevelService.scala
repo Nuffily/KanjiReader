@@ -19,6 +19,8 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
 
   private val WORD_LIST_COUNT = 11
 
+  /** СОздает случай квест
+    */
   private def createQuest(id: Long): ZIO[UserRepo, LevelError, Quest] =
     for {
       random    <- ZIO.random
@@ -121,8 +123,9 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
     quests <- getQuests(id)
 
     updated <- ZIO.foreach(quests)(handleQuest(id, _, res))
-    _ <- StatisticsService.update(id, res)
-      .mapError(e => {println(e); SomeLevelError(e.message)})
+    _ <- StatisticsService
+      .update(id, res)
+      .mapError(e => { println(e); SomeLevelError(e.message) })
 
   } yield updated.contains(true)
 
