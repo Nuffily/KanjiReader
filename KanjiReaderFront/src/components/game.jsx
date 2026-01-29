@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import "../css/Game.css"
 import "../css/App.css"
 import CountdownTimer from './CountDownTimer.jsx';
-import { useGlobalKeyPress } from './Some.jsx';
+import { useGlobalKeyPress } from '../functions/ReactFuncs.jsx';
 import ResultList from './ResultList.jsx';
 import config from "../config.js"
 import { checkReading } from '../functions/JSFuncs.jsx';
@@ -173,7 +173,6 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
 
       isGameGoes(false);
     }
-
 
     return (
       <div

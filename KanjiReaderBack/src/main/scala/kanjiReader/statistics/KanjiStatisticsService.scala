@@ -20,7 +20,6 @@ case class KanjiStatisticsService(ds: DataSource) extends StatisticsService {
       res: WordGameResult
   ): IO[StatError, Boolean] = {
 
-    // 1. Используем для SELECT и UPDATE
     val queryBase = quote {
       query[Statistic].filter(s =>
         s.id == lift(id) && s.word_list == lift(res.wordList)

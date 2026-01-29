@@ -33,7 +33,7 @@ case class PersistentUserRepo(ds: DataSource) extends UserRepo {
               .run {
                 quote {
                   query[UserTable].insertValue {
-                    lift(UserTable(id, 45, now))
+                    lift(UserTable(id, 0, now))
                   }
                 }
               }

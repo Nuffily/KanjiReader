@@ -92,12 +92,19 @@
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 
   float: left;
-  transition: all 0.3s ease;
-
+  transition: all 0.4s ease;
+  user-select: none;
 }
 
 .quest-block:hover {
   scale: 1.05;
+}
+
+.completed-quest:active {
+  color: var(--redder-color);
+  box-shadow: 1px 1px 10px var(--red-color);
+  scale: 1;
+  transition: all 0.05s ease;
 }
 
 .quest-desc-block {

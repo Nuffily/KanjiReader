@@ -1,7 +1,6 @@
 package kanjiReader.statistics
 
 import kanjiReader.KanjiResponse
-
 import kanjiReader.auth.{AuthBadUserError, AuthDunnoUserError, AuthService}
 import kanjiReader.kanjiUsers.UserRepo
 import zio._
@@ -13,6 +12,12 @@ object StatisticsRoutes {
   def apply()
       : Routes[StatisticsService & UserRepo & AuthService & Client, Response] =
     Routes(
+      /** Возвращает статистику User по токену.
+        *
+        * Возвращает статистику пользователя [id] как список, где каждое
+        * значение - процент верных ответов за последние пять попыток в
+        * соответствующем wordList
+        */
       Method.GET / "getStats" -> handler { (req: Request) =>
         req.header(Header.Authorization) match {
 

@@ -2,6 +2,14 @@ package kanjiReader.statistics
 
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 
+/**
+ * Нужна для представления результата одной игры (количество ответов / правильных)
+ * @param id id пользователя
+ * @param attempt номер попытки
+ * @param correct количество правильных ответов
+ * @param number количество ответов
+ * @param word_list номер wordList
+ */
 case class Statistic(
     id: Long,
     attempt: Int,

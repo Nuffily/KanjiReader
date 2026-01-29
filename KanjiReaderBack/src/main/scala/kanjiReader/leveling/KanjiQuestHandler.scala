@@ -14,6 +14,7 @@ object KanjiQuestHandler extends QuestHandler {
         0,
         0,
         quest.word_list,
+        1,
         quest.is_complete
       )
     case CorrectPer2M =>
@@ -23,6 +24,7 @@ object KanjiQuestHandler extends QuestHandler {
         0,
         0,
         quest.word_list,
+        2,
         quest.is_complete
       )
 
@@ -33,6 +35,7 @@ object KanjiQuestHandler extends QuestHandler {
         0,
         0,
         quest.word_list,
+        0,
         quest.is_complete
       )
 
@@ -43,6 +46,7 @@ object KanjiQuestHandler extends QuestHandler {
         0,
         0,
         quest.word_list,
+        1,
         quest.is_complete
       )
     case InRow2M =>
@@ -52,6 +56,7 @@ object KanjiQuestHandler extends QuestHandler {
         0,
         0,
         quest.word_list,
+        2,
         quest.is_complete
       )
     case SumCorrect =>
@@ -61,6 +66,7 @@ object KanjiQuestHandler extends QuestHandler {
         quest.progress,
         quest.parameter,
         quest.word_list,
+        0,
         quest.is_complete
       )
   }

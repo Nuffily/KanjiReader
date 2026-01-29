@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import './css/App.css'
 import Game from './components/Game'
 import ListMenu from './components/ListMenu'
 import ProfileMenu from './components/Profilemenu'
-import { toDark, toLight } from './parts/Theme'
+import './css/App.css'
 import { getQuests, getStats, getUserData } from './parts/Backend'
+import { toDark, toLight } from './parts/Theme'
 
 const vocs = [
   { title: "WaniKani 11 - 15", name: "WK11-15" },
@@ -35,7 +35,7 @@ function App() {
   const [darkTheme, setDarkTheme] = useState(true);
 
   useEffect(() => {
-    const root = document.documentElement;
+
 
     if (darkTheme) {
       toDark()
@@ -134,28 +134,17 @@ function App() {
     />)
 
   return (
-    <div style={{
-      width: '100vw',
-      height: '100vh',
-      position: 'fixed',
-      top: 0,
-      left: 0,
+    <div className='main-frame' style={{
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      overflow: 'hidden',
     }}>
-      <div className={submenu == 0 ? 'mainMenu' : (!listPick ? 'slide-in-blurred-left' : 'slide-out-blurred-left')}
+      <div className={`main-face ${submenu == 0 ? 'mainMenu' : (!listPick ? 'slide-in-blurred-left' : 'slide-out-blurred-left')}`}
         style={{
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          overflow: 'hidden',
         }}>
         <h1 style={{ margin: "20px" }}>KanjiReader</h1>
 
@@ -192,7 +181,9 @@ function App() {
           quests={quests}
           vocs={vocs}
           isPicked={listPick}
-          back={setListPick} />
+          back={setListPick}
+          setTime={setGameTime}
+          setList={setWordList} />
       }
     </div >
   )
