@@ -55,8 +55,8 @@ object MainApp extends ZIOAppDefault {
 
     (Server
       .install(
-        VocabularyRoutes() @@ simpleCors ++ AuthRoutes() @@ simpleCors
-          ++ LevelRoutes() @@ simpleCors ++ StatisticsRoutes() @@ simpleCors
+        (VocabularyRoutes() ++ AuthRoutes()
+          ++ LevelRoutes() ++ StatisticsRoutes()) @@ simpleCors
       )
       .flatMap(port =>
         Console.printLine(s"Started server on port: $port")

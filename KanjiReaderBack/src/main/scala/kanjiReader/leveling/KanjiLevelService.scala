@@ -7,7 +7,6 @@ import kanjiReader.leveling.QuestType._
 import kanjiReader.leveling.handler.QuestHandler
 import kanjiReader.statistics.StatisticsService
 import zio._
-
 import javax.sql.DataSource
 
 case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
@@ -16,7 +15,8 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
   val ctx = new H2ZioJdbcContext(Literal)
   import ctx._
 
-  implicit val questInsertMeta: InsertMeta[Quest] = insertMeta[Quest](_.entry_id)
+  // Don't you dare to annotate this
+  implicit val questInsertMeta = insertMeta[Quest](_.entry_id)
 
   private val WORD_LIST_COUNT = 11
 
@@ -69,6 +69,8 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
           quest1.quest_type == q.quest_type
       )
 
+      _ <- Console.printLine(quest3).orDie
+
       _ <- ctx
         .run {
           quote {
@@ -112,7 +114,11 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
                      .run {
                        query[Quest].filter(_.user_id == lift(id))
                      }
-                     .provide(ZLayer.succeed(ds))
+                     .provide(ZLayer.succeed(ds)).flatMap{
+                     q => if (q.isEmpty)
+                       UserRepo.refill(id) *>
+                       refillQuests(id) else ZIO.succeed(q)
+                     }
                  }).mapError(e => SomeLevelError(e.toString))
 
     } yield quests

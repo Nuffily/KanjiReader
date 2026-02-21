@@ -43,6 +43,8 @@ object LevelRoutes {
                 .mapError(e => Response.badRequest(s"LevelService Error: $e"))
               printable = quests.map(KanjiQuestHandler.toPrintable)
 
+              _ <- Console.printLine("zxc:" + quests)
+
             } yield Response.json(printable.toJson))
               .catchAll {
                 case AuthBadUserError(message) =>

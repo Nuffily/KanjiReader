@@ -34,58 +34,56 @@ object AuthRoutes {
       * GitHub
       */
     Method.GET / "getUserGitData" -> handler { (req: Request) =>
-      {
-        req.header(Header.Authorization) match {
-
-          case Some(Bearer(token)) =>
-            (for {
-              service <- ZIO.service[AuthService]
-
-              user <- service.getUserGitData(Bearer(token))
-            } yield Response.json(user.toJson))
-              .catchAll {
-                case AuthBadUserError(message) =>
-                  KanjiResponse.unauthorized(message)
-
-                case AuthDunnoUserError(message) =>
-                  ZIO.logError(s"Get user data error: $message") *>
-                    KanjiResponse.unauthorized(
-                      s"Failed to get user data: $message"
-                    )
-              }
-          case None =>
-            KanjiResponse.noAuthorization
-        }
-      }
+      withToken(req) { token =>
+        ZIO
+          .serviceWithZIO[AuthService](_.getUserGitData(token))
+          .map(u => Response.json(u.toJson))
+      }.catchAll(handleAuthError)
     },
 
     /** Принимает токен Authorization и возвращает данные пользователя в виде
       * KanjiUser
       */
     Method.GET / "getKanjiUserData" -> handler { (req: Request) =>
-      {
-        req.header(Header.Authorization) match {
-
-          case Some(Bearer(token)) =>
-            (for {
-              service <- ZIO.service[AuthService]
-
-              user <- service.getKanjiUserData(Bearer(token))
-            } yield Response.json(user.toJson))
-              .catchAll {
-                case AuthBadUserError(message) =>
-                  KanjiResponse.unauthorized(message)
-
-                case AuthDunnoUserError(message) =>
-                  ZIO.logError(s"Get user data error: $message") *>
-                    KanjiResponse.unauthorized(
-                      s"Failed to get user data: $message"
-                    )
-              }
-          case None =>
-            KanjiResponse.noAuthorization
-        }
-      }
+      withToken(req) { token =>
+        ZIO
+          .serviceWithZIO[AuthService](_.getKanjiUserData(token))
+          .map(u => Response.json(u.toJson))
+      }.catchAll(handleAuthError)
     }
+//      {
+//        req.header(Header.Authorization) match {
+//
+//          case Some(Bearer(token)) =>
+//            (for {
+//              service <- ZIO.service[AuthService]
+//
+//              user <- service.getKanjiUserData(Bearer(token))
+//            } yield Response.json(user.toJson))
+//              .catchAll(handleAuthError)
+//          case None =>
+//            KanjiResponse.noAuthorization
+//        }
+//      }
+//    }
   )
+
+  private def withToken(
+      req: Request
+  )(f: Bearer => ZIO[AuthService & UserRepo & Client, AuthUserDataError, Response]) =
+    req.header(Header.Authorization) match {
+      case Some(auth @ Bearer(_)) => f(auth)
+      case None                   => KanjiResponse.noAuthorization
+    }
+
+  private val handleAuthError
+      : AuthUserDataError => ZIO[Any, Nothing, Response] = {
+    case AuthBadUserError(message) =>
+      KanjiResponse.unauthorized(message)
+    case AuthDunnoUserError(message) =>
+      ZIO.logError(s"Get user data error: $message") *>
+        KanjiResponse.unauthorized(
+          s"Failed to get user data: $message"
+        )
+  }
 }
