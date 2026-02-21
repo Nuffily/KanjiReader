@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS "UserTable" (
     "id" BIGINT NOT NULL PRIMARY KEY,
     "experience" INT NOT NULL,
-    "refill" DATETIME NOT NULL
+    "refill" TIMESTAMP NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Statistic (

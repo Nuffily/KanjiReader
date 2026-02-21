@@ -1,4 +1,4 @@
-import "../css/app.css";
+import "../css/App.css";
 import "../css/ProfileMenu.css";
 
 import {
@@ -85,7 +85,7 @@ const ProfileMenu = ({ userData, quests, vocs, isPicked, back, setTheme, theme, 
                               quest.current / quest.progress * 100
                               }%`,
 
-                            cursor: `${quest.isCompleted ? "none" : "pointer"}`
+                            cursor: `${quest.isCompleted ? "auto" : "pointer"}`
                           }}>
 
                           <p className={`quest-icon ${quest.isCompleted ? "completed-icon" : ""}`}>

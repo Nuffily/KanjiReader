@@ -3,7 +3,8 @@ package kanjiReader
 import kanjiReader.auth.{AuthRoutes, GitHubService}
 import kanjiReader.config.{GitHubConfig, HttpServerConfig}
 import kanjiReader.kanjiUsers.PersistentUserRepo
-import kanjiReader.leveling.{KanjiLevelService, KanjiQuestHandler, LevelRoutes}
+import kanjiReader.leveling.handler.KanjiQuestHandler
+import kanjiReader.leveling.{KanjiLevelService, LevelRoutes}
 import kanjiReader.statistics.{KanjiStatisticsService, StatisticsRoutes}
 import kanjiReader.vocabulary.VocabularyRoutes
 import zio.config.typesafe.TypesafeConfigProvider

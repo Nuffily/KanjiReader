@@ -10,9 +10,11 @@ export function questIcon(type) {
 export function getLevel(x) {
   if (x < 0) throw new Error("x must be non-negative");
 
-  const k = Math.ceil((1 + Math.sqrt(1 + 4 * x / 5)) / 2);
+  // Используем Math.floor. 
+  // Теперь при достижении 10 XP результат будет ровно 2.
+  const k = Math.floor((1 + Math.sqrt(1 + 4 * x / 5)) / 2);
 
-  return k - 1;
+  return k;
 }
 
 export function getRemainXP(x, k) {

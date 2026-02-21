@@ -3,6 +3,7 @@ package kanjiReader.leveling
 import kanjiReader.KanjiResponse
 import kanjiReader.auth.{AuthBadUserError, AuthDunnoUserError, AuthService}
 import kanjiReader.kanjiUsers.UserRepo
+import kanjiReader.leveling.handler.KanjiQuestHandler
 import kanjiReader.statistics.StatisticsService
 import zio._
 import zio.http.Header.Authorization.Bearer

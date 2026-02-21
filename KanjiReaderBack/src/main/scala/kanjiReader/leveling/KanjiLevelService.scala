@@ -4,6 +4,7 @@ import io.getquill.jdbczio.Quill
 import io.getquill.{H2ZioJdbcContext, Literal}
 import kanjiReader.kanjiUsers.UserRepo
 import kanjiReader.leveling.QuestType._
+import kanjiReader.leveling.handler.QuestHandler
 import kanjiReader.statistics.StatisticsService
 import zio._
 
@@ -15,11 +16,11 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
   val ctx = new H2ZioJdbcContext(Literal)
   import ctx._
 
-  implicit val questInsertMeta = insertMeta[Quest](_.entry_id)
+  implicit val questInsertMeta: InsertMeta[Quest] = insertMeta[Quest](_.entry_id)
 
   private val WORD_LIST_COUNT = 11
 
-  /** СОздает случай квест
+  /** Создает случай квест
     */
   private def createQuest(id: Long): ZIO[UserRepo, LevelError, Quest] =
     for {
