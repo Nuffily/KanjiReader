@@ -114,10 +114,12 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
                      .run {
                        query[Quest].filter(_.user_id == lift(id))
                      }
-                     .provide(ZLayer.succeed(ds)).flatMap{
-                     q => if (q.isEmpty)
-                       UserRepo.refill(id) *>
-                       refillQuests(id) else ZIO.succeed(q)
+                     .provide(ZLayer.succeed(ds))
+                     .flatMap { q =>
+                       if (q.isEmpty)
+                         UserRepo.refill(id) *>
+                           refillQuests(id)
+                       else ZIO.succeed(q)
                      }
                  }).mapError(e => SomeLevelError(e.toString))
 
@@ -132,7 +134,7 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
     updated <- ZIO.foreach(quests)(handleQuest(id, _, res))
     _ <- StatisticsService
       .update(id, res)
-      .mapError(e => { println(e); SomeLevelError(e.message) })
+      .mapError(e => SomeLevelError(e.message))
 
   } yield updated.contains(true)
 

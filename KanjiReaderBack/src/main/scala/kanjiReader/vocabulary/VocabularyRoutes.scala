@@ -26,7 +26,7 @@ object VocabularyRoutes {
             shuffled <- Shuffler.getRandomItemsZIO(words, number)
           } yield Response.json(shuffled.toJson))
             .catchAll { error =>
-              ZIO.fail(Response.text(s"Error: $error"))
+              ZIO.succeed(Response.text(s"Error: $error"))
             }
       }
     )

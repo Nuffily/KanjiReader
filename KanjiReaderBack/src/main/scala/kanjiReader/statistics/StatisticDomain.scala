@@ -18,7 +18,10 @@ case class Statistic(
     word_list: Byte
 )
 
-trait StatError { val message: String }
+trait StatError extends Throwable {
+  val message: String
+  override def getMessage: String = message
+}
 
 case class DBStatError(message: String) extends StatError
 

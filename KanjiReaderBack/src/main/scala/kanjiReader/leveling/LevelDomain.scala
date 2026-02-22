@@ -62,8 +62,9 @@ object PrintableQuest {
     DeriveJsonDecoder.gen[PrintableQuest]
 }
 
-trait LevelError {
+trait LevelError extends Throwable {
   val message: String
+  override def getMessage: String = message
 }
 
 case class NoSuchUser(message: String)     extends LevelError

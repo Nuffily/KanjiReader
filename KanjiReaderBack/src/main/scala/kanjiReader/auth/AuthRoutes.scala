@@ -1,10 +1,11 @@
 package kanjiReader.auth
 
-import kanjiReader.KanjiResponse
+import kanjiReader.utils.KanjiResponse.withToken
 import kanjiReader.kanjiUsers.UserRepo
+import kanjiReader.utils.KanjiResponse
 import zio._
 import zio.http.Header.Authorization.Bearer
-import zio.http.{Method, _}
+import zio.http._
 import zio.json.EncoderOps
 
 object AuthRoutes {
@@ -21,12 +22,10 @@ object AuthRoutes {
         token   <- service.getAccessToken(code)
       } yield Response.json(token.toJson))
         .catchAll {
-          case AuthBadToken(message) =>
-            KanjiResponse.unauthorized(message)
-
+          case AuthBadToken(message) => KanjiResponse.unauthorized(message)
           case AuthDunnoTokenError(message) =>
-            ZIO.logError(s"Get user data error: $message") *>
-              KanjiResponse.unauthorized(s"Failed to get user data: $message")
+            ZIO.logError(s"Get user data error: $message") *> KanjiResponse
+              .unauthorized(s"Failed to get user data: $message")
         }
     },
 
@@ -34,7 +33,7 @@ object AuthRoutes {
       * GitHub
       */
     Method.GET / "getUserGitData" -> handler { (req: Request) =>
-      withToken(req) { token =>
+      KanjiResponse.withToken(req) { token =>
         ZIO
           .serviceWithZIO[AuthService](_.getUserGitData(token))
           .map(u => Response.json(u.toJson))
@@ -45,36 +44,13 @@ object AuthRoutes {
       * KanjiUser
       */
     Method.GET / "getKanjiUserData" -> handler { (req: Request) =>
-      withToken(req) { token =>
+      KanjiResponse.withToken(req) { token =>
         ZIO
           .serviceWithZIO[AuthService](_.getKanjiUserData(token))
           .map(u => Response.json(u.toJson))
       }.catchAll(handleAuthError)
     }
-//      {
-//        req.header(Header.Authorization) match {
-//
-//          case Some(Bearer(token)) =>
-//            (for {
-//              service <- ZIO.service[AuthService]
-//
-//              user <- service.getKanjiUserData(Bearer(token))
-//            } yield Response.json(user.toJson))
-//              .catchAll(handleAuthError)
-//          case None =>
-//            KanjiResponse.noAuthorization
-//        }
-//      }
-//    }
   )
-
-  private def withToken(
-      req: Request
-  )(f: Bearer => ZIO[AuthService & UserRepo & Client, AuthUserDataError, Response]) =
-    req.header(Header.Authorization) match {
-      case Some(auth @ Bearer(_)) => f(auth)
-      case None                   => KanjiResponse.noAuthorization
-    }
 
   private val handleAuthError
       : AuthUserDataError => ZIO[Any, Nothing, Response] = {
