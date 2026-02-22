@@ -13,6 +13,9 @@ case class GitHubService(
     cache: KanjiCache[Authorization, GitHubUser]
 ) extends AuthService {
 
+  private val retryPolicy =
+    Schedule.exponential(100.millis) && Schedule.recurs(3)
+
   private lazy val tokenURL = URL
     .decode(config.gitHubTokenServer)
     .getOrElse(
@@ -46,8 +49,11 @@ case class GitHubService(
 
         response <- client
           .request(request)
+          .retry(retryPolicy)
           .mapError(e =>
-            AuthDunnoTokenError(s"Request failed: ${e.getMessage}")
+            AuthDunnoTokenError(
+              s"Request failed after retries: ${e.getMessage}"
+            )
           )
 
         _ <-
@@ -80,9 +86,8 @@ case class GitHubService(
   override def getUserGitData(
       authHeader: Authorization
   ): ZIO[Client, AuthUserDataError, GitHubUser] = ZIO.scoped {
-
     cache.getOrElseZIO(authHeader)(
-      Console.printLine("Non hit!").ignore *> requestUserData(authHeader)
+      requestUserData(authHeader)
     )
   }
 
@@ -112,7 +117,8 @@ case class GitHubService(
 
         response <- client
           .request(request)
-          .mapError(e => AuthDunnoUserError(s"Request failed: ${e.getMessage}"))
+          .retry(retryPolicy)
+          .mapError(e => AuthDunnoUserError(s"Request failed after 3 attempts: ${e.getMessage}"))
 
         body <- response.body.asString
           .mapError(e =>

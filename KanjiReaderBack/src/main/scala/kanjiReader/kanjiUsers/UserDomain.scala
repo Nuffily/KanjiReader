@@ -5,8 +5,9 @@ import zio.schema.{DeriveSchema, Schema}
 
 import java.time.LocalDateTime
 
-trait UserError {
+trait UserError extends Throwable {
   val message: String
+  override def getMessage: String = message
 }
 
 case class OtherUserError(message: String) extends UserError

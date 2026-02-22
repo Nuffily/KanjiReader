@@ -35,7 +35,10 @@ object GitHubUser {
     DeriveJsonEncoder.gen[GitHubUser]
 }
 
-sealed trait AuthTokenError { val message: String }
+sealed trait AuthTokenError extends Throwable {
+  val message: String
+  override def getMessage: String = message
+}
 
 case class AuthBadToken(message: String)        extends AuthTokenError
 case class AuthDunnoTokenError(message: String) extends AuthTokenError
