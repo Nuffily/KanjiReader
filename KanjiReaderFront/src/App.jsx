@@ -60,7 +60,7 @@ function App() {
       console.log("no local")
 
       async function getAccessToken() {
-        await fetch("http://localhost:8099/getAccessToken?code=" + codeParam, {
+        await fetch("/api/getAccessToken?code=" + codeParam, {
           method: "GET"
         }).then((response) => {
           return response.json();

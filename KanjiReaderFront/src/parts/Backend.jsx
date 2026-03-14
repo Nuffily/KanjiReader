@@ -2,7 +2,7 @@ export async function getUserData(setUserData) {
   const token = localStorage.getItem("accessToken");
 
   try {
-    const response = await fetch("http://localhost:8099/getKanjiUserData", {
+    const response = await fetch("/api/getKanjiUserData", {
       method: "GET",
       headers: {
         "Authorization": "Bearer " + token
@@ -33,7 +33,7 @@ export async function getQuests(setQuests) {
   const token = localStorage.getItem("accessToken");
 
   try {
-    const response = await fetch("http://localhost:8099/getQuests", {
+    const response = await fetch("/api/getQuests", {
       method: "GET",
       headers: {
         "Authorization": "Bearer " + token
@@ -65,7 +65,7 @@ export async function getStats(setStats) {
   const token = localStorage.getItem("accessToken");
 
   try {
-    const response = await fetch("http://localhost:8099/getStats", {
+    const response = await fetch("/api/getStats", {
       method: "GET",
       headers: {
         "Authorization": "Bearer " + token
