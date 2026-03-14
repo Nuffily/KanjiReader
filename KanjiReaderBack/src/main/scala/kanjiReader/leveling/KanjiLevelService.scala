@@ -17,7 +17,7 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
   val ctx = new H2ZioJdbcContext(Literal)
   import ctx._
 
-  @nowarn("Don't you dare to annotate this")
+  @nowarn("msg=.* ; Don't you dare to remove this")
   implicit val questInsertMeta = insertMeta[Quest](_.entry_id)
 
   private val WORD_LIST_COUNT = 11
@@ -70,7 +70,7 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
       }
 
     for {
-      quests <- generateUniqueQuests(3);
+      quests <- generateUniqueQuests(3)
 
       _ <- ctx
         .transaction {
