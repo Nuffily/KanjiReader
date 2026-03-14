@@ -51,18 +51,20 @@ function App() {
 
   useEffect(() => {
     const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const codeParam = urlParams.get("code");
+    const urlParams = new URLSearchParams(queryString)
+    const codeParam = urlParams.get("code")
 
-    async function initializeApp() {
-      let token = localStorage.getItem("accessToken");
+    if (codeParam && (localStorage.getItem("accessToken") === null)) {
 
-      if (codeParam && !token) {
-        console.log("No local token, exchanging code...");
-        try {
-          const response = await fetch("http://localhost:8099/getAccessToken?code=" + codeParam);
-          const data = await response.json();
-          
+      console.log("no local")
+
+      async function getAccessToken() {
+        await fetch("/api/getAccessToken?code=" + codeParam, {
+          method: "GET"
+        }).then((response) => {
+          return response.json();
+        }).then((data) => {
+
           if (data.access_token) {
             localStorage.setItem("accessToken", data.access_token);
             token = data.access_token;
