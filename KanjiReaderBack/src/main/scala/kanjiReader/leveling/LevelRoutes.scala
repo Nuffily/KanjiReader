@@ -1,18 +1,11 @@
 package kanjiReader.leveling
 
-import kanjiReader.utils.KanjiResponse.{handleAuthErrorZIO, withToken}
-import kanjiReader.auth.{
-  AuthBadUserError,
-  AuthDunnoUserError,
-  AuthService,
-  AuthUserDataError
-}
+import kanjiReader.auth.AuthService
 import kanjiReader.kanjiUsers.UserRepo
 import kanjiReader.leveling.handler.KanjiQuestHandler
 import kanjiReader.statistics.StatisticsService
 import kanjiReader.utils.KanjiResponse
 import zio._
-import zio.http.Header.Authorization.Bearer
 import zio.http._
 import zio.json.{DecoderOps, EncoderOps}
 

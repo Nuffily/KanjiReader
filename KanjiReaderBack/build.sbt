@@ -30,6 +30,7 @@ libraryDependencies ++= Seq(
   "io.getquill"   %% "quill-zio"           % "4.8.5",
   "io.getquill"   %% "quill-jdbc-zio"      % "4.8.5",
   "com.h2database" % "h2"                  % "2.4.240",
+  "org.flywaydb" % "flyway-core" % "10.0.0",
   "dev.zio"       %% "zio-config"          % "4.0.6",
   "dev.zio"       %% "zio-config-typesafe" % "4.0.6",
   "dev.zio"       %% "zio-config-magnolia" % "4.0.6",

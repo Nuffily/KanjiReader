@@ -2,7 +2,6 @@ package kanjiReader.leveling.handler
 
 import kanjiReader.leveling.QuestType._
 import kanjiReader.leveling.{
-  PrintableQuest,
   Quest,
   QuestType,
   WordGameResult

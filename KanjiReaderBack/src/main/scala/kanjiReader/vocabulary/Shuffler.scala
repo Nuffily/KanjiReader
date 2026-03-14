@@ -2,6 +2,7 @@ package kanjiReader.vocabulary
 
 import zio.{Random, ZIO}
 
+@Deprecated
 object Shuffler {
 
   /** Выдает случайные [n] элементов из списка [list]

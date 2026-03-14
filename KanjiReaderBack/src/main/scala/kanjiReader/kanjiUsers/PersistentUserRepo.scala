@@ -61,18 +61,20 @@ case class PersistentUserRepo(ds: DataSource) extends UserRepo {
   override def lookupOrRegister(id: Long): IO[UserError, UserTable] = {
     val tryInsert = for {
       now <- Clock.localDateTime
-      _ <- ctx.run(query[UserTable].insertValue(lift(UserTable(id, 0, now))))
+      _   <- ctx.run(query[UserTable].insertValue(lift(UserTable(id, 0, now))))
     } yield ()
 
-    tryInsert
-      .unit
+    tryInsert.unit
       .catchAll { _ =>
         ZIO.unit
       }
       .flatMap { _ =>
         lookupId(id).flatMap {
           case Some(user) => ZIO.succeed(user)
-          case None => ZIO.fail(DBUserError(s"User $id not found after registration attempt"))
+          case None =>
+            ZIO.fail(
+              DBUserError(s"User $id not found after registration attempt")
+            )
         }
       }
       .provide(ZLayer.succeed(ds))

@@ -1,6 +1,6 @@
 package kanjiReader.leveling.handler
 
-import kanjiReader.leveling.{PrintableQuest, Quest, WordGameResult}
+import kanjiReader.leveling.{Quest, WordGameResult}
 
 trait QuestHandler {
 
