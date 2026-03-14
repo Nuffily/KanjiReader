@@ -6,17 +6,18 @@ import kanjiReader.kanjiUsers.UserRepo
 import kanjiReader.leveling.QuestType._
 import kanjiReader.leveling.handler.QuestHandler
 import kanjiReader.statistics.StatisticsService
-import zio._
-import javax.sql.DataSource
 import kanjiReader.utils.Syntax._
+import zio.{&, Clock, URIO, ZIO, ZLayer}
+
+import javax.sql.DataSource
+import scala.annotation.nowarn
 
 case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
     extends LevelService {
-
   val ctx = new H2ZioJdbcContext(Literal)
   import ctx._
 
-  // Don't you dare to annotate this
+  @nowarn("Don't you dare to annotate this")
   implicit val questInsertMeta = insertMeta[Quest](_.entry_id)
 
   private val WORD_LIST_COUNT = 11

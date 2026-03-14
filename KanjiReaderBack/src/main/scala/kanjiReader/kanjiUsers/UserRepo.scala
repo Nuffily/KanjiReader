@@ -1,6 +1,7 @@
 package kanjiReader.kanjiUsers
 
-import zio._
+import zio.{IO, ZIO}
+
 
 trait UserRepo {
 

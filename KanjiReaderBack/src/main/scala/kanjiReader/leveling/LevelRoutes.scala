@@ -5,9 +5,9 @@ import kanjiReader.kanjiUsers.UserRepo
 import kanjiReader.leveling.handler.KanjiQuestHandler
 import kanjiReader.statistics.StatisticsService
 import kanjiReader.utils.KanjiResponse
-import zio._
-import zio.http._
+import zio.http.{Client, Method, Request, Response, Routes, handler}
 import zio.json.{DecoderOps, EncoderOps}
+import zio.{&, Random, ZIO}
 
 object LevelRoutes {
 

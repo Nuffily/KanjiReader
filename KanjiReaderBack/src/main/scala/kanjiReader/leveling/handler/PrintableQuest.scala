@@ -3,8 +3,8 @@ package kanjiReader.leveling.handler
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 
 /** Нужен для представления кветста на фронте
- *
- * @param questType
+  *
+  * @param questType
   *   тип квеста (для иконки)
   * @param description
   *   описание квеста

@@ -1,7 +1,8 @@
 package kanjiReader.statistics
 
 import kanjiReader.leveling.WordGameResult
-import zio._
+import zio.{IO, ZIO}
+
 
 trait StatisticsService {
 

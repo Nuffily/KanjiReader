@@ -1,12 +1,11 @@
 package kanjiReader.statistics
 
-import kanjiReader.auth.{AuthBadUserError, AuthDunnoUserError, AuthService}
+import kanjiReader.auth.AuthService
 import kanjiReader.kanjiUsers.UserRepo
 import kanjiReader.utils.KanjiResponse
-import zio._
-import zio.http.Header.Authorization.Bearer
-import zio.http._
+import zio.http.{Client, Method, Request, Response, Routes, handler}
 import zio.json.EncoderOps
+import zio.{&, ZIO}
 
 object StatisticsRoutes {
   def apply()
@@ -30,7 +29,8 @@ object StatisticsRoutes {
           }
           .catchAll {
             case r: Response => ZIO.succeed(r)
-            case e: StatError => ZIO.succeed(Response.badRequest(s"StatError: ${e.getMessage}"))
+            case e: StatError =>
+              ZIO.succeed(Response.badRequest(s"StatError: ${e.getMessage}"))
           }
       }
     )

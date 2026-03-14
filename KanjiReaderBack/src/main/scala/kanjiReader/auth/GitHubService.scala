@@ -4,7 +4,7 @@ import kanjiReader.KanjiStructures.KanjiCache
 import kanjiReader.config.GitHubConfig
 import kanjiReader.kanjiUsers.UserRepo
 import zio.http.Header.Authorization
-import zio.http._
+import zio.http.{Body, Client, Form, Header, MediaType, Request, Status, URL}
 import zio.json.DecoderOps
 import zio.{&, Scope, ZIO, ZLayer, durationInt, _}
 
@@ -118,7 +118,11 @@ case class GitHubService(
         response <- client
           .request(request)
           .retry(retryPolicy)
-          .mapError(e => AuthDunnoUserError(s"Request failed after 3 attempts: ${e.getMessage}"))
+          .mapError(e =>
+            AuthDunnoUserError(
+              s"Request failed after 3 attempts: ${e.getMessage}"
+            )
+          )
 
         body <- response.body.asString
           .mapError(e =>
