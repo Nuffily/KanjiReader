@@ -1,11 +1,7 @@
 package kanjiReader.leveling.handler
 
 import kanjiReader.leveling.QuestType._
-import kanjiReader.leveling.{
-  Quest,
-  QuestType,
-  WordGameResult
-}
+import kanjiReader.leveling.{Quest, QuestType, WordGameResult}
 
 object KanjiQuestHandler extends QuestHandler {
 
