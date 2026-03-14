@@ -1,7 +1,7 @@
 package kanjiReader.vocabulary
 
-import zio._
-import zio.http._
+import zio.{&, Random, ZIO}
+import zio.http.{Method, Request, Response, Routes, handler, int, string}
 import zio.json.EncoderOps
 
 object VocabularyRoutes {

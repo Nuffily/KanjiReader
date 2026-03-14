@@ -9,9 +9,18 @@ import kanjiReader.statistics.{KanjiStatisticsService, StatisticsRoutes}
 import kanjiReader.vocabulary.{KanjiWordService, VocabularyRoutes}
 import zio.config.typesafe.TypesafeConfigProvider
 import zio.http.Middleware.CorsConfig
-import zio.http._
 import zio.http.netty.NettyConfig
-import zio.{Random, _}
+import zio.http.{Client, Header, Middleware, Server}
+import zio.{
+  Config,
+  Console,
+  Random,
+  Runtime,
+  ZIO,
+  ZIOAppArgs,
+  ZIOAppDefault,
+  ZLayer
+}
 
 object MainApp extends ZIOAppDefault {
 
@@ -53,23 +62,23 @@ object MainApp extends ZIOAppDefault {
 
   def run: ZIO[Any, Throwable, Nothing] = {
 
-        Migrator.run *>
-    (Server
-      .install(
-        (VocabularyRoutes() ++ AuthRoutes() ++ LevelRoutes() ++ StatisticsRoutes()) @@ simpleCors
-      )
-      .flatMap(port =>
-        Console.printLine(s"Started server on port: $port")
-      ) *> ZIO.never)
-      .provide(
-        serverConfig >+> nettyConfig >+> Server.live,
-        gitHubConfigLayer >>> GitHubService.layer,
-        Client.default,
-        KanjiWordService.layer,
-        PersistentUserRepo.layer,
-        randomLayer,
-        KanjiStatisticsService.layer,
-        KanjiLevelService.layer(KanjiQuestHandler)
-      )
+    Migrator.run *>
+      (Server
+        .install(
+          (VocabularyRoutes() ++ AuthRoutes() ++ LevelRoutes() ++ StatisticsRoutes()) @@ simpleCors
+        )
+        .flatMap(port =>
+          Console.printLine(s"Started server on port: $port")
+        ) *> ZIO.never)
+        .provide(
+          serverConfig >+> nettyConfig >+> Server.live,
+          gitHubConfigLayer >>> GitHubService.layer,
+          Client.default,
+          KanjiWordService.layer,
+          PersistentUserRepo.layer,
+          randomLayer,
+          KanjiStatisticsService.layer,
+          KanjiLevelService.layer(KanjiQuestHandler)
+        )
   }
 }

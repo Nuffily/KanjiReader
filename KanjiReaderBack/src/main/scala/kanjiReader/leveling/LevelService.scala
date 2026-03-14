@@ -2,7 +2,7 @@ package kanjiReader.leveling
 
 import kanjiReader.kanjiUsers.UserRepo
 import kanjiReader.statistics.StatisticsService
-import zio._
+import zio.{&, Random, ZIO}
 
 trait LevelService {
 

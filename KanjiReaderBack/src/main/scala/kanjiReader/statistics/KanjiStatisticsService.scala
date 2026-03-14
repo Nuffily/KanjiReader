@@ -3,14 +3,12 @@ package kanjiReader.statistics
 import io.getquill.jdbczio.Quill
 import io.getquill.{H2ZioJdbcContext, Literal, Ord}
 import kanjiReader.leveling.WordGameResult
-import zio.{IO, ZIO, ZLayer}
+import zio.{IO, ZLayer}
 
 import javax.sql.DataSource
 
 case class KanjiStatisticsService(ds: DataSource) extends StatisticsService {
-
   val ctx = new H2ZioJdbcContext(Literal)
-
   import ctx._
 
   private val WORD_LIST_COUNT = 10

@@ -1,12 +1,10 @@
 package kanjiReader.auth
 
-import kanjiReader.utils.KanjiResponse.withToken
 import kanjiReader.kanjiUsers.UserRepo
 import kanjiReader.utils.KanjiResponse
-import zio._
-import zio.http.Header.Authorization.Bearer
-import zio.http._
+import zio.http.{Client, Method, Request, Response, Routes, handler}
 import zio.json.EncoderOps
+import zio.{&, ZIO}
 
 object AuthRoutes {
 
@@ -33,22 +31,26 @@ object AuthRoutes {
       * GitHub
       */
     Method.GET / "getUserGitData" -> handler { (req: Request) =>
-      KanjiResponse.withToken(req) { token =>
-        ZIO
-          .serviceWithZIO[AuthService](_.getUserGitData(token))
-          .map(u => Response.json(u.toJson))
-      }.catchAll(handleAuthError)
+      KanjiResponse
+        .withToken(req) { token =>
+          ZIO
+            .serviceWithZIO[AuthService](_.getUserGitData(token))
+            .map(u => Response.json(u.toJson))
+        }
+        .catchAll(handleAuthError)
     },
 
     /** Принимает токен Authorization и возвращает данные пользователя в виде
       * KanjiUser
       */
     Method.GET / "getKanjiUserData" -> handler { (req: Request) =>
-      KanjiResponse.withToken(req) { token =>
-        ZIO
-          .serviceWithZIO[AuthService](_.getKanjiUserData(token))
-          .map(u => Response.json(u.toJson))
-      }.catchAll(handleAuthError)
+      KanjiResponse
+        .withToken(req) { token =>
+          ZIO
+            .serviceWithZIO[AuthService](_.getKanjiUserData(token))
+            .map(u => Response.json(u.toJson))
+        }
+        .catchAll(handleAuthError)
     }
   )
 

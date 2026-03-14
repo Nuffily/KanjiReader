@@ -2,7 +2,7 @@ package kanjiReader.kanjiUsers
 
 import io.getquill.jdbczio.Quill
 import io.getquill.{Escape, H2ZioJdbcContext}
-import zio._
+import zio.{Clock, IO, ZIO, ZLayer}
 
 import javax.sql.DataSource
 

@@ -41,15 +41,14 @@ object KanjiResponse {
   } yield id
 
   def withToken[E, R](req: Request)(
-    f: Bearer => ZIO[R, E, Response]
+      f: Bearer => ZIO[R, E, Response]
   ): ZIO[R, E, Response] =
     req.header(Header.Authorization) match {
       case Some(auth @ Bearer(_)) => f(auth)
       case None                   => noAuthorization
     }
 
-  val handleAuthErrorZIO
-  : AuthUserDataError => ZIO[Any, Nothing, Response] = {
+  val handleAuthErrorZIO: AuthUserDataError => ZIO[Any, Nothing, Response] = {
     case AuthBadUserError(message) =>
       KanjiResponse.unauthorized(message)
     case AuthDunnoUserError(message) =>
@@ -59,8 +58,7 @@ object KanjiResponse {
         )
   }
 
-  val handleAuthError
-  : AuthUserDataError => Response = {
+  val handleAuthError: AuthUserDataError => Response = {
     case AuthBadUserError(message) =>
       Response.unauthorized(message)
     case AuthDunnoUserError(message) =>

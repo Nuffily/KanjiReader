@@ -50,7 +50,6 @@ function App() {
   const [stats, setStats] = useState({});
 
   useEffect(() => {
-
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString)
     const codeParam = urlParams.get("code")
@@ -68,24 +67,26 @@ function App() {
 
           if (data.access_token) {
             localStorage.setItem("accessToken", data.access_token);
-            getUserData(setUserData);
-            getQuests(setQuests);
+            token = data.access_token;
+            window.history.replaceState({}, document.title, "/");
           }
-          setRerender(!rerender);
-        })
+        } catch (e) {
+          console.error("Failed to get token", e);
+        }
       }
 
-      getAccessToken()
+      if (token) {
+        console.log("Token found, loading data...");
+        await getUserData(setUserData);
+        await getQuests(setQuests);
+        await getStats(setStats);
+        
+        setRerender(prev => !prev);
+      }
     }
 
-    if (localStorage.getItem("accessToken")) {
-      getUserData(setUserData);
-      getQuests(setQuests);
-      getStats(setStats);
-    }
-
+    initializeApp();
   }, []);
-
 
   const [wordList, setWordList] = useState(0)
   const [gameTime, setGameTime] = useState(0)
