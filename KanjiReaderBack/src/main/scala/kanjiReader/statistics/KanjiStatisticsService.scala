@@ -22,53 +22,35 @@ case class KanjiStatisticsService(ds: DataSource) extends StatisticsService {
 
     val queryBase = quote {
       query[Statistic].filter(s =>
-        s.id == lift(id) && s.word_list == lift(res.wordList)
+        s.id == lift(id)
+          && s.word_list == lift(res.wordList)
       )
     }
 
     val task = for {
-      count <- ctx.run(queryBase.size)
+      records <- ctx.run(queryBase.sortBy(_.attempt)(Ord.asc))
 
-      _ <-
-        if (count < 5) {
-          ctx.run {
-            query[Statistic].insertValue(
-              lift(
-                Statistic(
-                  id = id,
-                  attempt = (count + 1).toInt,
-                  correct = res.correctCount,
-                  number = res.count,
-                  word_list = res.wordList
-                )
+      _ <- records match {
+        case list if list.size < 5 =>
+          val newStat = new Statistic(id, list.size + 1, res)
+          ctx.run(query[Statistic].insertValue(lift(newStat)))
+        case head :: _ =>
+          ctx.run(
+            queryBase
+              .filter(_.attempt == lift(head.attempt))
+              .update(
+                s => s.attempt -> (s.attempt + 5),
+                s => s.correct -> lift(res.correctCount),
+                s => s.number -> lift(res.count)
               )
-            )
-          }
-        } else {
-          for {
-            target <- ctx
-              .run(queryBase.sortBy(_.attempt)(Ord.asc).take(1))
-              .map(_.headOption)
-
-            _ <- ZIO.foreach(target) { oldRecord =>
-              ctx.run {
-                queryBase
-                  .filter(_.attempt == lift(oldRecord.attempt))
-                  .update(
-                    s => s.attempt -> (s.attempt + 5),
-                    s => s.correct -> lift(res.correctCount),
-                    s => s.number -> lift(res.count)
-                  )
-              }
-            }
-          } yield ()
-        }
+          )
+      }
     } yield true
 
     ctx
       .transaction(task)
-      .mapError(e => DBStatError(e.getMessage): StatError)
       .provide(ZLayer.succeed(ds))
+      .mapError(e => DBStatError(e.getMessage))
   }
 
   override def get(id: Long): IO[StatError, List[Byte]] = for {

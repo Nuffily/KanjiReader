@@ -1,7 +1,11 @@
 const config = {
   development: {
-    apiUrl: 'http://127.0.0.1:8099'
+    apiUrl: import.meta.env.VITE_API_URL || 'http://localhost:8099'
+  },
+  production: {
+    apiUrl: import.meta.env.VITE_API_URL || 'http://localhost:8099'
   }
 }
 
-export default config[process.env.NODE_ENV || 'development'];
+// In Vite, use import.meta.env.MODE instead of NODE_ENV
+export default config[import.meta.env.MODE || 'development'];

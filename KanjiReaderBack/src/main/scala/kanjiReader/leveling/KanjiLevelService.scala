@@ -4,10 +4,11 @@ import io.getquill.jdbczio.Quill
 import io.getquill.{H2ZioJdbcContext, Literal}
 import kanjiReader.kanjiUsers.UserRepo
 import kanjiReader.leveling.QuestType._
+import kanjiReader.leveling.handler.QuestHandler
 import kanjiReader.statistics.StatisticsService
 import zio._
-
 import javax.sql.DataSource
+import kanjiReader.utils.Syntax._
 
 case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
     extends LevelService {
@@ -15,13 +16,14 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
   val ctx = new H2ZioJdbcContext(Literal)
   import ctx._
 
+  // Don't you dare to annotate this
   implicit val questInsertMeta = insertMeta[Quest](_.entry_id)
 
   private val WORD_LIST_COUNT = 11
 
-  /** СОздает случай квест
+  /** Создает случай квест
     */
-  private def createQuest(id: Long): ZIO[UserRepo, LevelError, Quest] =
+  private def createQuest(id: Long): URIO[UserRepo, Quest] =
     for {
       random    <- ZIO.random
       questType <- random.nextIntBetween(0, QuestType.maxId)
@@ -49,32 +51,39 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
       parameter2 = parameter2.toByte
     )
 
-  override def refillQuests(id: Long): ZIO[UserRepo, LevelError, List[Quest]] =
+  override def refillQuests(
+      id: Long
+  ): ZIO[UserRepo, LevelError, List[Quest]] = {
+
+    def generateUniqueQuests(
+        count: Int,
+        acc: List[Quest] = Nil
+    ): URIO[UserRepo, List[Quest]] =
+      if (count == 0) ZIO.succeed(acc)
+      else {
+        createQuest(id).flatMap { q =>
+          val double = acc.exists(_.quest_type == q.quest_type)
+          if (double) generateUniqueQuests(count, acc)
+          else generateUniqueQuests(count - 1, q :: acc)
+        }
+      }
+
     for {
+      quests <- generateUniqueQuests(3);
 
       _ <- ctx
-        .run(query[Quest].filter(_.user_id == lift(id)).delete)
-        .provide(ZLayer.succeed(ds))
-        .mapError(e => DBLevelError(e.getMessage))
-
-      quest1 <- createQuest(id)
-
-      quest2 <- createQuest(id).repeatWhile(q =>
-        quest1.quest_type == q.quest_type
-      )
-
-      quest3 <- createQuest(id).repeatWhile(q =>
-        quest2.quest_type == q.quest_type &&
-          quest1.quest_type == q.quest_type
-      )
-
-      _ <- ctx
-        .run {
-          quote {
-            liftQuery(List(quest1, quest2, quest3)).foreach { q =>
-              query[Quest].insertValue(q)
-            }
-          }
+        .transaction {
+          for {
+            _ <- ctx.run(
+              query[Quest]
+                .filter(_.user_id == lift(id))
+                .delete
+            )
+            _ <- ctx.run(
+              liftQuery(quests)
+                .foreach(q => query[Quest].insertValue(q))
+            )
+          } yield ()
         }
         .provide(ZLayer.succeed(ds))
         .mapError(e => SomeLevelError(e.getMessage))
@@ -82,8 +91,11 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
       _ <- UserRepo
         .refill(id)
         .mapError(e => SomeLevelError(e.message))
-
-    } yield List(quest1, quest2, quest3)
+        .logInfo(
+          s"Generated quests for user $id: ${quests.map(_.quest_type.toString + ", ")}"
+        )
+    } yield quests
+  }
 
   override def addExperience(
       id: Long,
@@ -93,40 +105,49 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
       .addExp(id, exp)
       .mapError(e => SomeLevelError(e.message))
 
-  override def getQuests(id: Long): ZIO[UserRepo, LevelError, List[Quest]] =
+  override def getQuests(id: Long): ZIO[UserRepo, LevelError, List[Quest]] = {
+
+    val doRefill = UserRepo
+      .refill(id)
+      .mapError(e => SomeLevelError(e.message)) *> refillQuests(id)
+
     for {
-      elapse <- UserRepo
+      user <- UserRepo
         .lookupId(id)
         .mapError(e => SomeLevelError(e.message))
         .someOrFail(NoSuchUser(s"No $id"))
-        .map(_.refill)
 
       now <- Clock.localDateTime
+      isExpired = user.refill.isBefore(now)
 
-      quests <- (if (elapse.isBefore(now)) {
-                   UserRepo.refill(id) *>
-                     refillQuests(id)
-                 } else {
-                   ctx
-                     .run {
-                       query[Quest].filter(_.user_id == lift(id))
-                     }
-                     .provide(ZLayer.succeed(ds))
-                 }).mapError(e => SomeLevelError(e.toString))
+      quests <-
+        if (isExpired) doRefill
+        else
+          fetchQuestsFromDb(id).flatMap {
+            case list => ZIO.succeed(list)
+            case Nil  => doRefill
+          }
 
     } yield quests
+  }
+
+  private def fetchQuestsFromDb(
+      id: Long
+  ): ZIO[UserRepo, LevelError, List[Quest]] =
+    ctx
+      .run(query[Quest].filter(_.user_id == lift(id)))
+      .provide(ZLayer.succeed(ds))
+      .mapError(e => DBLevelError(e.getMessage))
 
   override def checkResult(
       id: Long,
       res: WordGameResult
   ): ZIO[UserRepo & StatisticsService, LevelError, Boolean] = for {
-    quests <- getQuests(id)
-
+    quests  <- getQuests(id)
     updated <- ZIO.foreach(quests)(handleQuest(id, _, res))
     _ <- StatisticsService
       .update(id, res)
-      .mapError(e => { println(e); SomeLevelError(e.message) })
-
+      .mapError(e => SomeLevelError(e.message))
   } yield updated.contains(true)
 
   override def handleQuest(

@@ -1,11 +1,11 @@
 package kanjiReader.leveling
 
-import kanjiReader.KanjiResponse
-import kanjiReader.auth.{AuthBadUserError, AuthDunnoUserError, AuthService}
+import kanjiReader.auth.AuthService
 import kanjiReader.kanjiUsers.UserRepo
+import kanjiReader.leveling.handler.KanjiQuestHandler
 import kanjiReader.statistics.StatisticsService
+import kanjiReader.utils.KanjiResponse
 import zio._
-import zio.http.Header.Authorization.Bearer
 import zio.http._
 import zio.json.{DecoderOps, EncoderOps}
 
@@ -29,33 +29,17 @@ object LevelRoutes {
         * ```
         */
       Method.GET / "getQuests" -> handler { (req: Request) =>
-        req.header(Header.Authorization) match {
-
-          case Some(Bearer(token)) =>
-            (for {
-              service <- ZIO.service[AuthService]
-
-              user <- service.getUserGitData(Bearer(token))
-
-              quests <- LevelService
-                .getQuests(user.id)
-                .mapError(e => Response.badRequest(s"LevelService Error: $e"))
+        KanjiResponse
+          .withToken(req) { token =>
+            for {
+              user <- ZIO
+                .serviceWithZIO[AuthService](_.getUserGitData(token))
+                .mapError(KanjiResponse.handleAuthError)
+              quests <- LevelService.getQuests(user.id)
               printable = quests.map(KanjiQuestHandler.toPrintable)
-
-            } yield Response.json(printable.toJson))
-              .catchAll {
-                case AuthBadUserError(message) =>
-                  KanjiResponse.unauthorized(message)
-
-                case AuthDunnoUserError(message) =>
-                  ZIO.logError(s"Get user data error: $message") *>
-                    KanjiResponse.unauthorized(
-                      s"Failed to get user data: $message"
-                    )
-              }
-          case None =>
-            KanjiResponse.noAuthorization
-        }
+            } yield Response.json(printable.toJson)
+          }
+          .catchAll(handleLevelError)
       },
 
       /** Обрабатывает результат игры пользователя:
@@ -73,66 +57,51 @@ object LevelRoutes {
         * ```
         */
       Method.POST / "checkResult" -> handler { (req: Request) =>
-        req.header(Header.Authorization) match {
-
-          case Some(Bearer(token)) =>
-            (for {
-              service <- ZIO.service[AuthService]
-
-              user <- service.getUserGitData(Bearer(token))
-
+        KanjiResponse
+          .withToken(req) { token =>
+            for {
+              user <- ZIO
+                .serviceWithZIO[AuthService](_.getUserGitData(token))
+                .mapError(KanjiResponse.handleAuthError)
               bodyString <- req.body.asString
-                .mapError(_ => Response.badRequest("Empty request body"))
-
+                .orElseFail(Response.badRequest("Empty body"))
               gameResult <- ZIO
                 .fromEither(bodyString.fromJson[WordGameResult])
-                .mapError(e => Response.badRequest(s"Invalid game result: $e"))
-
+                .orElseFail(Response.badRequest("Invalid JSON"))
               isChanged <- LevelService.checkResult(user.id, gameResult)
+            } yield Response.json(isChanged.toJson)
+          }
+          .catchAll(handleLevelError)
+      },
 
-            } yield Response.json(isChanged.toJson))
-              .catchAll {
-                case AuthBadUserError(message) =>
-                  KanjiResponse.unauthorized(message)
-
-                case AuthDunnoUserError(message) =>
-                  ZIO.logError(s"Get user data error: $message") *>
-                    KanjiResponse.unauthorized(
-                      s"Failed to get user data: $message"
-                    )
-              }
-          case None =>
-            KanjiResponse.noAuthorization
-        }
+      // Unused
+      Method.GET / "refill" -> handler { (req: Request) =>
+        KanjiResponse
+          .withToken(req) { token =>
+            for {
+              user <- ZIO
+                .serviceWithZIO[AuthService](_.getUserGitData(token))
+                .mapError(KanjiResponse.handleAuthError)
+              _ <- LevelService
+                .refillQuests(user.id)
+                .mapError(e => Response.badRequest(s"wrong id: $e"))
+            } yield Response.ok
+          }
+          .catchAll(handleLevelError)
       }
-//      Method.GET / "refill" -> handler { (req: Request) =>
-//        req.header(Header.Authorization) match {
-//
-//          case Some(Bearer(token)) =>
-//            (for {
-//              service <- ZIO.service[AuthService]
-//
-//              user <- service.getUserGitData(Bearer(token))
-//
-//              _ <- LevelService
-//                .refillQuests(user.id)
-//                .mapError(e => Response.badRequest("wrong id"))
-//
-//            } yield Response.ok)
-//              .catchAll {
-//                case AuthBadUserError(message) =>
-//                  KanjiResponse.unauthorized(message)
-//
-//                case AuthDunnoUserError(message) =>
-//                  ZIO.logError(s"Get user data error: $message") *>
-//                    KanjiResponse.unauthorized(
-//                      s"Failed to get user data: $message"
-//                    )
-//              }
-//          case None =>
-//            KanjiResponse.noAuthorization
-//        }
-//      }
     )
 
+  private val handleLevelError: Any => ZIO[Any, Nothing, Response] = {
+    case r: Response => ZIO.succeed(r)
+
+    case SomeLevelError(message) =>
+      ZIO.succeed(Response.badRequest(s"No such user: $message"))
+    case NoSuchUser(message) =>
+      ZIO.succeed(Response.badRequest(s"No such user: $message"))
+    case DBLevelError(message) =>
+      ZIO.logError(s"DBLevel error: $message") *>
+        ZIO.succeed(Response.internalServerError(s"Database error: $message"))
+
+    case _ => ZIO.succeed(Response.internalServerError(s"Unknown error"))
+  }
 }

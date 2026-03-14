@@ -6,7 +6,7 @@ import zio.json.EncoderOps
 
 object VocabularyRoutes {
 
-  def apply(): Routes[Random, Response] =
+  def apply(): Routes[Random & WordService, Response] =
     Routes(
       /** Выдает список из [number] объектов типа
         * ```
@@ -22,11 +22,10 @@ object VocabularyRoutes {
       Method.GET / "vocabulary" / string("set") / int("number") -> handler {
         (set: String, number: Int, _: Request) =>
           (for {
-            words <- JsonFileReader.readWordsFromFile(s"vocabulary/$set.json")
-            shuffled <- Shuffler.getRandomItemsZIO(words, number)
+            shuffled <- ZIO.serviceWithZIO[WordService](_.getWords(set, number))
           } yield Response.json(shuffled.toJson))
             .catchAll { error =>
-              ZIO.fail(Response.text(s"Error: $error"))
+              ZIO.succeed(Response.text(s"Error: $error"))
             }
       }
     )

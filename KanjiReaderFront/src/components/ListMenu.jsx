@@ -1,4 +1,4 @@
-import "../css/app.css";
+import "../css/App.css";
 import "../css/ListMenu.css";
 
 const ListMenu = ({ getter, setter, isPicked, title, collec, back, secondary }) => {

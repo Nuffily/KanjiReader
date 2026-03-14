@@ -1,24 +1,36 @@
 package kanjiReader.statistics
 
+import kanjiReader.leveling.WordGameResult
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 
-/**
- * Нужна для представления результата одной игры (количество ответов / правильных)
- * @param id id пользователя
- * @param attempt номер попытки
- * @param correct количество правильных ответов
- * @param number количество ответов
- * @param word_list номер wordList
- */
+/** Нужна для представления результата одной игры (количество ответов /
+  * правильных)
+  * @param id
+  *   id пользователя
+  * @param attempt
+  *   номер попытки
+  * @param correct
+  *   количество правильных ответов
+  * @param number
+  *   количество ответов
+  * @param word_list
+  *   номер wordList
+  */
 case class Statistic(
     id: Long,
     attempt: Int,
     correct: Int,
     number: Int,
     word_list: Byte
-)
+) {
+  def this(id: Long, attempt: Int, res: WordGameResult) =
+    this(id, attempt, res.correctCount, res.count, res.wordList)
+}
 
-trait StatError { val message: String }
+trait StatError extends Throwable {
+  val message: String
+  override def getMessage: String = message
+}
 
 case class DBStatError(message: String) extends StatError
 

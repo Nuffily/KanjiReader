@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Game from './components/Game'
 import ListMenu from './components/ListMenu'
-import ProfileMenu from './components/Profilemenu'
+import ProfileMenu from './components/ProfileMenu'
 import './css/App.css'
 import { getQuests, getStats, getUserData } from './parts/Backend'
 import { toDark, toLight } from './parts/Theme'
@@ -46,7 +46,7 @@ function App() {
 
 
   const [userData, setUserData] = useState({});
-  const [quests, setQuests] = useState({});
+  const [quests, setQuests] = useState([]);
   const [stats, setStats] = useState({});
 
   useEffect(() => {

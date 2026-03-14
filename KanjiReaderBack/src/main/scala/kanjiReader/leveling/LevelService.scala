@@ -29,8 +29,10 @@ trait LevelService {
 
   /** Обрабатывает результат игры пользователя:
     * ```
-    * 1. Обновляет состояние квестов
-    * 2. Изменяет статистику
+    * <ol>
+    * <li>Обновляет состояние квестов</li>
+    * <li>Изменяет статистику</li>
+    * </ol>
     * ```
     */
   def checkResult(
@@ -76,13 +78,15 @@ object LevelService {
 
   /** Обрабатывает результат игры пользователя:
     * ```
-    * 1. Обновляет состояние квестов
-    * 2. Изменяет статистику
+    * <ol>
+    *     <li>Обновляет состояние квестов</li>
+    *     <li>Изменяет статистику</li>
+    * </ol>
     * ```
     */
   def checkResult(
       id: Long,
       res: WordGameResult
-  ): ZIO[UserRepo & LevelService & StatisticsService, LevelError, Boolean] =
+  ): ZIO[UserRepo & StatisticsService with LevelService, LevelError, Boolean] =
     ZIO.serviceWithZIO[LevelService](_.checkResult(id, res))
 }

@@ -3,9 +3,10 @@ package kanjiReader
 import kanjiReader.auth.{AuthRoutes, GitHubService}
 import kanjiReader.config.{GitHubConfig, HttpServerConfig}
 import kanjiReader.kanjiUsers.PersistentUserRepo
-import kanjiReader.leveling.{KanjiLevelService, KanjiQuestHandler, LevelRoutes}
+import kanjiReader.leveling.handler.KanjiQuestHandler
+import kanjiReader.leveling.{KanjiLevelService, LevelRoutes}
 import kanjiReader.statistics.{KanjiStatisticsService, StatisticsRoutes}
-import kanjiReader.vocabulary.VocabularyRoutes
+import kanjiReader.vocabulary.{KanjiWordService, VocabularyRoutes}
 import zio.config.typesafe.TypesafeConfigProvider
 import zio.http.Middleware.CorsConfig
 import zio.http._
@@ -52,10 +53,10 @@ object MainApp extends ZIOAppDefault {
 
   def run: ZIO[Any, Throwable, Nothing] = {
 
+        Migrator.run *>
     (Server
       .install(
-        VocabularyRoutes() @@ simpleCors ++ AuthRoutes() @@ simpleCors
-          ++ LevelRoutes() @@ simpleCors ++ StatisticsRoutes() @@ simpleCors
+        (VocabularyRoutes() ++ AuthRoutes() ++ LevelRoutes() ++ StatisticsRoutes()) @@ simpleCors
       )
       .flatMap(port =>
         Console.printLine(s"Started server on port: $port")
@@ -64,6 +65,7 @@ object MainApp extends ZIOAppDefault {
         serverConfig >+> nettyConfig >+> Server.live,
         gitHubConfigLayer >>> GitHubService.layer,
         Client.default,
+        KanjiWordService.layer,
         PersistentUserRepo.layer,
         randomLayer,
         KanjiStatisticsService.layer,
