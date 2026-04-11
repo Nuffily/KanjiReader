@@ -1,4 +1,4 @@
-package kanjiReader.leveling.handler
+package kanjiReader.base.leveling.handler
 
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 

@@ -1,12 +1,12 @@
 package kanjiReader
 
-import kanjiReader.auth.{AuthRoutes, GitHubService}
+import kanjiReader.base.auth.{AuthRoutes, GitHubService}
+import kanjiReader.base.kanjiUsers.PersistentUserRepo
+import kanjiReader.base.leveling.{KanjiLevelService, LevelRoutes}
+import kanjiReader.base.leveling.handler.KanjiQuestHandler
+import kanjiReader.base.statistics.{KanjiStatisticsService, StatisticsRoutes}
+import kanjiReader.base.vocabulary.{KanjiWordService, VocabularyRoutes}
 import kanjiReader.config.{GitHubConfig, HttpServerConfig}
-import kanjiReader.kanjiUsers.PersistentUserRepo
-import kanjiReader.leveling.handler.KanjiQuestHandler
-import kanjiReader.leveling.{KanjiLevelService, LevelRoutes}
-import kanjiReader.statistics.{KanjiStatisticsService, StatisticsRoutes}
-import kanjiReader.vocabulary.{KanjiWordService, VocabularyRoutes}
 import zio.config.typesafe.TypesafeConfigProvider
 import zio.http.Middleware.CorsConfig
 import zio.http.netty.NettyConfig

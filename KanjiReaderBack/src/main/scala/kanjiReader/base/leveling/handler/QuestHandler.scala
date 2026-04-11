@@ -1,6 +1,6 @@
-package kanjiReader.leveling.handler
+package kanjiReader.base.leveling.handler
 
-import kanjiReader.leveling.{Quest, WordGameResult}
+import kanjiReader.base.leveling.{Quest, WordGameResult}
 
 trait QuestHandler {
 

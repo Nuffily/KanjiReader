@@ -1,6 +1,6 @@
-package kanjiReader.auth
+package kanjiReader.base.auth
 
-import kanjiReader.kanjiUsers.UserTable
+import kanjiReader.base.kanjiUsers.UserTable
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 
 import java.time.LocalDateTime

@@ -1,4 +1,4 @@
-package kanjiReader.vocabulary
+package kanjiReader.base.vocabulary
 
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 

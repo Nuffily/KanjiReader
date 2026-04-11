@@ -1,4 +1,4 @@
-package kanjiReader.vocabulary
+package kanjiReader.base.vocabulary
 
 import io.getquill.jdbczio.Quill
 import io.getquill.{H2ZioJdbcContext, Literal}

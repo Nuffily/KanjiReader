@@ -1,4 +1,4 @@
-package kanjiReader.vocabulary
+package kanjiReader.base.vocabulary
 
 import zio.{&, Random, ZIO}
 import zio.http.{Method, Request, Response, Routes, handler, int, string}

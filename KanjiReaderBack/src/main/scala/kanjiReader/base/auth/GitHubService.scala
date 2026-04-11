@@ -1,8 +1,8 @@
-package kanjiReader.auth
+package kanjiReader.base.auth
 
 import kanjiReader.KanjiStructures.KanjiCache
+import kanjiReader.base.kanjiUsers.UserRepo
 import kanjiReader.config.GitHubConfig
-import kanjiReader.kanjiUsers.UserRepo
 import zio.http.Header.Authorization
 import zio.http.{Body, Client, Form, Header, MediaType, Request, Status, URL}
 import zio.json.DecoderOps

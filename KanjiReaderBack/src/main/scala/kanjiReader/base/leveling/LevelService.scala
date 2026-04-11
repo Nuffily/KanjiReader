@@ -1,7 +1,7 @@
-package kanjiReader.leveling
+package kanjiReader.base.leveling
 
-import kanjiReader.kanjiUsers.UserRepo
-import kanjiReader.statistics.StatisticsService
+import kanjiReader.base.kanjiUsers.UserRepo
+import kanjiReader.base.statistics.StatisticsService
 import zio.{&, Random, ZIO}
 
 trait LevelService {

@@ -1,7 +1,7 @@
-package kanjiReader.statistics
+package kanjiReader.base.statistics
 
-import kanjiReader.auth.AuthService
-import kanjiReader.kanjiUsers.UserRepo
+import kanjiReader.base.auth.AuthService
+import kanjiReader.base.kanjiUsers.UserRepo
 import kanjiReader.utils.KanjiResponse
 import zio.http.{Client, Method, Request, Response, Routes, handler}
 import zio.json.EncoderOps

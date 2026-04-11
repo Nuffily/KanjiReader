@@ -1,4 +1,4 @@
-package kanjiReader.kanjiUsers
+package kanjiReader.base.kanjiUsers
 
 import io.getquill.jdbczio.Quill
 import io.getquill.{Escape, H2ZioJdbcContext}

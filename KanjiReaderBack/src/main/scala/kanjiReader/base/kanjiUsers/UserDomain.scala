@@ -1,4 +1,4 @@
-package kanjiReader.kanjiUsers
+package kanjiReader.base.kanjiUsers
 
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 import zio.schema.{DeriveSchema, Schema}

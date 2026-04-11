@@ -1,10 +1,6 @@
 package kanjiReader.utils
 
-import kanjiReader.auth.{
-  AuthBadUserError,
-  AuthDunnoUserError,
-  AuthUserDataError
-}
+import kanjiReader.base.auth.{AuthBadUserError, AuthDunnoUserError, AuthUserDataError}
 import zio.ZIO
 import zio.http.Header.Authorization.Bearer
 import zio.http.{Header, Request, Response, Status}

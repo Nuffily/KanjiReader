@@ -1,6 +1,6 @@
-package kanjiReader.auth
+package kanjiReader.base.auth
 
-import kanjiReader.kanjiUsers.UserRepo
+import kanjiReader.base.kanjiUsers.UserRepo
 import zio.http.Client
 import zio.http.Header.Authorization
 import zio.{&, ZIO}

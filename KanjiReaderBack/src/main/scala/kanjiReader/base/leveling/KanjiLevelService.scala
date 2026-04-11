@@ -1,11 +1,11 @@
-package kanjiReader.leveling
+package kanjiReader.base.leveling
 
 import io.getquill.jdbczio.Quill
 import io.getquill.{H2ZioJdbcContext, Literal}
-import kanjiReader.kanjiUsers.UserRepo
-import kanjiReader.leveling.QuestType._
-import kanjiReader.leveling.handler.QuestHandler
-import kanjiReader.statistics.StatisticsService
+import kanjiReader.base.kanjiUsers.UserRepo
+import kanjiReader.base.leveling.handler.QuestHandler
+import kanjiReader.base.statistics.StatisticsService
+import QuestType._
 import kanjiReader.utils.Syntax._
 import zio.{&, Clock, URIO, ZIO, ZLayer}
 

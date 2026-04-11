@@ -1,8 +1,8 @@
-package kanjiReader.statistics
+package kanjiReader.base.statistics
 
 import io.getquill.jdbczio.Quill
 import io.getquill.{H2ZioJdbcContext, Literal, Ord}
-import kanjiReader.leveling.WordGameResult
+import kanjiReader.base.leveling.WordGameResult
 import zio.{IO, ZLayer}
 
 import javax.sql.DataSource

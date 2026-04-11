@@ -1,4 +1,4 @@
-package kanjiReader.kanjiUsers
+package kanjiReader.base.kanjiUsers
 
 import zio.{IO, ZIO}
 

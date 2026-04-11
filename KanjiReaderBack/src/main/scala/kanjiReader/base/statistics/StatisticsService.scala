@@ -1,6 +1,6 @@
-package kanjiReader.statistics
+package kanjiReader.base.statistics
 
-import kanjiReader.leveling.WordGameResult
+import kanjiReader.base.leveling.WordGameResult
 import zio.{IO, ZIO}
 
 

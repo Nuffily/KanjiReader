@@ -1,9 +1,9 @@
-package kanjiReader.leveling
+package kanjiReader.base.leveling
 
-import kanjiReader.auth.AuthService
-import kanjiReader.kanjiUsers.UserRepo
-import kanjiReader.leveling.handler.KanjiQuestHandler
-import kanjiReader.statistics.StatisticsService
+import kanjiReader.base.auth.AuthService
+import kanjiReader.base.kanjiUsers.UserRepo
+import kanjiReader.base.leveling.handler.KanjiQuestHandler
+import kanjiReader.base.statistics.StatisticsService
 import kanjiReader.utils.KanjiResponse
 import zio.http.{Client, Method, Request, Response, Routes, handler}
 import zio.json.{DecoderOps, EncoderOps}
