@@ -1,6 +1,11 @@
 export async function getUserData(setUserData) {
   const token = localStorage.getItem("accessToken");
 
+  if (!token) {
+    console.warn("No token found, skipping fetch");
+    return;
+  }
+
   try {
     const response = await fetch("/api/getKanjiUserData", {
       method: "GET",
@@ -31,6 +36,11 @@ export async function getUserData(setUserData) {
 
 export async function getQuests(setQuests) {
   const token = localStorage.getItem("accessToken");
+
+  if (!token) {
+    console.warn("No token found, skipping fetch");
+    return;
+  }
 
   try {
     const response = await fetch("/api/getQuests", {
@@ -63,6 +73,12 @@ export async function getQuests(setQuests) {
 
 export async function getStats(setStats) {
   const token = localStorage.getItem("accessToken");
+
+  if (!token) {
+    console.warn("No token found, skipping fetch");
+
+    return;
+  }
 
   try {
     const response = await fetch("/api/getStats", {

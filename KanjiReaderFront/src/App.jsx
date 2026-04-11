@@ -50,24 +50,25 @@ function App() {
   const [stats, setStats] = useState({});
 
   useEffect(() => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString)
-    const codeParam = urlParams.get("code")
+    const urlParams = new URLSearchParams(window.location.search);
+    const codeParam = urlParams.get("code");
+    const storedToken = localStorage.getItem("accessToken");
 
-    if (codeParam && (localStorage.getItem("accessToken") === null)) {
+    // Объединяем всё в одну асинхронную функцию внутри эффекта
+    const initializeApp = async () => {
+      let currentToken = storedToken;
 
-      console.log("no local")
-
-      async function getAccessToken() {
-        await fetch("/api/getAccessToken?code=" + codeParam, {
-          method: "GET"
-        }).then((response) => {
-          return response.json();
-        }).then((data) => {
+      // 1. Если токена нет, но есть код — идем за токеном
+      if (codeParam && !storedToken) {
+        console.log("No local token, fetching with code...");
+        try {
+          const response = await fetch("/api/getAccessToken?code=" + codeParam);
+          const data = await response.json();
 
           if (data.access_token) {
             localStorage.setItem("accessToken", data.access_token);
-            token = data.access_token;
+            currentToken = data.access_token;
+            // Убираем код из URL, чтобы не смущать пользователя
             window.history.replaceState({}, document.title, "/");
           }
         } catch (e) {
@@ -75,18 +76,28 @@ function App() {
         }
       }
 
-      if (token) {
-        console.log("Token found, loading data...");
-        await getUserData(setUserData);
-        await getQuests(setQuests);
-        await getStats(setStats);
-        
-        setRerender(prev => !prev);
+      // 2. Если токен теперь есть (был или получили) — грузим данные
+      if (currentToken) {
+        console.log("Token found, loading data sequentially...");
+        try {
+          // Сначала ЖДЕМ только юзера
+          await getUserData(setUserData); 
+          
+          // Только когда getUserData завершится, пойдут остальные запросы
+          console.log("User data loaded, now fetching quests and stats...");
+          
+          await getQuests(setQuests);
+          await getStats(setStats);
+          
+          setRerender(prev => !prev);
+        } catch (e) {
+          console.error("Failed to load app data step-by-step", e);
+        }
       }
-    }
+    };
 
     initializeApp();
-  }, []);
+  }, []); // Пустой массив — сработает один раз при загрузке
 
   const [wordList, setWordList] = useState(0)
   const [gameTime, setGameTime] = useState(0)
