@@ -18,7 +18,7 @@ function useVocabulary(set = 'WK51-55', number = 10) {
         setLoading(true);
         setError(null);
         const response = await fetch(
-          `${config.apiUrl}/vocabulary/${set}/${number}`
+          `/api/vocabulary/${set}/${number}`
         );
 
         if (!response.ok) {
@@ -100,6 +100,11 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
     };
 
     const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      console.warn("No token found, skipping fetch");
+      return;
+    }
 
     try {
       const response = await fetch(`${config.apiUrl}/checkResult`, {
