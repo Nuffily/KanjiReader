@@ -22,8 +22,8 @@ services:
       - CLIENT_SECRET=${CLIENT_SECRET}
       - GITHUB_TOKEN_SERVER=${GITHUB_TOKEN_SERVER}
       - GITHUB_USER_SERVER=${GITHUB_USER_SERVER}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_HOST=redis_cache
+      - REDIS_PORT=6379
 
   redis_cache:
     image: redis:alpine

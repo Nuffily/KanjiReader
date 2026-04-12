@@ -71,7 +71,7 @@ object MainApp extends ZIOAppDefault {
           Console.printLine(s"Started server on port: $port")
         ) *> ZIO.never)
         .provide(
-          serverConfig >>> nettyConfig >>> Server.live,
+          serverConfig >+> nettyConfig >+> Server.live,
           gitHubConfigLayer >>> GitHubService.layer,
           Client.default,
           KanjiWordService.layer,

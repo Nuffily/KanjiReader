@@ -103,12 +103,10 @@ case class GitHubService(
   ): ZIO[Client & UserRepo & Redis, AuthUserDataError, KanjiUser] = for {
 
     gitUser <- getUserGitData(authHeader)
-    _       <- Console.printLine(gitUser).orDie
 
     user <- UserRepo
       .lookupOrRegister(gitUser.id)
       .mapError(e => AuthDunnoUserError(e.message))
-    _ <- Console.printLine(user).orDie
 
   } yield KanjiUser(gitUser, user)
 

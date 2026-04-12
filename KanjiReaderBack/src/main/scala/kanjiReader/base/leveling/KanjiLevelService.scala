@@ -3,11 +3,11 @@ package kanjiReader.base.leveling
 import io.getquill.jdbczio.Quill
 import io.getquill.{H2ZioJdbcContext, Literal}
 import kanjiReader.base.kanjiUsers.UserRepo
+import kanjiReader.base.leveling.QuestType._
 import kanjiReader.base.leveling.handler.QuestHandler
 import kanjiReader.base.statistics.StatisticsService
-import QuestType._
 import kanjiReader.utils.Syntax._
-import zio.{&, Clock, URIO, ZIO, ZLayer}
+import zio.{&, Clock, Console, URIO, ZIO, ZLayer}
 
 import javax.sql.DataSource
 import scala.annotation.nowarn
@@ -120,6 +120,10 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
 
       now <- Clock.localDateTime
       isExpired = user.refill.isBefore(now)
+
+      _    <- Console.printLine(isExpired).orDie
+      _    <- Console.printLine(user.refill).orDie
+      _    <- Console.printLine(now).orDie
 
       quests <-
         if (isExpired) doRefill
