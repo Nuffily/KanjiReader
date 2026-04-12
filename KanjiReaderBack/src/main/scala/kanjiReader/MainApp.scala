@@ -2,11 +2,11 @@ package kanjiReader
 
 import kanjiReader.base.auth.{AuthRoutes, GitHubService}
 import kanjiReader.base.kanjiUsers.PersistentUserRepo
-import kanjiReader.base.leveling.{KanjiLevelService, LevelRoutes}
 import kanjiReader.base.leveling.handler.KanjiQuestHandler
+import kanjiReader.base.leveling.{KanjiLevelService, LevelRoutes}
 import kanjiReader.base.statistics.{KanjiStatisticsService, StatisticsRoutes}
 import kanjiReader.base.vocabulary.{KanjiWordService, VocabularyRoutes}
-import kanjiReader.config.{GitHubConfig, HttpServerConfig}
+import kanjiReader.config.{GitHubConfig, HttpServerConfig, KanjiRedisConfig}
 import zio.config.typesafe.TypesafeConfigProvider
 import zio.http.Middleware.CorsConfig
 import zio.http.netty.NettyConfig
@@ -71,14 +71,15 @@ object MainApp extends ZIOAppDefault {
           Console.printLine(s"Started server on port: $port")
         ) *> ZIO.never)
         .provide(
-          serverConfig >+> nettyConfig >+> Server.live,
+          serverConfig >>> nettyConfig >>> Server.live,
           gitHubConfigLayer >>> GitHubService.layer,
           Client.default,
           KanjiWordService.layer,
           PersistentUserRepo.layer,
           randomLayer,
           KanjiStatisticsService.layer,
-          KanjiLevelService.layer(KanjiQuestHandler)
+          KanjiLevelService.layer(KanjiQuestHandler),
+          KanjiRedisConfig.layer
         )
   }
 }

@@ -1,29 +1,39 @@
 services:
   nginx:
-      image: nginx:alpine
-      volumes:
-        - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      ports:
-        - "80:80"
-      depends_on:
-        - frontend
-        - backend
+    image: nginx:alpine
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
 
   backend:
+    depends_on:
+      - redis_cache
     build:
       context: ./KanjiReaderBack
     environment:
-    - PORT=8099
-    - DB_URL=jdbc:h2:./data/kanjiapp;AUTO_SERVER=TRUE
-    - APP_ENV=production
-    - CLIENT_ID=${CLIENT_ID}
-    - CLIENT_SECRET=${CLIENT_SECRET}
-    - GITHUB_TOKEN_SERVER=${GITHUB_TOKEN_SERVER}
-    - GITHUB_USER_SERVER=${GITHUB_USER_SERVER}
+      - PORT=8099
+      - DB_URL=jdbc:h2:./data/kanjiapp;AUTO_SERVER=TRUE
+      - APP_ENV=production
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+      - GITHUB_TOKEN_SERVER=${GITHUB_TOKEN_SERVER}
+      - GITHUB_USER_SERVER=${GITHUB_USER_SERVER}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+
+  redis_cache:
+    image: redis:alpine
+    volumes:
+      - redis_data:/data
 
   frontend:
     build: ./KanjiReaderFront
-    # ports:
-    #   - "5173:80"
     depends_on:
       - backend
+
+volumes:
+  redis_data:

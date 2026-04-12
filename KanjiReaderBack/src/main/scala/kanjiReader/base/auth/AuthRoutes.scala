@@ -4,11 +4,12 @@ import kanjiReader.base.kanjiUsers.UserRepo
 import kanjiReader.utils.KanjiResponse
 import zio.http.{Client, Method, Request, Response, Routes, handler}
 import zio.json.EncoderOps
+import zio.redis.Redis
 import zio.{&, ZIO}
 
 object AuthRoutes {
 
-  def apply(): Routes[Client & AuthService & UserRepo, Response] = Routes(
+  def apply(): Routes[Client & AuthService & UserRepo & Redis, Response] = Routes(
     /** Принимает код входа через гитхаб в url строке и с помощью него получает
       * токен пользователя с API GitHub
       */

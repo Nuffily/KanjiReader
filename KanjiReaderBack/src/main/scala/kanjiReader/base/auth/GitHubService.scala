@@ -1,16 +1,17 @@
 package kanjiReader.base.auth
 
-import kanjiReader.KanjiStructures.KanjiCache
+import kanjiReader.base.auth.redis.{KanjiTokenCache, TokenCache}
 import kanjiReader.base.kanjiUsers.UserRepo
 import kanjiReader.config.GitHubConfig
 import zio.http.Header.Authorization
 import zio.http.{Body, Client, Form, Header, MediaType, Request, Status, URL}
 import zio.json.DecoderOps
+import zio.redis.Redis
 import zio.{&, Scope, ZIO, ZLayer, durationInt, _}
 
 case class GitHubService(
     config: GitHubConfig,
-    cache: KanjiCache[Authorization, GitHubUser]
+    cache: TokenCache
 ) extends AuthService {
 
   private val retryPolicy =
@@ -85,21 +86,29 @@ case class GitHubService(
 
   override def getUserGitData(
       authHeader: Authorization
-  ): ZIO[Client, AuthUserDataError, GitHubUser] = ZIO.scoped {
-    cache.getOrElseZIO(authHeader)(
-      requestUserData(authHeader)
-    )
+  ): ZIO[Client & Redis, AuthUserDataError, GitHubUser] = ZIO.scoped {
+    cache.getUser(authHeader).orElse {
+      for {
+        _    <- Console.printLine("Cache miss").orDie
+        user <- requestUserData(authHeader)
+        _ <- cache
+          .cacheUser(authHeader, user, 1.hour)
+          .mapError(e => AuthDunnoUserError(e.getMessage))
+      } yield user
+    }
   }
 
   override def getKanjiUserData(
       authHeader: Authorization
-  ): ZIO[Client & UserRepo, AuthUserDataError, KanjiUser] = for {
+  ): ZIO[Client & UserRepo & Redis, AuthUserDataError, KanjiUser] = for {
 
     gitUser <- getUserGitData(authHeader)
+    _       <- Console.printLine(gitUser).orDie
 
     user <- UserRepo
       .lookupOrRegister(gitUser.id)
       .mapError(e => AuthDunnoUserError(e.message))
+    _ <- Console.printLine(user).orDie
 
   } yield KanjiUser(gitUser, user)
 
@@ -158,7 +167,7 @@ object GitHubService {
   def layer: ZLayer[GitHubConfig, Throwable, AuthService] = ZLayer.scoped {
     for {
       config <- ZIO.service[GitHubConfig]
-      cache  <- KanjiCache.make[Authorization, GitHubUser](1.hour)
+      cache = KanjiTokenCache("bear:")
     } yield GitHubService(config, cache)
   }
 }

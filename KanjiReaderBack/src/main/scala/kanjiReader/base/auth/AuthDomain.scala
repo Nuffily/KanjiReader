@@ -2,6 +2,8 @@ package kanjiReader.base.auth
 
 import kanjiReader.base.kanjiUsers.UserTable
 import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
+import zio.schema.{DeriveSchema, Schema}
+import zio.schema.codec.{BinaryCodec, ProtobufCodec}
 
 import java.time.LocalDateTime
 
@@ -33,6 +35,9 @@ object GitHubUser {
     DeriveJsonDecoder.gen[GitHubUser]
   implicit val encoder: JsonEncoder[GitHubUser] =
     DeriveJsonEncoder.gen[GitHubUser]
+
+  implicit val schema: Schema[GitHubUser] = DeriveSchema.gen[GitHubUser]
+  implicit val codec: BinaryCodec[GitHubUser] = ProtobufCodec.protobufCodec[GitHubUser]
 }
 
 sealed trait AuthTokenError extends Throwable {

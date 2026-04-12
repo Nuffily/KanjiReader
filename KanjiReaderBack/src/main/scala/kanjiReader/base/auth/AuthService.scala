@@ -3,6 +3,7 @@ package kanjiReader.base.auth
 import kanjiReader.base.kanjiUsers.UserRepo
 import zio.http.Client
 import zio.http.Header.Authorization
+import zio.redis.Redis
 import zio.{&, ZIO}
 
 trait AuthService {
@@ -19,14 +20,14 @@ trait AuthService {
     */
   def getUserGitData(
       authHeader: Authorization
-  ): ZIO[Client, AuthUserDataError, GitHubUser]
+  ): ZIO[Client & Redis, AuthUserDataError, GitHubUser]
 
   /** Принимает токен Authorization и возвращает данные пользователя в виде
     * KanjiUser
     */
   def getKanjiUserData(
       authHeader: Authorization
-  ): ZIO[Client & UserRepo, AuthUserDataError, KanjiUser]
+  ): ZIO[Client & UserRepo & Redis, AuthUserDataError, KanjiUser]
 }
 
 object AuthService {
@@ -44,7 +45,7 @@ object AuthService {
     */
   def getUserGitData(
       authHeader: Authorization
-  ): ZIO[AuthService & Client, AuthUserDataError, GitHubUser] =
+  ): ZIO[AuthService & Client & Redis, AuthUserDataError, GitHubUser] =
     ZIO.serviceWithZIO[AuthService](_.getUserGitData(authHeader))
 
   /** Принимает токен Authorization и возвращает данные пользователя в виде
@@ -52,6 +53,6 @@ object AuthService {
     */
   def getKanjiUserData(
       authHeader: Authorization
-  ): ZIO[Client & UserRepo & AuthService, AuthUserDataError, KanjiUser] =
+  ): ZIO[Client & UserRepo & AuthService & Redis, AuthUserDataError, KanjiUser] =
     ZIO.serviceWithZIO[AuthService](_.getKanjiUserData(authHeader))
 }
