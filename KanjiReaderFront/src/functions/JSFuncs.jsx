@@ -48,9 +48,14 @@ export function unlogin() {
 }
 
 export function getTimeRemaining(targetDateString) {
-  const targetDate = new Date(targetDateString);
-  const now = new Date();
-  const diffMs = targetDate - now;
+  const isoString = targetDateString.endsWith('Z') 
+    ? targetDateString 
+    : `${targetDateString}Z`;
+
+  const targetDate = new Date(isoString);
+  const now = Date.now(); // Это всегда UTC
+
+  const diffMs = targetDate.getTime() - now;
 
   if (diffMs <= 0) {
     return "00:00:00";
@@ -62,7 +67,6 @@ export function getTimeRemaining(targetDateString) {
   const seconds = totalSeconds % 60;
 
   const format = (num) => String(num).padStart(2, '0');
-
   return `${format(hours)}:${format(minutes)}:${format(seconds)}`;
 }
 

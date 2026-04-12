@@ -1,0 +1,74 @@
+package kanjiReader.base.leveling
+
+import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
+
+/** Класс внутреннего представления квеста
+  * @param user_id
+  *   пользователь
+  * @param quest_type
+  *   тип квеста (см. QuestType)
+  * @param word_list
+  *   список слов, в котором квест действует
+  * @param progress
+  *   прогресс квеста (если есть)
+  * @param parameter
+  *   параметр 1 (зависит от типа)
+  * @param parameter2
+  *   параметр 2 (зависит от типа)
+  * @param entry_id
+  *   суррогатный ключ
+  * @param is_complete
+  *   пройден ли квест
+  */
+case class Quest(
+    user_id: Long,
+    quest_type: Byte,
+    word_list: Byte,
+    progress: Byte = 0,
+    parameter: Byte = 0,
+    parameter2: Byte = 0,
+    entry_id: Long = 0L,
+    is_complete: Boolean = false
+)
+
+
+
+trait LevelError extends Throwable {
+  val message: String
+  override def getMessage: String = message
+}
+
+case class NoSuchUser(message: String)     extends LevelError
+case class SomeLevelError(message: String) extends LevelError
+case class DBLevelError(message: String)   extends LevelError
+
+object QuestType extends Enumeration {
+  val CorrectPer1M, CorrectPer2M, Percent, InRow1M, InRow2M, SumCorrect = Value
+}
+
+/** Представление резальтата игры, который приходит с фронта
+  * @param wordList
+  *   список слов, в котором прошла игра
+  * @param time
+  *   выбранное время
+  * @param count
+  *   количество ответов
+  * @param correctCount
+  *   количество верных ответов
+  * @param maxInRow
+  *   максимальное количество верных ответов подряд
+  */
+case class WordGameResult(
+    wordList: Byte,
+    time: Int,
+    count: Int,
+    correctCount: Int,
+    maxInRow: Int
+)
+
+object WordGameResult {
+  implicit val decoder: JsonDecoder[WordGameResult] =
+    DeriveJsonDecoder.gen[WordGameResult]
+  implicit val encoder: JsonEncoder[WordGameResult] =
+    DeriveJsonEncoder.gen[WordGameResult]
+}
