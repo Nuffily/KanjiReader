@@ -5,7 +5,7 @@ import zio.http.Header.Authorization
 import zio.redis.{Redis, RedisError}
 import zio.{Duration, IO, ZIO, ZLayer}
 
-case class KanjiTokenCache(prefix: String, redis: Redis) extends TokenCache {
+case class RedisTokenCache(prefix: String, redis: Redis) extends TokenCache {
   private def redisKey(token: String): String =
     s"$prefix:${token.take(50)}"
 
@@ -36,11 +36,11 @@ case class KanjiTokenCache(prefix: String, redis: Redis) extends TokenCache {
     }
 }
 
-object KanjiTokenCache {
+object RedisTokenCache {
   val layer: ZLayer[Redis, Nothing, TokenCache] =
     ZLayer.fromZIO {
       for {
         redis <- ZIO.service[Redis]
-      } yield KanjiTokenCache("kanji-auth", redis)
+      } yield RedisTokenCache("kanji-auth", redis)
     }
 }

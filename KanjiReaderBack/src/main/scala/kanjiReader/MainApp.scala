@@ -2,7 +2,7 @@ package kanjiReader
 
 import kanjiReader.base.auth.token.cache.{
   InMemoryTokenCache,
-  KanjiTokenCache,
+  RedisTokenCache,
   TokenCache
 }
 import kanjiReader.base.auth.{AuthRoutes, GitHubService}
@@ -66,9 +66,9 @@ object MainApp extends ZIOAppDefault {
   )
 
   private val tokenCacheLayer: ZLayer[Any, Throwable, TokenCache] = {
-    (KanjiRedisConfig.layer >+> KanjiTokenCache.layer)
-      .catchAll(_ =>
-        ZLayer.fromZIO(ZIO.logWarning("!!! Redis недоступен. Токены переключаются в память!")) >>>
+    (KanjiRedisConfig.layer >+> RedisTokenCache.layer)
+      .catchAll(e =>
+        ZLayer.fromZIO(ZIO.logWarning(f"Cannot connect redis, using local store: ${e.exception}")) >>>
           InMemoryTokenCache.layer
       )
   }
@@ -86,9 +86,7 @@ object MainApp extends ZIOAppDefault {
         .provide(
           serverConfig >+> nettyConfig >+> Server.live,
 
-          tokenCacheLayer,
-
-          gitHubConfigLayer >>> GitHubService.layer,
+          gitHubConfigLayer ++ tokenCacheLayer >>> GitHubService.layer,
 
           Client.default,
           KanjiWordService.layer,

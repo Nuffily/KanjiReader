@@ -6,14 +6,14 @@ import zio.{Duration, IO, Ref, ZIO, ZLayer}
 
 case class InMemoryTokenCache(state: Ref[Map[String, (GitHubUser, Long)]]) extends TokenCache {
 
-  private def redisKey(token: String): String =
+  private def memoryKey(token: String): String =
     s"kanji-auth:${token.take(50)}"
 
   override def getUser(auth: Authorization): IO[AuthTokenError, GitHubUser] =
     auth match {
       case Authorization.Bearer(token) =>
         state.get.flatMap { map =>
-          map.get(redisKey(token.value.mkString)) match {
+          map.get(memoryKey(token.value.mkString)) match {
             case Some((user, expireAt)) if System.currentTimeMillis() < expireAt =>
               ZIO.succeed(user)
 
@@ -34,7 +34,7 @@ case class InMemoryTokenCache(state: Ref[Map[String, (GitHubUser, Long)]]) exten
     auth match {
       case Authorization.Bearer(token) =>
         ZIO.succeed(System.currentTimeMillis() + ttl.toMillis).flatMap { expireAt =>
-          state.update(_ + (redisKey(token.value.mkString) -> (user, expireAt))).unit
+          state.update(_ + (memoryKey(token.value.mkString) -> (user, expireAt))).unit
         }
 
       case _ =>
