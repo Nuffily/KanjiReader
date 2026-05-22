@@ -7,13 +7,12 @@ import kanjiReader.base.statistics.StatisticsService
 import kanjiReader.utils.KanjiResponse
 import zio.http.{Client, Method, Request, Response, Routes, handler}
 import zio.json.{DecoderOps, EncoderOps}
-import zio.redis.Redis
 import zio.{&, Random, ZIO}
 
 object LevelRoutes {
 
   def apply(): Routes[
-    Random & LevelService & UserRepo & AuthService & Client & StatisticsService & Redis,
+    Random & LevelService & UserRepo & AuthService & Client & StatisticsService,
     Response
   ] =
     Routes(

@@ -1,5 +1,10 @@
 package kanjiReader
 
+import kanjiReader.base.auth.token.cache.{
+  InMemoryTokenCache,
+  KanjiTokenCache,
+  TokenCache
+}
 import kanjiReader.base.auth.{AuthRoutes, GitHubService}
 import kanjiReader.base.kanjiUsers.PersistentUserRepo
 import kanjiReader.base.leveling.handler.KanjiQuestHandler
@@ -60,6 +65,14 @@ object MainApp extends ZIOAppDefault {
     )
   )
 
+  private val tokenCacheLayer: ZLayer[Any, Throwable, TokenCache] = {
+    (KanjiRedisConfig.layer >+> KanjiTokenCache.layer)
+      .catchAll(_ =>
+        ZLayer.fromZIO(ZIO.logWarning("!!! Redis недоступен. Токены переключаются в память!")) >>>
+          InMemoryTokenCache.layer
+      )
+  }
+
   def run: ZIO[Any, Throwable, Nothing] = {
 
     Migrator.run *>
@@ -72,14 +85,18 @@ object MainApp extends ZIOAppDefault {
         ) *> ZIO.never)
         .provide(
           serverConfig >+> nettyConfig >+> Server.live,
+
+          tokenCacheLayer,
+
           gitHubConfigLayer >>> GitHubService.layer,
+
           Client.default,
           KanjiWordService.layer,
           PersistentUserRepo.layer,
           randomLayer,
           KanjiStatisticsService.layer,
           KanjiLevelService.layer(KanjiQuestHandler),
-          KanjiRedisConfig.layer
+
         )
   }
 }
