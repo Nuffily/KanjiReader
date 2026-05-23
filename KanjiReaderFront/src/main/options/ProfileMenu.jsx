@@ -83,7 +83,7 @@ const ProfileMenu = ({ userData, quests, vocs, isActive, isPicked, back, setThem
 
     return (
       <div className="profile-quests-column">
-        <div className="profile-section-divider">RITUAL TASKS</div>
+        <div className="profile-section-divider">QUESTS</div>
         <div className="profile-quests-list">
           {quests.map((quest, index) => {
             const isCompleted = quest.isCompleted;

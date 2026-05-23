@@ -1,0 +1,169 @@
+/* ==========================================================================
+   RESULT LIST CONTAINER (Адаптирован под общую темную сетку)
+   ========================================================================== */
+.result-list-container {
+  width: 100%;
+  max-width: 1050px; /* Идеальный размер для фокуса по центру */
+  margin: 2rem auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.result-list-wrapper {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-height: 680px; /* Ограничение по высоте скролла */
+  overflow-y: auto;
+  padding-right: 4px; /* Отступ для кастомного скроллбара */
+}
+
+/* ==========================================================================
+   УНИФИЦИРОВАННЫЙ СТИЛЬ СТРОКИ РЕЗУЛЬТАТА (Без рамок, на градиентах)
+   ========================================================================== */
+.result-item {
+  display: grid;
+  grid-template-columns: 180px 1px 1fr; /* Иероглиф | Разделитель | Чтение и Перевод */
+  align-items: center;
+  width: 95%;
+  padding: 0.6rem 1.5rem;
+  margin-bottom: 0.6rem;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Столбец 1: Номер + Кандзи */
+.item-left-side {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.result-item-number {
+  font-family: "Yu Mincho", serif;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.15);
+  min-width: 30px;
+}
+
+.kanji-text {
+  font-family: "Yu Mincho", "Meiryo", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Тонкий разделитель посередине */
+.result-item-separator {
+  width: 1px;
+  height: 24px;
+  transition: all 0.3s ease;
+}
+
+/* Столбец 2: Чтение и Перевод в одну линию */
+.result-item-content {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem; /* Отступ между чтением и английским переводом */
+  padding-left: 1.5rem;
+}
+
+.result-text.furigana {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  min-width: 120px; /* Фиксируем ширину чтения, чтобы перевод не прыгал */
+}
+
+.result-text.english {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 300;
+}
+
+/* Общая динамика строки при ховере */
+.result-item:hover {
+  transform: translateX(6px);
+}
+
+.result-item:hover .result-item-separator {
+  height: 32px;
+}
+
+/* ==========================================================================
+   АТМОСФЕРНОЕ СВЕЧЕНИЕ ФОНА (Мягкие градиенты на основе твоих переменных)
+   ========================================================================== */
+
+/* --- СОСТОЯНИЕ: ПРАВИЛЬНО (--occult-green) --- */
+.result-item.correct {
+  /* Градиент мягко подсвечивает левую часть и растворяется в прозрачный к концу строки */
+  background: linear-gradient(90deg, rgba(0, 255, 136, 0.03) 0%, rgba(0, 255, 136, 0.005) 50%, transparent 100%);
+}
+
+.result-item.correct .kanji-text,
+.result-item.correct .result-text.furigana {
+  color: var(--occult-green);
+  text-shadow: 0 0 12px rgba(0, 255, 136, 0.25);
+}
+
+.result-item.correct .result-item-separator {
+  background: rgba(0, 255, 136, 0.2);
+}
+
+/* Акцент при наведении на правильную строку */
+.result-item.correct:hover {
+  background: linear-gradient(90deg, rgba(0, 255, 136, 0.06) 0%, rgba(0, 255, 136, 0.01) 60%, transparent 100%);
+}
+
+.result-item.correct:hover .result-item-separator {
+  background: var(--occult-green);
+}
+
+
+/* --- СОСТОЯНИЕ: НЕПРАВИЛЬНО (--red-color) --- */
+.result-item.incorrect {
+  background: linear-gradient(90deg, rgba(255, 0, 0, 0.03) 0%, rgba(255, 0, 0, 0.005) 50%, transparent 100%);
+}
+
+.result-item.incorrect .kanji-text,
+.result-item.incorrect .result-text.furigana {
+  color: var(--red-color);
+  text-shadow: 0 0 12px rgba(255, 0, 0, 0.25);
+}
+
+.result-item.incorrect .result-item-separator {
+  background: rgba(255, 0, 0, 0.2);
+}
+
+/* Акцент при наведении на ошибочную строку */
+.result-item.incorrect:hover {
+  background: linear-gradient(90deg, rgba(255, 0, 0, 0.06) 0%, rgba(255, 0, 0, 0.01) 60%, transparent 100%);
+}
+
+.result-item.incorrect:hover .result-item-separator {
+  background: var(--red-color);
+}
+
+
+/* ==========================================================================
+   ПУСТОЕ СОСТОЯНИЕ (EMPTY STATE)
+   ========================================================================== */
+.result-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem 2rem;
+  border: 1px dashed rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.005);
+}
+
+.result-empty-state .empty-text {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.25);
+  margin-top: 1rem;
+  letter-spacing: 1px;
+}

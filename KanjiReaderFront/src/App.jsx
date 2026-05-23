@@ -1,41 +1,85 @@
 import { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import MainMenu from './main/base/MainMenu.jsx'
 import ListMenu from './main/options/ListMenu.jsx'
-import ProfileMenu from './main/options/ProfileMenu.jsx' // Импортируем наш новый профиль
+import ProfileMenu from './main/options/ProfileMenu.jsx'
+import Game from './main/game/Game.jsx' // Импорт нашей обновленной игры
 import { timeVars, vocs } from './main/config/lists.js'
 import './App.css'
 import './index.css'
 import { getQuests, getStats, getUserData } from './parts/Backend.js'
 
+/* ==========================================================================
+   ИГРОВОЙ ЭКРАН (Внутренний компонент, у которого есть доступ к useNavigate)
+   ========================================================================== */
+const GameSessionContainer = ({ config, setResult, setUser }) => {
+  const navigate = useNavigate();
+
+  // Рассчитываем чистые секунды. Если в конфиге 0 (без лимита), ставим заглушку (например, 1 час)
+  const rawTimeValue = timeVars[config.gameTime]?.name;
+  const durationInSeconds = rawTimeValue === 0 ? 3600 : (rawTimeValue || 1) * 60;
+  
+  const currentVocabName = vocs[config.wordList]?.name || 'WK51-55';
+
+  const handleGameClose = () => {
+    navigate('/'); // Безопасный редирект на главную
+  };
+
+  const handleRefreshStats = async () => {
+    try {
+      const [updatedQuests, updatedStats] = await Promise.all([
+        getQuests(),
+        getStats()
+      ]);
+      setUser(prev => ({
+        ...prev,
+        quests: updatedQuests || prev.quests,
+        stats: updatedStats || prev.stats
+      }));
+    } catch (e) {
+      console.error("Failed to sync stats after game session", e);
+    }
+  };
+
+  return (
+    <div className="main-frame" style={{ position: 'relative', width: '100%' }}>
+      <Game
+        timerKey={`game-session-${config.wordList}-${config.gameTime}`}
+        duration={durationInSeconds}
+        isGameGoes={handleGameClose}
+        count={config.gameTime * 50 + 50} // Количество слов на раунд
+        voca={currentVocabName}
+        vocaNum={config.wordList}
+        resultSetter={setResult}
+        dataUpdate={handleRefreshStats}
+        theme={config.darkTheme}
+        updateStats={handleRefreshStats}
+      />
+    </div>
+  );
+};
+
+/* ==========================================================================
+   ГЛАВНЫЙ КОМПОНЕНТ ПРИЛОЖЕНИЯ
+   ========================================================================== */
 function App() {
   const [rerender, setRerender] = useState(false);
   const [result, setResult] = useState({ correct: 0, total: 0 });
 
-  // Конфиг игры
   const [config, setConfig] = useState({
     wordList: 0,
     gameTime: 1,
     darkTheme: true
   });
 
-  // Данные пользователя
   const [user, setUser] = useState({
     data: {},
     quests: [],
     stats: {}
   });
 
-  /* ==========================================================================
-     УНИВЕРСАЛЬНАЯ ЛОГИКА ДЛЯ ПОДМЕНЮ (ТАЙМЕР, СЛОВАРЬ И ПРОФИЛЬ)
-     ========================================================================== */
-  // Хранит тип текущего контента в DOM: null, 'timer', 'vocab' или 'profile'
   const [subMenuType, setSubMenuType] = useState(null);
-
-  // Флаг для запуска анимации прилета/улета (true = на экране, false = скрывается)
   const [isSubMenuActive, setIsSubMenuActive] = useState(false);
-
-  // Флаг активности главного меню
   const [isMainMenuActive, setIsMainMenuActive] = useState(true);
 
   const openTimerMenu = () => {
@@ -50,7 +94,6 @@ function App() {
     setIsSubMenuActive(true);
   };
 
-  // Метод открытия профиля
   const openProfileMenu = () => {
     setIsMainMenuActive(false);
     setSubMenuType('profile');
@@ -60,20 +103,17 @@ function App() {
   const closeSubMenu = () => {
     setIsMainMenuActive(true);
     setIsSubMenuActive(false);
-
     setTimeout(() => {
       setSubMenuType(null);
-    }, 600);
+    }, 100);
   };
 
-  // Переключение темы (синхронизируем с конфигом)
   const handleSetTheme = (isDark) => {
     const updatedConfig = { ...config, darkTheme: isDark };
     setConfig(updatedConfig);
     localStorage.setItem('selectSelections', JSON.stringify(updatedConfig));
   };
 
-  // Хэндлеры выбора
   const handleSelectTimer = (index) => {
     const updatedConfig = { ...config, gameTime: index };
     setConfig(updatedConfig);
@@ -82,7 +122,6 @@ function App() {
 
   const handleSelectVocab = (index) => {
     const updatedConfig = { ...config, wordList: index };
-    console.log(index)
     setConfig(updatedConfig);
     localStorage.setItem('selectSelections', JSON.stringify(updatedConfig));
   };
@@ -95,9 +134,6 @@ function App() {
     });
   };
 
-  /* ==========================================================================
-     ЗАГРУЗКА И АВТОРИЗАЦИЯ
-     ========================================================================== */
   useEffect(() => {
     const saved = localStorage.getItem('selectSelections');
     if (saved) setConfig(JSON.parse(saved));
@@ -157,7 +193,6 @@ function App() {
           path="/"
           element={
             <div className="main-frame" style={{ position: 'relative', width: '100%' }}>
-
               <MainMenu
                 config={{
                   ...config,
@@ -168,7 +203,7 @@ function App() {
                 result={result}
                 onOpenTimer={openTimerMenu}
                 onOpenVocab={openVocabMenu}
-                onOpenProfile={openProfileMenu} // Передаем обработчик открытия профиля
+                onOpenProfile={openProfileMenu}
                 isActive={isMainMenuActive}
               />
 
@@ -198,7 +233,6 @@ function App() {
                 />
               )}
 
-              {/* Рендерим меню профиля */}
               {subMenuType === 'profile' && (
                 <ProfileMenu
                   userData={user.data}
@@ -213,22 +247,19 @@ function App() {
                   goToMain={closeSubMenu}
                 />
               )}
-
             </div>
           }
         />
 
+        {/* СЕССИЯ ИГРЫ ТЕПЕРЬ СВОБОДНО СЛУШАЕТ НАВИГАЦИЮ */}
         <Route
           path="/game"
           element={
-            <div className="game-placeholder">
-              <h2>Gameplay Session</h2>
-              <p style={{ opacity: 0.6 }}>Component coming soon...</p>
-              <div style={{ marginTop: '20px', fontSize: '0.9rem' }}>
-                <span>Selected List: {vocs[config.wordList]?.name}</span> |
-                <span> Duration: {timeVars[config.gameTime]?.name === 0 ? 'Infinite' : `${timeVars[config.gameTime]?.name}m`}</span>
-              </div>
-            </div>
+            <GameSessionContainer
+              config={config}
+              setResult={setResult}
+              setUser={setUser}
+            />
           }
         />
 
