@@ -1,0 +1,221 @@
+.void-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+}
+
+.void-btnz {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--faded-gray);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.void-icon {
+  width: 70%;
+  height: 70%;
+  z-index: 3;
+  opacity: 0.7;
+  transition: 0.3s;
+}
+
+.void-glow {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: var(--occult-pink);
+  filter: blur(40px);
+  opacity: 0;
+  z-index: 1;
+  transition: 0.4s;
+}
+
+/* Эффект сканирования */
+.scan-line {
+  position: absolute;
+  width: 120%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--occult-pink), transparent);
+  top: 50%;
+  opacity: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.void-rings .v-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  transition: 0.5s;
+}
+
+.v-inner {
+  width: 110px;
+  height: 110px;
+  border-style: solid !important;
+}
+
+.v-outer {
+  width: 150px;
+  height: 150px;
+  border-style: dashed !important;
+}
+
+.v-glitch {
+  width: 130px;
+  height: 130px;
+  border: 1px double var(--occult-pink) !important;
+  opacity: 0;
+}
+
+/* --- HOVER STATES --- */
+
+.void-btnz:hover {
+  color: #fff;
+}
+
+.void-btnz:hover .void-icon {
+  opacity: 1;
+  filter: drop-shadow(0 0 15px var(--occult-pink));
+  animation: void-shiver 0.15s infinite;
+}
+
+.void-btnz:hover .void-glow {
+  opacity: 0.4;
+}
+
+.void-btnz:hover .scan-line {
+  opacity: 0.8;
+  animation: scan-move 2s linear infinite;
+}
+
+.void-btnz:hover .v-inner {
+  animation: rot-r 8s linear infinite;
+  border-color: var(--occult-pink);
+  opacity: 0.4;
+}
+
+.void-btnz:hover .v-outer {
+  animation: rot-l 15s linear infinite;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.void-btnz:hover .v-glitch {
+  opacity: 0.2;
+  animation: glitch-pulse 1s ease-in-out infinite;
+}
+
+/* Лейбл */
+.void-label {
+  font: 30px 'JetBrains Mono', monospace;
+  letter-spacing: 6px;
+  color: var(--faded-gray);
+  text-transform: uppercase;
+  transition: 0.4s;
+  opacity: 0.6;
+
+  /* Центрируем сам текст внутри блока */
+  text-align: center;
+  white-space: nowrap;
+
+  width: auto;
+  min-width: 300px;
+  /* Чтобы контейнер текста был стабильным */
+
+  margin-right: -10px;
+  /* Значение должно быть примерно равно letter-spacing при ховере */
+
+  font: 30px 'JetBrains Mono', monospace;
+  letter-spacing: 5px;
+  transition: all 0.4s ease;
+}
+
+.void-btnz:hover~.void-label {
+  color: var(--occult-pink);
+  letter-spacing: 12px;
+  opacity: 1;
+  text-shadow: 0 0 10px var(--occult-pink);
+}
+
+/* --- ANIMATIONS --- */
+
+@keyframes scan-move {
+  0% {
+    transform: translateY(-50px) scaleX(0.5);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(50px) scaleX(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes void-shiver {
+  0% {
+    transform: translate(0);
+  }
+
+  33% {
+    transform: translate(-1px, 1px);
+  }
+
+  66% {
+    transform: translate(1px, -1px);
+  }
+}
+
+@keyframes glitch-pulse {
+
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.1;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.3;
+  }
+}
+
+@keyframes rot-r {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes rot-l {
+  from {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+.void-btnz:hover .trinity-group {
+  filter: drop-shadow(0 0 8px var(--occult-pink));
+  transition: 0.3s;
+}

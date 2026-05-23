@@ -1,9 +1,16 @@
 import "../css/App.css";
 import "../css/ListMenu.css";
 
-const ListMenu = ({ getter, setter, isPicked, title, collec, back, secondary }) => {
+const ListMenu = ({ getter, setter, isActive, isPicked, title, collec, back, secondary }) => {
+  // Вычисляем класс анимации: 
+  // Если это меню активно — крутим ин/аут в зависимости от общего флага открытия подменю.
+  // Если неактивно — прячем далеко за экран с помощью .noMore
+  const animationClass = isActive 
+    ? (isPicked ? 'slide-in-blurred-right' : 'slide-out-blurred-right') 
+    : 'noMore';
+
   return (
-    <div className={`${isPicked ? 'slide-in-blurred-right' : 'slide-out-blurred-right'} list-menu-container`}>
+    <div className={`${animationClass} list-menu-container`}>
       <h1>{title}</h1>
 
       <div className="card">
@@ -25,15 +32,14 @@ const ListMenu = ({ getter, setter, isPicked, title, collec, back, secondary }) 
                     {secondary[index]} <span className="percent">%</span>
                   </span>}
 
-                <span className="list-menu-indicator">
-                  此
-                </span>
+                <span className="list-menu-indicator">此</span>
               </a>
             </li>
           ))}
         </ol>
       </div>
-      <button className="list-menu-button" onClick={() => back(!isPicked)}>帰</button>
+      {/* Кнопка просто дергает переданную функцию закрытия из App.jsx */}
+      <button className="list-menu-button" onClick={back}>帰</button>
     </div>
   );
 }

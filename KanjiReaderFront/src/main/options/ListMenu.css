@@ -1,0 +1,176 @@
+/* ==========================================================================
+   CONTAINER & LAYOUT
+   ========================================================================== */
+.list-menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 420px; /* Слегка сузили для более аккуратного и собранного вида */
+  position: absolute;
+  box-sizing: border-box;
+  padding: 0 1rem;
+}
+
+.list-menu-container h1 {
+  font-family: "Yu Mincho", serif;
+  font-size: 2.2rem; /* Сделали заголовок чуть компактнее и утонченнее */
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--text-color);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.list-card {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+/* ==========================================================================
+   THE LIST & ITEMS (Уменьшили отступы и шрифты)
+   ========================================================================== */
+.list-menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.list-menu-item {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.5rem; /* Уменьшили разрыв между строками с 1.2rem до 0.5rem */
+}
+
+/* Интерактивная подложка строки */
+.list-menu-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.6rem 0.8rem; /* Внутренние отступы вместо внешних маргинов */
+  cursor: pointer;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.01);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03); /* Тонкая дорогая линия */
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.item-left-side, .item-right-side {
+  display: flex;
+  align-items: center;
+}
+
+/* Шрифты записей */
+.list-menu-link .item-title {
+  font-size: 1.05rem; /* Уменьшили с 1.3rem */
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.25s ease;
+}
+
+/* Римские цифры слева */
+.list-menu-number {
+  font-family: "Yu Mincho", serif;
+  font-size: 0.95rem; /* Уменьшили */
+  margin-right: 1.2rem;
+  min-width: 25px;
+  color: rgba(255, 255, 255, 0.15);
+  transition: all 0.25s ease;
+}
+
+/* Эффект Ховера на строку */
+.list-menu-link:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom-color: rgba(var(--red-color), 0.3);
+  transform: translateX(4px); /* Легкий интерактивный сдвиг вправо при наведении */
+}
+
+.list-menu-link:hover .item-title {
+  color: var(--text-color);
+}
+
+/* Состояние когда элемент выбран (Киберпанк-неон) */
+.list-menu-link.selected {
+  background: linear-gradient(90deg, rgba(192, 12, 117, 0.08) 0%, transparent 100%);
+  border-bottom-color: var(--red-color);
+}
+
+.list-menu-link.selected .item-title {
+  color: var(--redder-color);
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(192, 12, 117, 0.5);
+}
+
+.list-menu-number.selected {
+  color: var(--red-color);
+  text-shadow: 0 0 8px var(--red-color);
+}
+
+/* Проценты (статистика) */
+.secondary {
+  font-size: 0.85rem; /* Сделали аккуратнее */
+  color: #666;
+  margin-right: 0.8rem;
+  font-variant-numeric: tabular-nums; /* Чтобы цифры не прыгали */
+}
+
+.percent {
+  font-size: 0.7rem;
+  opacity: 0.5;
+}
+
+/* Иероглиф-индикатор "此" (Этот) справа */
+.list-menu-indicator {
+  font-family: "Yu Mincho", serif;
+  font-size: 0.95rem;
+  color: transparent;
+  transform: translateX(8px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.list-menu-link.selected .list-menu-indicator,
+.list-menu-link:hover .list-menu-indicator {
+  color: var(--red-color);
+  text-shadow: 0 0 8px var(--red-color);
+  transform: translateX(0);
+}
+
+/* ==========================================================================
+   ANIMATION CONFIGURATION (Взрывной старт, супер-плавный финиш справа)
+   ========================================================================== */
+.noMore {
+  display: none !important;
+}
+
+.slide-in-blurred-right {
+  animation: slideInPureRight 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+}
+
+.slide-out-blurred-right {
+  animation: slideOutPureRight 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+}
+
+@keyframes slideInPureRight {
+  0% {
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutPureRight {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+}

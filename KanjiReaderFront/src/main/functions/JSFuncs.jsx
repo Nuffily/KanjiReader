@@ -48,12 +48,10 @@ export function unlogin() {
 }
 
 export function getTimeRemaining(targetDateString) {
-  const isoString = targetDateString.endsWith('Z') 
-    ? targetDateString 
-    : `${targetDateString}Z`;
-
-  const targetDate = new Date(isoString);
-  const now = Date.now(); // Это всегда UTC
+  // Просто создаем Date из строки.
+  // Браузер сам поймет, если там есть Z (UTC) или если там просто время (локальное).
+  const targetDate = new Date(targetDateString);
+  const now = Date.now(); 
 
   const diffMs = targetDate.getTime() - now;
 

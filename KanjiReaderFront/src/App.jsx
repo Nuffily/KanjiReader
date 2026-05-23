@@ -1,74 +1,122 @@
-import Game from './components/game'
 import { useEffect, useState } from 'react'
-import ListMenu from './components/ListMenu'
-import ProfileMenu from './components/ProfileMenu'
-import './css/App.css'
-import { getQuests, getStats, getUserData } from './parts/Backend'
-import { toDark, toLight } from './parts/Theme'
-
-const vocs = [
-  { title: "WaniKani 11 - 15", name: "WK11-15" },
-  { title: "WaniKani 16 - 20", name: "WK16-20" },
-  { title: "WaniKani 21 - 25", name: "WK21-25" },
-  { title: "WaniKani 26 - 30", name: "WK26-30" },
-  { title: "WaniKani 31 - 35", name: "WK31-35" },
-  { title: "WaniKani 36 - 40", name: "WK36-40" },
-  { title: "WaniKani 41 - 45", name: "WK41-45" },
-  { title: "WaniKani 46 - 50", name: "WK46-50" },
-  { title: "WaniKani 51 - 55", name: "WK51-55" },
-  { title: "WaniKani 56 - 60", name: "WK56-60" }
-]
-
-const timeVars = [
-  { title: "1 min.", name: 1 },
-  { title: "2 min.", name: 2 },
-  { title: "3 min.", name: 3 },
-  { title: "4 min.", name: 4 },
-  { title: "No limit", name: 0 }
-]
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import MainMenu from './main/base/MainMenu.jsx'
+import ListMenu from './main/options/ListMenu.jsx'
+import ProfileMenu from './main/options/ProfileMenu.jsx' // Импортируем наш новый профиль
+import { timeVars, vocs } from './main/config/lists.js'
+import './App.css'
+import './index.css'
+import { getQuests, getStats, getUserData } from './parts/Backend.js'
 
 function App() {
-
   const [rerender, setRerender] = useState(false);
+  const [result, setResult] = useState({ correct: 0, total: 0 });
 
+  // Конфиг игры
+  const [config, setConfig] = useState({
+    wordList: 0,
+    gameTime: 1,
+    darkTheme: true
+  });
 
-  const [darkTheme, setDarkTheme] = useState(true);
+  // Данные пользователя
+  const [user, setUser] = useState({
+    data: {},
+    quests: [],
+    stats: {}
+  });
 
+  /* ==========================================================================
+     УНИВЕРСАЛЬНАЯ ЛОГИКА ДЛЯ ПОДМЕНЮ (ТАЙМЕР, СЛОВАРЬ И ПРОФИЛЬ)
+     ========================================================================== */
+  // Хранит тип текущего контента в DOM: null, 'timer', 'vocab' или 'profile'
+  const [subMenuType, setSubMenuType] = useState(null);
+
+  // Флаг для запуска анимации прилета/улета (true = на экране, false = скрывается)
+  const [isSubMenuActive, setIsSubMenuActive] = useState(false);
+
+  // Флаг активности главного меню
+  const [isMainMenuActive, setIsMainMenuActive] = useState(true);
+
+  const openTimerMenu = () => {
+    setIsMainMenuActive(false);
+    setSubMenuType('timer');
+    setIsSubMenuActive(true);
+  };
+
+  const openVocabMenu = () => {
+    setIsMainMenuActive(false);
+    setSubMenuType('vocab');
+    setIsSubMenuActive(true);
+  };
+
+  // Метод открытия профиля
+  const openProfileMenu = () => {
+    setIsMainMenuActive(false);
+    setSubMenuType('profile');
+    setIsSubMenuActive(true);
+  };
+
+  const closeSubMenu = () => {
+    setIsMainMenuActive(true);
+    setIsSubMenuActive(false);
+
+    setTimeout(() => {
+      setSubMenuType(null);
+    }, 600);
+  };
+
+  // Переключение темы (синхронизируем с конфигом)
+  const handleSetTheme = (isDark) => {
+    const updatedConfig = { ...config, darkTheme: isDark };
+    setConfig(updatedConfig);
+    localStorage.setItem('selectSelections', JSON.stringify(updatedConfig));
+  };
+
+  // Хэндлеры выбора
+  const handleSelectTimer = (index) => {
+    const updatedConfig = { ...config, gameTime: index };
+    setConfig(updatedConfig);
+    localStorage.setItem('selectSelections', JSON.stringify(updatedConfig));
+  };
+
+  const handleSelectVocab = (index) => {
+    const updatedConfig = { ...config, wordList: index };
+    console.log(index)
+    setConfig(updatedConfig);
+    localStorage.setItem('selectSelections', JSON.stringify(updatedConfig));
+  };
+
+  const handleUpdateConfig = (newChanges) => {
+    setConfig(prevConfig => {
+      const updatedConfig = { ...prevConfig, ...newChanges };
+      localStorage.setItem('selectSelections', JSON.stringify(updatedConfig));
+      return updatedConfig;
+    });
+  };
+
+  /* ==========================================================================
+     ЗАГРУЗКА И АВТОРИЗАЦИЯ
+     ========================================================================== */
   useEffect(() => {
-
-
-    if (darkTheme) {
-      toDark()
-    } else {
-      toLight()
-    }
-  }, [darkTheme]);
-
-
-  const [userData, setUserData] = useState({});
-  const [quests, setQuests] = useState([]);
-  const [stats, setStats] = useState({});
+    const saved = localStorage.getItem('selectSelections');
+    if (saved) setConfig(JSON.parse(saved));
+  }, []);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const codeParam = urlParams.get("code");
     const storedToken = localStorage.getItem("accessToken");
 
-    // Объединяем всё в одну асинхронную функцию внутри эффекта
     const initializeApp = async () => {
       let currentToken = storedToken;
-
-      // 1. Если токена нет, но есть код — идем за токеном
       if (codeParam && !storedToken) {
-        console.log("No local token, fetching with code...");
         try {
           const response = await fetch("/api/getAccessToken?code=" + codeParam);
           const data = await response.json();
-
           if (data.access_token) {
             localStorage.setItem("accessToken", data.access_token);
             currentToken = data.access_token;
-            // Убираем код из URL, чтобы не смущать пользователя
             window.history.replaceState({}, document.title, "/");
           }
         } catch (e) {
@@ -76,129 +124,118 @@ function App() {
         }
       }
 
-      // 2. Если токен теперь есть (был или получили) — грузим данные
       if (currentToken) {
-        console.log("Token found, loading data sequentially...");
         try {
-          // Сначала ЖДЕМ только юзера
-          await getUserData(setUserData); 
-          
-          // Только когда getUserData завершится, пойдут остальные запросы
-          console.log("User data loaded, now fetching quests and stats...");
-          
-          await getQuests(setQuests);
-          await getStats(setStats);
-          
+          const [userData, questsData, statsData] = await Promise.all([
+            getUserData(),
+            getQuests(),
+            getStats()
+          ]);
+
+          setUser(prev => ({
+            ...prev,
+            data: userData || prev.data,
+            quests: questsData || prev.quests,
+            stats: statsData || prev.stats
+          }));
+
           setRerender(prev => !prev);
         } catch (e) {
-          console.error("Failed to load app data step-by-step", e);
+          console.error("Failed to load app data packages", e);
         }
       }
     };
-
     initializeApp();
-  }, []); // Пустой массив — сработает один раз при загрузке
-
-  const [wordList, setWordList] = useState(0)
-  const [gameTime, setGameTime] = useState(0)
-
-  useEffect(() => {
-    const saved = localStorage.getItem('selectSelections');
-    if (saved) {
-      const selections = JSON.parse(saved);
-      setWordList(selections.wordList);
-      setGameTime(selections.gameTime);
-      setDarkTheme(selections.darkTheme);
-    }
   }, []);
 
-  useEffect(() => {
-    const selections = { wordList, gameTime, darkTheme };
-    localStorage.setItem('selectSelections', JSON.stringify(selections));
-  }, [wordList, gameTime, darkTheme]);
-
-
-  const [listPick, setListPick] = useState(false)
-
-  const [submenu, setSubmenu] = useState(0)
-
-  const [gameGoes, setGameGoes] = useState(false)
-
-  const [result, setResult] = useState({ correct: 0, total: 0 })
-  const [timerKey, setTimerKey] = useState(1)
-
-
-  if (gameGoes) return (
-    <Game
-      theme={darkTheme}
-      timerKey={timerKey}
-      duration={timeVars[gameTime].name * 60}
-      resultSetter={setResult}
-      isGameGoes={setGameGoes}
-      count={(gameTime + 1) * 50}
-      voca={vocs[wordList].name}
-      vocaNum={wordList}
-      updateStats={() => getStats(setStats)}
-      dataUpdate={() => {
-        getUserData(setUserData);
-        getQuests(setQuests);
-      }}
-    />)
+  const vocabPercentages = vocs.map(v => user.stats?.[v.name] || null);
 
   return (
-    <div className='main-frame' style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}>
-      <div className={`main-face ${submenu == 0 ? 'mainMenu' : (!listPick ? 'slide-in-blurred-left' : 'slide-out-blurred-left')}`}
-        style={{
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <h1 style={{ margin: "20px" }}>KanjiReader</h1>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div className="main-frame" style={{ position: 'relative', width: '100%' }}>
 
-        <h2 style={{ margin: "0px", opacity: `${result.total == 0 ? "0" : "0.3"}` }}>Result: {result.correct} / {result.total} </h2>
+              <MainMenu
+                config={{
+                  ...config,
+                  wordList: vocs[config.wordList]?.title || "WaniKani",
+                  gameTime: timeVars[config.gameTime]?.title || "No limit"
+                }}
+                user={user}
+                result={result}
+                onOpenTimer={openTimerMenu}
+                onOpenVocab={openVocabMenu}
+                onOpenProfile={openProfileMenu} // Передаем обработчик открытия профиля
+                isActive={isMainMenuActive}
+              />
 
-        <div className="card">
-          <p>
-            Words: <a onClick={() => { setSubmenu(1); setListPick(!listPick) }}>{vocs[wordList].title}</a>
-          </p>
-          <p>
-            Timer: <a onClick={() => { setSubmenu(2); setListPick(!listPick) }}>{timeVars[gameTime].title}</a>
-          </p>
+              {subMenuType === 'timer' && (
+                <ListMenu
+                  title="Time Limit"
+                  collec={timeVars}
+                  getter={config.gameTime}
+                  setter={handleSelectTimer}
+                  isActive={true}
+                  isPicked={isSubMenuActive}
+                  back={closeSubMenu}
+                  secondary={null}
+                />
+              )}
 
-          <p>
-            Profile: <a onClick={() => { setSubmenu(3); setListPick(!listPick) }}>
-              {userData.login || "Guest"}
-            </a>
-          </p>
+              {subMenuType === 'vocab' && (
+                <ListMenu
+                  title="Vocabulary"
+                  collec={vocs}
+                  getter={config.wordList}
+                  setter={handleSelectVocab}
+                  isActive={true}
+                  isPicked={isSubMenuActive}
+                  back={closeSubMenu}
+                  secondary={vocabPercentages}
+                />
+              )}
 
-        </div>
-        <button onClick={() => { setSubmenu(0); setTimerKey(n => n + 1); setGameGoes(true) }}>始</button>
-      </div>
+              {/* Рендерим меню профиля */}
+              {subMenuType === 'profile' && (
+                <ProfileMenu
+                  userData={user.data}
+                  quests={user.quests}
+                  vocs={vocs}
+                  isActive={true}
+                  isPicked={isSubMenuActive}
+                  back={closeSubMenu}
+                  theme={config.darkTheme}
+                  setTheme={handleSetTheme}
+                  updateConfig={handleUpdateConfig}
+                  goToMain={closeSubMenu}
+                />
+              )}
 
-      {submenu === 1 &&
-        <ListMenu title={"Pick a list of words"} getter={wordList} secondary={stats} setter={setWordList} isPicked={listPick} back={setListPick} collec={vocs} />
-      }
-      {submenu === 2 &&
-        <ListMenu title={"Pick a game time"} getter={gameTime} setter={setGameTime} isPicked={listPick} back={setListPick} collec={timeVars} />
-      }
-      {submenu === 3 &&
-        <ProfileMenu userData={userData}
-          theme={darkTheme}
-          setTheme={setDarkTheme}
-          quests={quests}
-          vocs={vocs}
-          isPicked={listPick}
-          back={setListPick}
-          setTime={setGameTime}
-          setList={setWordList} />
-      }
-    </div >
-  )
+            </div>
+          }
+        />
+
+        <Route
+          path="/game"
+          element={
+            <div className="game-placeholder">
+              <h2>Gameplay Session</h2>
+              <p style={{ opacity: 0.6 }}>Component coming soon...</p>
+              <div style={{ marginTop: '20px', fontSize: '0.9rem' }}>
+                <span>Selected List: {vocs[config.wordList]?.name}</span> |
+                <span> Duration: {timeVars[config.gameTime]?.name === 0 ? 'Infinite' : `${timeVars[config.gameTime]?.name}m`}</span>
+              </div>
+            </div>
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
