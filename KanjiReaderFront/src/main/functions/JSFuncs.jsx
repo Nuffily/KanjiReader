@@ -65,9 +65,30 @@ function getTrailingKanaRomaji(word) {
 
 
 export function checkReading(input, kanji, romaji) {
+  const cleanInput = input.trim();
 
-  if (input === romaji) return true
+  // 1. Полное совпадение — всегда истина
+  if (cleanInput === romaji) return true;
 
-  else if (getTrailingKanaRomaji(kanji).length > 0 && input.startsWith(romaji.slice(0, -getTrailingKanaRomaji(kanji).length))) return true
-  else return false
+  const trailingRomaji = getTrailingKanaRomaji(kanji);
+
+  if (trailingRomaji.length > 0) {
+    // Вырезаем корень, относящийся к кандзи (например, "tabe" для 食べる)
+    const kanjiRomajiPart = romaji.slice(0, -trailingRomaji.length);
+
+    // Если ввод даже не начинается с правильного корня кандзи — сразу бан
+    if (!cleanInput.startsWith(kanjiRomajiPart)) return false;
+
+    // Вытаскиваем то, что пользователь ввёл ВМЕСТО хвоста с каной
+    const userTrailingInput = cleanInput.slice(kanjiRomajiPart.length);
+
+    // Если хвост пустой (пользователь ввёл только корень "tabe") — это легально
+    if (userTrailingInput.length === 0) return true;
+
+    // Проверяем, что введённый хвост является честным НАЧАЛОМ правильного ромадзи-хвоста.
+    // Например, для "ru" легально ввести "r", но введение "x" или "run" — это бан.
+    return trailingRomaji.startsWith(userTrailingInput);
+  }
+
+  return false;
 }

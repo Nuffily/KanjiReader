@@ -22,7 +22,7 @@ const GameInput = ({ value, onChange, disabled, isWrong, theme, wordIndex }) => 
         value={value}
         onChange={onChange}
         disabled={disabled}
-        placeholder={disabled ? "Press ENTER to skip" : "Type reading..."}
+        placeholder={disabled ? "Press ENTER to skip" : "読みを打て..."}
         autoComplete="off"
         spellCheck="false"
       />
