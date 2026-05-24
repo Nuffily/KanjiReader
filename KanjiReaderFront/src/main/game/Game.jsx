@@ -5,7 +5,7 @@ import { useGlobalKeyPress } from '../functions/ReactFuncs.jsx';
 import ResultList from './ResultList.jsx';
 import GameInput from '../../comp/input/GameInput.jsx';
 import { checkReading } from '../functions/JSFuncs.jsx';
-import { sendGameResult } from '../../hooks/BaseApi.js'; 
+import { sendGameResult } from '../../hooks/BaseApi.js';
 
 const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum, resultSetter, dataUpdate, theme, updateStats }) => {
   const [num, setNum] = useState(0);
@@ -55,7 +55,7 @@ const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum
     };
 
     const isLevelUpdated = await sendGameResult(payload);
-    
+
     if (isLevelUpdated === true && dataUpdate) {
       await dataUpdate();
     }
@@ -123,7 +123,7 @@ const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum
   });
 
   const completedWords = words.slice(0, num + 1);
-  
+
   // Оптимизировали сборку массива ответов для ResultList через кэш-карту сложностью O(N) вместо O(N^2)
   const legacyAnswersArray = useMemo(() => {
     const answersMap = answers.reduce((acc, cur) => {
@@ -156,7 +156,10 @@ const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum
             {isWrong ? words[num]?.furigana : ""}
           </p>
 
-          <h1 className="kanji-main-display">{words[num]?.kanji}</h1>
+          {/* Добавляем key={num}. При смене слова анимация гарантированно запустится заново */}
+          <h1 key={num} className="kanji-main-display">
+            {words[num]?.kanji}
+          </h1>
 
           <p className={`game-text-english ${isWrong ? "visible" : "hidden"}`}>
             {isWrong ? words[num]?.english : ""}

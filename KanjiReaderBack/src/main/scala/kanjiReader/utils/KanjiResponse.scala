@@ -44,6 +44,14 @@ object KanjiResponse {
       case None                   => noAuthorization
     }
 
+  def withCookie[E, R](req: Request)(
+    f: Bearer => ZIO[R, E, Response]
+  ): ZIO[R, E, Response] =
+    req.cookie("kanji_github_token").map(c => c.content) match {
+      case Some(cookie) => f(Bearer(cookie))
+      case None                   => noAuthorization
+    }
+
   val handleAuthErrorZIO: AuthUserDataError => ZIO[Any, Nothing, Response] = {
     case AuthBadUserError(message) =>
       KanjiResponse.unauthorized(message)

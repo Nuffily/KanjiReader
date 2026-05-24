@@ -88,7 +88,6 @@ case class GitHubService(
   ): ZIO[Client, AuthUserDataError, GitHubUser] = ZIO.scoped {
     cache.getUser(authHeader).orElse {
       for {
-        _    <- Console.printLine("Cache miss").orDie
         user <- requestUserData(authHeader)
         _ <- cache
           .cacheUser(authHeader, user, 1.hour)

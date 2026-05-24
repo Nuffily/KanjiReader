@@ -1,5 +1,7 @@
-// Внутренний базовый клиент для запросов
 async function apiFetch(endpoint) {
+  // Выводим все доступные JS куки для теста
+  console.log("Current document.cookie:", document.cookie);
+
   const token = localStorage.getItem("accessToken");
 
   if (!token) {
@@ -20,7 +22,6 @@ async function apiFetch(endpoint) {
         console.error("Unauthorized (401): Token expired or invalid");
         localStorage.removeItem("accessToken");
         localStorage.removeItem("userData");
-        // Здесь можно сделать window.location.reload(), если нужно выкинуть юзера на авторизацию
       }
       return null;
     }
@@ -35,7 +36,6 @@ async function apiFetch(endpoint) {
   }
 }
 
-// Теперь экспортируемые функции просто возвращают чистые данные
 export async function getUserData() {
   return await apiFetch("/api/getKanjiUserData");
 }
@@ -49,11 +49,13 @@ export async function getStats() {
 }
 
 export async function sendGameResult(payload) {
+  console.log("Current document.cookie (on POST):", document.cookie);
+  
   const token = localStorage.getItem("accessToken");
   if (!token) return null;
 
   try {
-    const response = await fetch("/api/checkResult", { // Заменили config.apiUrl на относительный путь, как в остальных твоих запросах
+    const response = await fetch("/api/checkResult", { 
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json', 
