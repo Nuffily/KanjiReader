@@ -1,16 +1,25 @@
 /* ==========================================================================
    GAMEPLAY ROOT FRAME
    ========================================================================== */
+.game-container-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+}
+
 .game-root-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 70vh; /* Используем относительную высоту для идеальной посадки по центру */
+  position: absolute;
   outline: none;
   box-sizing: border-box;
-  position: relative;
 }
 
 .game-root-container.preloader-state {
@@ -25,7 +34,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 280px; /* Фиксированная высота предотвращает прыжки интерфейса при ошибках */
+  min-height: 280px;
   margin-bottom: 2rem;
 }
 
@@ -59,7 +68,6 @@
   transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Переключатели видимости подсказок */
 .game-text-furigana.hidden,
 .game-text-english.hidden {
   opacity: 0;
@@ -78,79 +86,13 @@
 }
 
 /* ==========================================================================
-   INPUT SYSTEM (Оккультно-киберпанковые поля ввода)
+   INPUT SYSTEM WRAPPER
    ========================================================================== */
 .game-input-wrapper {
   width: 100%;
   max-width: 340px;
   display: flex;
   justify-content: center;
-}
-
-/* Вариант 1: Блочный неоновый инпут */
-.occult-neon-input {
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  background: #0a0a0b;
-  padding: 1rem 1.5rem;
-  width: 100%;
-  outline: none;
-  border-radius: 4px;
-  color: var(--text-color);
-  text-align: center;
-  font-size: 1.4rem;
-  font-family: "Yu Gothic UI", sans-serif;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.02);
-  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.occult-neon-input:focus {
-  border-color: rgba(192, 18, 61, 0.4);
-  box-shadow: 0 0 20px rgba(255, 0, 38, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-.occult-neon-input:disabled {
-  border-color: rgba(255, 0, 98, 0.4);
-  color: var(--occult-pink);
-  box-shadow: 0 0 20px rgba(255, 0, 98, 0.1), inset 0 2px 4px rgba(0, 0, 0, 0.8);
-  background: rgba(255, 0, 98, 0.01);
-}
-
-/* Вариант 2: Тонкая неоновая линия */
-.occult-neon-line {
-  border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background: transparent;
-  padding: 1rem 0;
-  width: 100%;
-  outline: none;
-  color: var(--text-color);
-  text-align: center;
-  font-size: 1.5rem;
-  font-family: inherit;
-  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.occult-neon-line:focus {
-  border-bottom-color: var(--occult-green);
-}
-
-.occult-neon-line:disabled {
-  border-bottom-color: var(--occult-pink);
-  color: var(--occult-pink);
-  opacity: 0.8;
-}
-
-.occult-neon-input::placeholder,
-.occult-neon-line::placeholder {
-  color: #333;
-  font-size: 1.1rem;
-  letter-spacing: 0.05em;
-  transition: opacity 0.3s ease;
-}
-
-.occult-neon-input:focus::placeholder,
-.occult-neon-line:focus::placeholder {
-  opacity: 0.1;
 }
 
 /* ==========================================================================
@@ -170,12 +112,11 @@
   margin: 0 0.4rem;
 }
 
-/* Анимация правильного ответа: Мягкий бирюзовый блик на текст */
+/* Анимации вспышек кандзи */
 .correct-flash .kanji-main-display {
   animation: correctTextGlow 0.6s cubic-bezier(0.2, 0.4, 0.1, 1);
 }
 
-/* Анимация ошибки: Глубокий неоново-красный блик */
 .incorrect-flash .kanji-main-display {
   animation: incorrectTextGlow 0.6s cubic-bezier(0.2, 0.4, 0.1, 1);
 }
@@ -191,76 +132,26 @@
 }
 
 /* ==========================================================================
-   LOADING SCREEN (SLIDE IN FROM BOTTOM)
+   LOADING SCREEN & TRANSITIONS
    ========================================================================== */
-
-/* Стилизация надписи "Загрузка" игровым шрифтом Минтё */
 .kanji-loading-display {
   font-family: "Yu Mincho", "Meiryo", serif;
-  font-size: 5rem; /* Крупный каноничный размер, как у игровых кандзи */
+  font-size: 5rem;
   font-weight: 300;
   color: var(--text-color);
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
   animation: loadingTextPulse 1.8s infinite ease-in-out;
 }
 
-/* Плавный вылет прелоадера снизу вверх на встречу меню */
-.slide-in-pure-bottom {
-  animation: slideInPureBottom 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
-}
-
-@keyframes slideInPureBottom {
-  0% {
-    transform: translateY(1000px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Мягкое неоновое "дыхание" текста во время ожидания загрузки */
-@keyframes loadingTextPulse {
-  0%, 100% {
-    opacity: 0.4;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.02);
-  }
-  50% {
-    opacity: 1;
-    text-shadow: 0 0 35px rgba(0, 242, 255, 0.15);
-  }
-}
-
-/* Общий контейнер, удерживающий оба экрана в одной точке */
-.game-container-wrapper {
-  position: relative;
-  width: 100%;
-  min-height: 70vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  outline: none;
-}
-
-/* Модифицируем существующий класс, чтобы экраны накладывались для анимации */
-.game-root-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  position: absolute; /* Важно: чтобы один экран улетал, а второй вставал на его место */
-  outline: none;
-  box-sizing: border-box;
-}
-
-/* Если экран скрыт и игра еще идет, полностью убираем результаты из видимости */
 .noMore {
   display: none !important;
 }
 
-/* Переиспользуем твои анимации улета влево и вылета справа */
+/* Анимации появления и ухода экранов */
+.slide-in-pure-bottom {
+  animation: slideInPureBottom 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+}
+
 .slide-out-pure-left {
   animation: slideOutPureLeft 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
   pointer-events: none;
@@ -270,18 +161,21 @@
   animation: slideInPureRight 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
 }
 
-
 .slide-out-up {
   animation: slideOutUp 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
 }
 
+@keyframes slideInPureBottom {
+  0% { transform: translateY(1000px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes loadingTextPulse {
+  0%, 100% { opacity: 0.4; text-shadow: 0 0 20px rgba(255, 255, 255, 0.02); }
+  50% { opacity: 1; text-shadow: 0 0 35px rgba(0, 242, 255, 0.15); }
+}
+
 @keyframes slideOutUp {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(+500px);
-    opacity: 0;
-  }
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(+500px); opacity: 0; } /* Изменено с +500px на -500px для корректного улета вверх */
 }

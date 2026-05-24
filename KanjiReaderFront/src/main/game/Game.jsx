@@ -3,6 +3,7 @@ import "./Game.css";
 import CountdownTimer from './CountDownTimer.jsx';
 import { useGlobalKeyPress } from '../functions/ReactFuncs.jsx';
 import ResultList from './ResultList.jsx';
+import GameInput from '../../comp/input/GameInput.jsx';
 import config from "../../config.js";
 import { checkReading } from '../functions/JSFuncs.jsx';
 
@@ -10,11 +11,10 @@ const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum
   const [num, setNum] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const [answers, setAnswers] = useState([]);
-  const [flash, setFlash] = useState("neutral-pulse"); 
+  const [flash, setFlash] = useState("neutral-pulse");
   const [forceEnd, setForceEnd] = useState(false);
-  const [isExiting, setIsExiting] = useState(false); // Состояние для уезда вверх
+  const [isExiting, setIsExiting] = useState(false);
 
-  const inputRef = useRef(null);
   const containerRef = useRef(null);
   const hasSentResult = useRef(false);
 
@@ -80,19 +80,6 @@ const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum
   }, [isGameFinished]);
 
   useEffect(() => {
-    if (!isGameFinished && !isWrong && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [num, isWrong, isGameFinished]);
-
-  useEffect(() => {
-    if (!isGameFinished && !isWrong && inputRef.current) {
-      const timer = setTimeout(() => inputRef.current.focus(), 10);
-      return () => clearTimeout(timer);
-    }
-  }, [isWrong, isGameFinished]);
-
-  useEffect(() => {
     if (containerRef.current) containerRef.current.focus();
   }, []);
 
@@ -117,21 +104,18 @@ const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum
     }
   };
 
-  // Вынесли закрытие с задержкой в отдельную функцию, чтобы не дублировать код
   const handleExitWithAnimation = () => {
     updateStats();
-    setIsExiting(true); // Включаем анимацию уезда вверх
-    
+    setIsExiting(true);
+
     setTimeout(() => {
-      isGameGoes(false); // Закрываем полностью через 400мс
+      isGameGoes(false);
     }, 275);
   };
 
   useGlobalKeyPress({
     'Escape': (event) => {
       event.preventDefault();
-      
-      // Запоминаем результаты
       resultSetter({ correct: correctCount, total: isWrong ? num + 1 : num });
 
       if (!isGameFinished) {
@@ -157,15 +141,13 @@ const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum
   });
 
   const gameplayAnimationClass = isGameFinished ? 'slide-out-pure-left' : 'gameplay-active';
-  
-  // Динамически меняем класс: если выходим, то slide-out-up, иначе стандартное поведение
-  const resultAnimationClass = isExiting 
-    ? 'slide-out-up' 
+  const resultAnimationClass = isExiting
+    ? 'slide-out-up'
     : (isGameFinished ? 'slide-in-blurred-right' : 'noMore');
 
   return (
     <div ref={containerRef} tabIndex={0} className="game-container-wrapper">
-      
+
       {/* ИГРОВОЙ ПРОЦЕСС */}
       <div className={`game-root-container ${gameplayAnimationClass} ${flash}`}>
         <div className="game-timer-wrapper">
@@ -189,13 +171,13 @@ const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum
         </div>
 
         <div className="game-input-wrapper">
-          <input
-            className={theme ? 'occult-neon-input' : 'occult-neon-line'}
-            ref={inputRef}
+          <GameInput
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             disabled={isWrong}
-            placeholder={isWrong ? "Press ENTER to skip" : "Type reading..."}
+            isWrong={flash === "incorrect-flash"}
+            theme={theme}
+            wordIndex={num}
           />
         </div>
       </div>

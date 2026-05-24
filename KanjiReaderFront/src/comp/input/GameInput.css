@@ -1,0 +1,122 @@
+.game-input-field-container {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Настоящий, стильный монохромный инпут */
+.game-core-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  /* Глубокий матовый черный с легким прозрачным бэкдропом */
+  background: rgba(10, 10, 11, 0.85); 
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  
+  padding: 1.1rem 1.5rem;
+  font-size: 1.4rem;
+  font-family: "Yu Gothic UI", sans-serif;
+  letter-spacing: 0.05em;
+  color: #ffffff; /* Текст теперь всегда контрастный белый */
+  text-align: center;
+  outline: none;
+  border-radius: 6px;
+  
+  /* Мягкая глубокая тень, чтобы инпут "отрывался" от темного фона */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Декоративная линия теперь встроена прямо в контейнер (от края до края инпута) */
+.game-input-field-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%; /* Ровно по всей ширине инпута */
+  height: 2px;
+  background: var(--occult-pink, #ff0062);
+  box-shadow: 0 0 14px var(--occult-pink, #ff0062);
+  border-radius: 0 0 6px 6px; /* Идеально ложится на скругление инпута */
+  
+  /* Изначально линия полностью скрыта через scaleX */
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), 
+              background-color 0.2s ease, 
+              box-shadow 0.2s ease;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   СОСТОЯНИЯ И АКТИВНЫЕ ЭФФЕКТЫ
+   ========================================================================== */
+
+/* Активный фокус — инпут становится темнее и четче */
+.game-core-input:focus {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: #050506;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* При фокусе плавно разворачиваем розовый неоновый неон */
+.game-input-field-container:focus-within::after {
+  transform: scaleX(1);
+}
+
+/* Стилизация темы (оставляем единый строгий стиль) */
+.game-core-input.theme-neon:focus,
+.game-core-input.theme-minimal:focus {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Состояние блокировки при ошибке (Ожидание Enter/Skip) */
+.game-input-field-container.is-disabled .game-core-input {
+  color: var(--occult-pink, #ff0062);
+  border-color: rgba(255, 0, 98, 0.2);
+  background: rgba(255, 0, 98, 0.02);
+}
+
+.game-input-field-container.is-disabled::after {
+  transform: scaleX(1);
+  background: var(--occult-pink, #ff0062);
+  box-shadow: 0 0 16px var(--occult-pink, #ff0062);
+}
+
+/* КРИТИЧЕСКАЯ ОШИБКА: Тряска + Линия мгновенно бьет чистым белым светом */
+.game-input-field-container.is-wrong {
+  animation: inputExactShake 0.35s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.game-input-field-container.is-wrong::after {
+  transform: scaleX(1);
+  background: #ffffff00 !important;
+  box-shadow: 0 0 15px #ffffff00, 0 0 30px #ffffff00 !important;
+}
+
+/* Стильный тусклый плейсхолдер */
+.game-core-input::placeholder {
+  color: rgba(255, 255, 255, 0.15);
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  transition: all 0.3s ease;
+}
+
+.game-core-input:focus::placeholder {
+  opacity: 0.2;
+  transform: translateY(-2px);
+}
+
+/* Идеальная прямолинейная тряска без деформации размеров */
+@keyframes inputExactShake {
+  10%, 90% { transform: translate3d(-2px, 0, 0); }
+  20%, 80% { transform: translate3d(3px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
+  40%, 60% { transform: translate3d(5px, 0, 0); }
+}
