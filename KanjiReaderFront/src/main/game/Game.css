@@ -189,3 +189,45 @@
   0% { color: var(--occult-pink); text-shadow: 0 0 40px var(--occult-pink); transform: scale(0.98); }
   100% { color: var(--text-color); text-shadow: 0 0 30px rgba(255, 255, 255, 0.05); transform: scale(1); }
 }
+
+/* ==========================================================================
+   LOADING SCREEN (SLIDE IN FROM BOTTOM)
+   ========================================================================== */
+
+/* Стилизация надписи "Загрузка" игровым шрифтом Минтё */
+.kanji-loading-display {
+  font-family: "Yu Mincho", "Meiryo", serif;
+  font-size: 5rem; /* Крупный каноничный размер, как у игровых кандзи */
+  font-weight: 300;
+  color: var(--text-color);
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+  animation: loadingTextPulse 1.8s infinite ease-in-out;
+}
+
+/* Плавный вылет прелоадера снизу вверх на встречу меню */
+.slide-in-pure-bottom {
+  animation: slideInPureBottom 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+}
+
+@keyframes slideInPureBottom {
+  0% {
+    transform: translateY(1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Мягкое неоновое "дыхание" текста во время ожидания загрузки */
+@keyframes loadingTextPulse {
+  0%, 100% {
+    opacity: 0.4;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.02);
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 35px rgba(0, 242, 255, 0.15);
+  }
+}

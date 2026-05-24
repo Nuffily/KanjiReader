@@ -1,16 +1,30 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import './MainMenu.css'; 
 import TrinityButton from '../../comp/buttons/TrinityButton';
 
-function MainMenu({ config, user, result, onOpenTimer, onOpenVocab, onOpenProfile, isActive }) {
-  const navigate = useNavigate();
+function MainMenu({ config, user, result, onOpenTimer, onOpenVocab, onOpenProfile, isActive, onStartTrigger, isReturningFromError }) {
+  const [isStarting, setIsStarting] = useState(false); 
+
+  useEffect(() => {
+    if (isActive) {
+      setIsStarting(false);
+    }
+  }, [isActive]);
 
   const handleStartGame = () => {
-    navigate('/game');
+    setIsStarting(true);
+  
+    onStartTrigger();    
   };
 
-  const animationClass = isActive ? 'slide-in-pure-left' : 'slide-out-pure-left';
+  let animationClass = '';
+  if (isStarting) {
+    animationClass = 'slide-out-pure-top';
+  } else if (isReturningFromError) {
+    animationClass = 'slide-in-pure-top';
+  } else {
+    animationClass = isActive ? 'slide-in-pure-left' : 'slide-out-pure-left';
+  }
 
   return (
     <div className={`${animationClass} mainMenu`}>
@@ -38,6 +52,7 @@ function MainMenu({ config, user, result, onOpenTimer, onOpenVocab, onOpenProfil
       <TrinityButton className="start-btn" onClick={handleStartGame} label={"始 め"}>
         始
       </TrinityButton>
+      
     </div>
   );
 }

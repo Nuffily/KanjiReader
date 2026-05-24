@@ -6,47 +6,12 @@ import ResultList from './ResultList.jsx';
 import config from "../../config.js";
 import { checkReading } from '../functions/JSFuncs.jsx';
 
-// Оставляем твой оригинальный хук без изменений логики
-function useVocabulary(set = 'WK51-55', number = 10) {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const response = await fetch(`/api/vocabulary/${set}/${number}`);
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch: ${response.status}`);
-        }
-
-        const result = await response.json();
-        setData(result);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [set, number]);
-
-  return { data, loading, error };
-}
-
-const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSetter, dataUpdate, theme, updateStats }) => {
-  const vocabularyParams = useMemo(() => ({ set: voca, number: count }), [voca, count]);
-  const { data: words, loading, error } = useVocabulary(vocabularyParams.set, vocabularyParams.number);
-
+const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum, resultSetter, dataUpdate, theme, updateStats }) => {
   // --- СТЕЙТЫ И РЕФЫ ---
   const [num, setNum] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const [answers, setAnswers] = useState([]);
-  const [flash, setFlash] = useState("neutral-pulse"); // Новые оккультные анимации вместо ядовитых вспышек
+  const [flash, setFlash] = useState("neutral-pulse"); 
   const [forceEnd, setForceEnd] = useState(false);
 
   const inputRef = useRef(null);
@@ -171,17 +136,7 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
     }
   });
 
-  // Прелоадер в стиле твоего пустого экрана
-  if (loading) return (
-    <div className="game-root-container preloader-state">
-      <span className="profile-kanji-pulse">字</span>
-    </div>
-  );
-
-  if (error) return <div className="game-root-container error-state">Error: {error}</div>;
-
   if (isGameFinished) {
-    // Обрезаем массив слов ровно до того индекса, до которого дошел игрок
     const completedWords = words.slice(0, num + 1);
 
     const legacyAnswersArray = completedWords.map((_, idx) => {
@@ -199,7 +154,6 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
         <h1 className="result-header">
           Result: {correctCount} <span className="slash-divider">/</span> {num}
         </h1>
-        {/* Передаем только завершенные слова */}
         <ResultList items={completedWords} answers={legacyAnswersArray} />
       </div>
     );
@@ -213,7 +167,6 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
       tabIndex={0}
       className={`game-root-container gameplay-active ${flash}`}
     >
-      {/* Контейнер таймера в верхнем углу/центре */}
       <div className="game-timer-wrapper">
         <CountdownTimer
           resetKey={timerKey}
@@ -222,7 +175,6 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
         />
       </div>
 
-      {/* Основной алтарь кандзи */}
       <div className="kanji-altar">
         <p className={`game-text-furigana ${isWrong ? "visible" : "hidden"}`}>
           {isWrong ? words[num]?.furigana : ""}
@@ -235,7 +187,6 @@ const Game = ({ timerKey, duration, isGameGoes, count, voca, vocaNum, resultSett
         </p>
       </div>
 
-      {/* Контейнер ввода */}
       <div className="game-input-wrapper">
         <input
           autoFocus={!isWrong}
