@@ -2,9 +2,31 @@ import React from "react";
 import "./ResultList.css";
 
 const ResultList = ({ items, answers }) => {
-  const toRoman = (num) => {
-    const roman = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
-    return roman[num] || num + 1;
+  const toJapaneseNumber = (index) => {
+    const num = index + 1;
+    if (num <= 0 || num > 999) return num;
+
+    const units = ["", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+    
+    const hundredsDigit = Math.floor(num / 100);
+    const tensDigit = Math.floor((num % 100) / 10);
+    const unitsDigit = num % 10;
+
+    let result = "";
+
+    if (hundredsDigit > 0) {
+      result += hundredsDigit === 1 ? "百" : units[hundredsDigit] + "百";
+    }
+
+    if (tensDigit > 0) {
+      result += tensDigit === 1 ? "十" : units[tensDigit] + "十";
+    }
+
+    if (unitsDigit > 0) {
+      result += units[unitsDigit];
+    }
+
+    return result;
   };
 
   return (
@@ -23,7 +45,7 @@ const ResultList = ({ items, answers }) => {
                 }`}
               >
                 <div className="item-left-side">
-                  <span className="result-item-number">{toRoman(index)}</span>
+                  <span className="result-item-number">{toJapaneseNumber(index)}</span>
                   <span className="kanji-text">{item.kanji}</span>
                 </div>
 

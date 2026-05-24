@@ -46,9 +46,43 @@
 
 <body>
   <div id="root">
-    <div class="preloader">
-      <span class="spinner">字</span>
+    <div style="
+      background-color: #0d0d0d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      font-family: 'Yu Mincho', 'Meiryo', serif;
+      margin: 0;
+      padding: 0;
+    ">
+      <span style="
+        font-size: 6.5rem; 
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.87);
+        text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+        animation: htmlPulse 1.8s infinite ease-in-out;
+      ">読み込み中</span>
+
+
     </div>
+
+    <style>
+      @keyframes htmlPulse {
+
+        0%,
+        100% {
+          opacity: 0.4;
+          text-shadow: 0 0 20px rgba(255, 255, 255, 0.02);
+        }
+
+        50% {
+          opacity: 1;
+          text-shadow: 0 0 35px rgba(0, 242, 255, 0.15);
+        }
+      }
+    </style>
   </div>
   <script type="module" src="/src/main.jsx"></script>
 </body>

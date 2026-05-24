@@ -1,190 +1,37 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import MainMenu from './main/base/MainMenu.jsx'
 import ListMenu from './main/options/ListMenu.jsx'
 import ProfileMenu from './main/options/ProfileMenu.jsx'
 import ErrorMenu from './main/base/ErrorMenu.jsx'
-import Game from './main/game/Game.jsx'
+import GameSessionContainer from './main/game/GameSessionContainer.jsx'
+import { useVocabulary } from './hooks/useVocabulary.js'
 import { timeVars, vocs } from './main/config/lists.js'
+import { getQuests, getStats, getUserData } from './hooks/BaseApi.js'
 import './App.css'
 import './index.css'
-import { getQuests, getStats, getUserData } from './parts/Backend.js'
 
-// Изменения внутри функции useVocabulary:
-function useVocabulary(set = 'WK51-55', number = 10, enabled = false) {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    if (!enabled) {
-      setError(null);
-      return;
-    }
-
-    const maxRetries = 3;
-    const retryDelay = 2000;
-    const timeoutDuration = 5000;
-    let isMounted = true;
-    let timeoutId = null;
-
-    const fetchData = async () => {
-      // ОЧИЩАЕМ старые слова перед новой загрузкой
-      setData([]);
-      setLoading(true);
-      setError(null);
-
-      for (let attempt = 1; attempt <= maxRetries; attempt++) {
-        if (!isMounted) return;
-
-        const controller = new AbortController();
-        timeoutId = setTimeout(() => controller.abort(), timeoutDuration);
-
-        try {
-          const response = await fetch(`/api/vocabulary/${set}/${number}`, {
-            signal: controller.signal
-          });
-
-          clearTimeout(timeoutId);
-
-          if (!response.ok) {
-            if (response.status >= 500) {
-              throw new Error(`Internal server error occurred (Status: ${response.status}). Please try again later.`);
-            } else if (response.status === 404) {
-              throw new Error(`Requested vocabulary set "${set}" was not found on the server (Status: 404).`);
-            } else if (response.status === 403 || response.status === 401) {
-              throw new Error(`Access denied. Please check your authentication token (Status: ${response.status}).`);
-            } else {
-              throw new Error(`Unexpected server response (Status: ${response.status}).`);
-            }
-          }
-
-          const result = await response.json();
-
-          if (isMounted) {
-            setData(result);
-            setLoading(false);
-            return;
-          }
-        } catch (err) {
-          clearTimeout(timeoutId);
-
-          let errorMessage = err.message;
-          if (err.name === 'AbortError') {
-            errorMessage = `Request timeout after ${timeoutDuration}ms. The server took too long to respond.`;
-          } else if (err.message.includes('Failed to fetch')) {
-            errorMessage = "Failed to connect to the server. Please verify your network connection or check if the backend is running.";
-          }
-
-          console.warn(`Attempt ${attempt}/${maxRetries} failed: ${errorMessage}`);
-
-          if (attempt === maxRetries) {
-            if (isMounted) {
-              setError(`Failed to load data after ${maxRetries} attempts. ${errorMessage}`);
-              setLoading(false);
-            }
-            return;
-          }
-
-          await new Promise(resolve => setTimeout(resolve, retryDelay));
-        }
-      }
-    };
-
-    fetchData();
-
-    return () => {
-      isMounted = false;
-      if (timeoutId) clearTimeout(timeoutId);
-    };
-  }, [set, number, enabled]);
-
-  return { data, loading, error };
-}
-
-// Изменения внутри GameSessionContainer:
-const GameSessionContainer = ({ config, words, setResult, setUser, resetLoadingTrigger }) => {
+function AppRoutes({
+  config, setConfig, user, setUser, result, setResult,
+  gameLoadingTrigger, setGameLoadingTrigger, isMinDelayPassed, setIsMinDelayPassed,
+  isReturningFromError, setIsReturningFromError, subMenuType, setSubMenuType,
+  isSubMenuActive, setIsSubMenuActive, isMainMenuActive, setIsMainMenuActive,
+  closeSubMenu, handleUpdateConfig, isAppLoading
+}) {
   const navigate = useNavigate();
 
-  const rawTimeValue = timeVars[config.gameTime]?.name;
-  const durationInSeconds = rawTimeValue === 0 ? 3600 : (rawTimeValue || 1) * 60;
+  // Локальный стейт, чтобы зафиксировать факт окончания самой первой загрузки приложения
+  const [wasAppLoaded, setWasAppLoaded] = useState(false);
 
-  const currentVocabName = vocs[config.wordList]?.name || 'WK51-55';
-
-  // Генерируем уникальный ключ сессии при монтировании контейнера игры,
-  // чтобы даже при одинаковых настройках sessionStorage сбрасывался.
-  const uniqueTimerKey = useMemo(() => {
-    return `game-session-${config.wordList}-${config.gameTime}-${Date.now()}`;
-  }, [config.wordList, config.gameTime]);
-
-  const handleGameClose = () => {
-    resetLoadingTrigger();
-    navigate('/');
-  };
-
-  const handleRefreshStats = async () => {
-    try {
-      const [updatedQuests, updatedStats] = await Promise.all([
-        getQuests(),
-        getStats()
-      ]);
-      setUser(prev => ({
-        ...prev,
-        quests: updatedQuests || prev.quests,
-        stats: updatedStats || prev.stats
-      }));
-    } catch (e) {
-      console.error("Failed to sync stats after game session", e);
+  useEffect(() => {
+    if (!isAppLoading && !wasAppLoaded) {
+      // Даем анимации ухода отработать (например, 600мс), затем полностью демонтируем этот слой
+      const timer = setTimeout(() => {
+        setWasAppLoaded(true);
+      }, 600);
+      return () => clearTimeout(timer);
     }
-  };
-
-  return (
-    <div className="main-frame" style={{ position: 'relative', width: '100%' }}>
-      <Game
-        words={words}
-        timerKey={uniqueTimerKey}
-        duration={durationInSeconds}
-        isGameGoes={handleGameClose}
-        count={config.gameTime * 50 + 50}
-        voca={currentVocabName}
-        vocaNum={config.wordList}
-        resultSetter={setResult}
-        dataUpdate={handleRefreshStats}
-        theme={config.darkTheme}
-        updateStats={handleRefreshStats}
-      />
-    </div>
-  );
-};
-
-
-
-function App() {
-  const [rerender, setRerender] = useState(false);
-  const [result, setResult] = useState({ correct: 0, total: 0 });
-
-  const [config, setConfig] = useState({
-    wordList: 0,
-    gameTime: 1,
-    darkTheme: true
-  });
-
-  const [user, setUser] = useState({
-    data: {},
-    quests: [],
-    stats: {}
-  });
-
-  const [subMenuType, setSubMenuType] = useState(null);
-  const [isSubMenuActive, setIsSubMenuActive] = useState(false);
-  const [isMainMenuActive, setIsMainMenuActive] = useState(true);
-
-  const [gameLoadingTrigger, setGameLoadingTrigger] = useState(false);
-  const [shouldNavigateToGame, setShouldNavigateToGame] = useState(false);
-  const [isReturningFromError, setIsReturningFromError] = useState(false);
-
-  // Флаг минимальной задержки для прелоадера
-  const [isMinDelayPassed, setIsMinDelayPassed] = useState(false);
+  }, [isAppLoading, wasAppLoaded]);
 
   const currentVocabName = vocs[config.wordList]?.name || 'WK51-55';
   const wordCount = config.gameTime * 50 + 50;
@@ -195,13 +42,11 @@ function App() {
     gameLoadingTrigger
   );
 
-  // ЕДИНСТВЕННЫЙ И ПРАВИЛЬНЫЙ ЭФФЕКТ ДЛЯ НАВИГАЦИИ
-  // (Старый эффект, который находился ниже и вызывал баг, полностью удален)
   useEffect(() => {
     if (gameLoadingTrigger && !isVocabLoading && isMinDelayPassed && words && words.length > 0) {
-      setShouldNavigateToGame(true);
+      navigate('/game');
     }
-  }, [words, gameLoadingTrigger, isVocabLoading, isMinDelayPassed]);
+  }, [words, gameLoadingTrigger, isVocabLoading, isMinDelayPassed, navigate]);
 
   const handleResetError = () => {
     setIsReturningFromError(true);
@@ -230,17 +75,15 @@ function App() {
     setIsSubMenuActive(true);
   };
 
-  const closeSubMenu = () => {
-    setIsMainMenuActive(true);
-    setIsSubMenuActive(false);
-    setTimeout(() => {
-      setSubMenuType(null);
-    }, 100);
-  };
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      'data-theme',
+      config.darkTheme ? 'dark' : 'light'
+    );
+  }, [config.darkTheme]);
 
   const handleSetTheme = (isDark) => {
     const updatedConfig = { ...config, darkTheme: isDark };
-    const target = event.target;
     setConfig(updatedConfig);
     localStorage.setItem('selectSelections', JSON.stringify(updatedConfig));
   };
@@ -255,6 +98,143 @@ function App() {
     const updatedConfig = { ...config, wordList: index };
     setConfig(updatedConfig);
     localStorage.setItem('selectSelections', JSON.stringify(updatedConfig));
+  };
+
+  const vocabPercentages = Array.isArray(user.stats) ? user.stats : null;
+
+  const handleMainMenuStartTrigger = () => {
+    setIsReturningFromError(false);
+    setIsMinDelayPassed(false);
+    setGameLoadingTrigger(true);
+
+    setTimeout(() => {
+      setIsMinDelayPassed(true);
+    }, 500);
+  };
+
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <div className="main-frame" style={{ position: 'relative', width: '100%' }}>
+            {vocabError ? (
+              <ErrorMenu error={vocabError} onBack={handleResetError} />
+            ) : (
+              <>
+                {!isAppLoading && (
+                  <MainMenu
+                    config={{
+                      ...config,
+                      wordList: vocs[config.wordList]?.title || "WaniKani",
+                      gameTime: timeVars[config.gameTime]?.title || "No limit"
+                    }}
+                    user={user}
+                    result={result}
+                    onOpenTimer={openTimerMenu}
+                    onOpenVocab={openVocabMenu}
+                    onOpenProfile={openProfileMenu}
+                    isActive={isMainMenuActive}
+                    onStartTrigger={handleMainMenuStartTrigger}
+                    isReturningFromError={isReturningFromError}
+                  />
+                )}
+
+                {/* Пока приложуха грузится, показываем статичный слой */}
+                {isAppLoading && (
+                  <div className="game-root-container preloader-state" style={{ zIndex: 10, position: 'absolute' }}>
+                    <span className="kanji-loading-display">読み込み中</span>
+                  </div>
+                )}
+
+                {/* Как только загрузка завершилась, этот слой рендерится ОДИН РАЗ, улетает вправо и уничтожается стейтом wasAppLoaded */}
+                {!isAppLoading && !wasAppLoaded && (
+                  <div className="game-root-container preloader-state slide-out-pure-right" style={{ zIndex: 10, position: 'absolute' }}>
+                    <span className="kanji-loading-display">読み込み中</span>
+                  </div>
+                )}
+
+                {gameLoadingTrigger && (
+                  <div className="game-root-container preloader-state slide-in-pure-bottom" style={{ zIndex: 10 }}>
+                    <span className="kanji-loading-display">読み込み中</span>
+                    <span className="game-text-english visible">Loading...</span>
+                  </div>
+                )}
+              </>
+            )}
+
+            {subMenuType === 'timer' && (
+              <ListMenu title="Time Limit" collec={timeVars} getter={config.gameTime} setter={handleSelectTimer} isActive={true} isPicked={isSubMenuActive} back={closeSubMenu} secondary={null} />
+            )}
+            {subMenuType === 'vocab' && (
+              <ListMenu title="Vocabulary" collec={vocs} getter={config.wordList} setter={handleSelectVocab} isActive={true} isPicked={isSubMenuActive} back={closeSubMenu} secondary={vocabPercentages} />
+            )}
+            {subMenuType === 'profile' && (
+              <ProfileMenu userData={user.data} quests={user.quests} vocs={vocs} isActive={true} isPicked={isSubMenuActive} back={closeSubMenu} theme={config.darkTheme} setTheme={handleSetTheme} updateConfig={handleUpdateConfig} goToMain={closeSubMenu} />
+            )}
+          </div>
+        }
+      />
+
+      <Route
+        path="/game"
+        element={
+          !gameLoadingTrigger || !words || words.length === 0 ? (
+            <Navigate to="/" replace />
+          ) : (
+            <GameSessionContainer
+              config={config}
+              words={words}
+              setResult={setResult}
+              setUser={setUser}
+              resetLoadingTrigger={() => {
+                setGameLoadingTrigger(false);
+                setIsReturningFromError(false);
+                setIsMinDelayPassed(false);
+              }}
+            />
+          )
+        }
+      />
+
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}
+
+function App() {
+  const [rerender, setRerender] = useState(false);
+  const [result, setResult] = useState({ correct: 0, total: 0 });
+
+  const [config, setConfig] = useState({
+    wordList: 0,
+    gameTime: 1,
+    darkTheme: true
+  });
+
+  const [user, setUser] = useState({
+    data: {},
+    quests: [],
+    stats: []
+  });
+
+  const [subMenuType, setSubMenuType] = useState(null);
+  const [isSubMenuActive, setIsSubMenuActive] = useState(false);
+  const [isMainMenuActive, setIsMainMenuActive] = useState(true);
+
+  const [gameLoadingTrigger, setGameLoadingTrigger] = useState(false);
+  const [isReturningFromError, setIsReturningFromError] = useState(false);
+  const [isMinDelayPassed, setIsMinDelayPassed] = useState(false);
+
+  // Новый стейт для инициализации приложения
+  const [isAppLoading, setIsAppLoading] = useState(true);
+
+  const closeSubMenu = () => {
+    setIsMainMenuActive(true);
+    setIsSubMenuActive(false);
+    setTimeout(() => {
+      setSubMenuType(null);
+    }, 100);
   };
 
   const handleUpdateConfig = (newChanges) => {
@@ -309,102 +289,33 @@ function App() {
           setRerender(prev => !prev);
         } catch (e) {
           console.error("Failed to load app data packages", e);
+        } finally {
+          setIsAppLoading(false);
+          setIsMainMenuActive(true); // Включаем меню при успешном окончании загрузки
         }
+      } else {
+        setIsAppLoading(false);
+        setIsMainMenuActive(true); // Включаем меню, если токена нет и загружать нечего
       }
     };
     initializeApp();
   }, []);
 
-  const vocabPercentages = vocs.map(v => user.stats?.[v.name] || null);
-
-  const handleMainMenuStartTrigger = () => {
-    setIsReturningFromError(false);
-    setIsMinDelayPassed(false);
-    setGameLoadingTrigger(true);
-
-    setTimeout(() => {
-      setIsMinDelayPassed(true);
-    }, 500);
-  };
-
   return (
     <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            shouldNavigateToGame ? (
-              <Navigate to="/game" replace />
-            ) : (
-              <div className="main-frame" style={{ position: 'relative', width: '100%' }}>
-                {vocabError ? (
-                  <ErrorMenu error={vocabError} onBack={handleResetError} />
-                ) : (
-                  <>
-                    <MainMenu
-                      config={{
-                        ...config,
-                        wordList: vocs[config.wordList]?.title || "WaniKani",
-                        gameTime: timeVars[config.gameTime]?.title || "No limit"
-                      }}
-                      user={user}
-                      result={result}
-                      onOpenTimer={openTimerMenu}
-                      onOpenVocab={openVocabMenu}
-                      onOpenProfile={openProfileMenu}
-                      isActive={isMainMenuActive}
-                      onStartTrigger={handleMainMenuStartTrigger}
-                      isReturningFromError={isReturningFromError}
-                    />
-
-                    {gameLoadingTrigger && (
-                      <div className="game-root-container preloader-state slide-in-pure-bottom" style={{ zIndex: 10 }}>
-                        <h1 className="kanji-loading-display">読み込み中</h1>
-                      </div>
-                    )}
-                  </>
-                )}
-
-                {subMenuType === 'timer' && (
-                  <ListMenu title="Time Limit" collec={timeVars} getter={config.gameTime} setter={handleSelectTimer} isActive={true} isPicked={isSubMenuActive} back={closeSubMenu} secondary={null} />
-                )}
-                {subMenuType === 'vocab' && (
-                  <ListMenu title="Vocabulary" collec={vocs} getter={config.wordList} setter={handleSelectVocab} isActive={true} isPicked={isSubMenuActive} back={closeSubMenu} secondary={vocabPercentages} />
-                )}
-                {subMenuType === 'profile' && (
-                  <ProfileMenu userData={user.data} quests={user.quests} vocs={vocs} isActive={true} isPicked={isSubMenuActive} back={closeSubMenu} theme={config.darkTheme} setTheme={handleSetTheme} updateConfig={handleUpdateConfig} goToMain={closeSubMenu} />
-                )}
-              </div>
-            )
-          }
-        />
-
-        <Route
-          path="/game"
-          element={
-            // Если слов нет или загрузка не была инициирована через меню, 
-            // отправляем пользователя на главную
-            !gameLoadingTrigger || !words || words.length === 0 ? (
-              <Navigate to="/" replace />
-            ) : (
-              <GameSessionContainer
-                config={config}
-                words={words}
-                setResult={setResult}
-                setUser={setUser}
-                resetLoadingTrigger={() => {
-                  setGameLoadingTrigger(false);
-                  setShouldNavigateToGame(false);
-                  setIsReturningFromError(false);
-                  setIsMinDelayPassed(false);
-                }}
-              />
-            )
-          }
-        />
-
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <AppRoutes
+        config={config} setConfig={setConfig}
+        user={user} setUser={setUser}
+        result={result} setResult={setResult}
+        gameLoadingTrigger={gameLoadingTrigger} setGameLoadingTrigger={setGameLoadingTrigger}
+        isMinDelayPassed={isMinDelayPassed} setIsMinDelayPassed={setIsMinDelayPassed}
+        isReturningFromError={isReturningFromError} setIsReturningFromError={setIsReturningFromError}
+        subMenuType={subMenuType} setSubMenuType={setSubMenuType}
+        isSubMenuActive={isSubMenuActive} setIsSubMenuActive={setIsSubMenuActive}
+        isMainMenuActive={isMainMenuActive} setIsMainMenuActive={setIsMainMenuActive}
+        closeSubMenu={closeSubMenu} handleUpdateConfig={handleUpdateConfig}
+        isAppLoading={isAppLoading}
+      />
     </Router>
   );
 }

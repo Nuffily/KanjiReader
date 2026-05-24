@@ -1,18 +1,12 @@
 /* ==========================================================================
-   MAIN MENU CONTAINERS & TYPOGRAPHY
+   1. MAIN MENU CONTAINERS & TYPOGRAPHY
    ========================================================================== */
 .mainMenu {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  position: absolute; /* Чтобы меню и подменю могли находиться в одной точке экрана */
-}
-
-.mainMenu h1 {
-  font-size: 3.5rem;
-  line-height: 1.1;
-  margin: 0 0 0.5rem 0;
+  position: absolute; /* Для наложения меню и подменю в одной точке */
 }
 
 .result-badge {
@@ -34,28 +28,19 @@
   font-size: 1.25rem;
 }
 
-/* ==========================================================================
-   INTERACTIVE LINKS (A)
-   ========================================================================== */
-
-.mainMenu a:hover {
-  color: var(--red-color);
-  text-shadow: 0 0 15px var(--red-color);
-}
-
-.mainMenu a:active {
-  transform: scale(1.05);
-  color: var(--redder-color);
-  text-shadow: 0 0 20px var(--redder-color);
+/* Вынесли инлайн-стили текста ошибки из ErrorMenu */
+.error-text-message {
+  font-size: 1.1rem;
+  opacity: 0.8;
+  max-width: 80%;
+  margin: 0 auto;
 }
 
 /* ==========================================================================
-   KANJI START BUTTON
+   2. KANJI START BUTTON (Внутренние стили, если TrinityButton/VoidButton их не перебивают)
    ========================================================================== */
 .start-btn {
-  background: var(--button-color);
   font-family: "Yu Mincho", "Meiryo", "Yu Gothic UI", sans-serif;
-  color: var(--button-text);
   border: none;
   width: 110px;
   height: 110px;
@@ -65,101 +50,73 @@
 }
 
 /* ==========================================================================
-   ANIMATIONS & TRANSITIONS (Синхронный Ease-In-Out сдвиг)
-   ========================================================================== */
-@keyframes textGlow {
-  0% { text-shadow: 0 0 15px var(--red-color); }
-  100% { text-shadow: 0 0 25px var(--red-color); }
-}
-
-@keyframes textGlowHigher {
-  0% { text-shadow: 0 0 20px var(--redder-color); }
-  100% { text-shadow: 0 0 30px var(--redder-color); }
-}
-
-/* Возврат слева на центр (0.3 сек) */
-.slide-in-pure-left {
-  animation: slideInPureLeft 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
-}
-
-/* Улет с центра влево (0.3 сек) */
-.slide-out-pure-left {
-  animation: slideOutPureLeft 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
-  pointer-events: none;
-}
-
-@keyframes slideInPureLeft {
-  0% {
-    transform: translateX(-1000px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideOutPureLeft {
-  0% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-1000px);
-    opacity: 0;
-  }
-}
-
-/* ==========================================================================
-   NEW ANIMATION: SLIDE OUT TOP
+   3. ANIMATIONS & PRELOADERS
    ========================================================================== */
 
-/* Улет центрального меню наверх при старте игры */
-.slide-out-pure-top {
-  animation: slideOutPureTop 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
-  pointer-events: none; /* Защита от лишних кликов во время анимации */
-}
-
-@keyframes slideOutPureTop {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-500px);
-    opacity: 0;
-  }
-}
-
-
-
-/* Стилизация надписи "Загрузка" игровым шрифтом Минтё */
+/* Прелоадер "Загрузка" и Заголовок Ошибки */
 .kanji-loading-display {
   font-family: "Yu Mincho", "Meiryo", serif;
-  font-size: 5rem; /* Крупный каноничный размер, как у игровых кандзи */
+  font-size: 6.5rem; 
   font-weight: 300;
   color: var(--text-color);
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
   animation: loadingTextPulse 1.8s infinite ease-in-out;
 }
 
-/* Плавный вылет прелоадера снизу вверх на встречу меню */
+/* Специфичный цвет для кандзи ошибки без инлайн-стилей */
+.kanji-loading-display.error-state {
+  color: var(--red-color);
+}
+
+/* Анимации сдвигов */
+.slide-in-pure-left {
+  animation: slideInPureLeft 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+}
+
+.slide-out-pure-left {
+  animation: slideOutPureLeft 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+  pointer-events: none;
+}
+
+.slide-out-pure-top {
+  animation: slideOutPureTop 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+  pointer-events: none;
+}
+
 .slide-in-pure-bottom {
   animation: slideInPureBottom 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
 }
 
-@keyframes slideInPureBottom {
-  0% {
-    transform: translateY(1000px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.slide-in-pure-top {
+  animation: slideInPureTop 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
 }
 
-/* Мягкое неоновое "дыхание" текста во время ожидания загрузки */
+/* Ключевые кадры */
+@keyframes slideInPureLeft {
+  0% { transform: translateX(-1000px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutPureLeft {
+  0% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(-1000px); opacity: 0; }
+}
+
+@keyframes slideOutPureTop {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-500px); opacity: 0; }
+}
+
+@keyframes slideInPureTop {
+  0% { transform: translateY(-500px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInPureBottom {
+  0% { transform: translateY(1000px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
 @keyframes loadingTextPulse {
   0%, 100% {
     opacity: 0.4;
@@ -171,22 +128,15 @@
   }
 }
 
-h2 {
-  margin: 0px;
+
+/* Добавь это в секцию 3. ANIMATIONS & PRELOADERS в MainMenu.css */
+
+.slide-out-pure-right {
+  animation: slideOutPureRight 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+  pointer-events: none;
 }
 
-/* Плавное возвращение главного меню сверху вниз после ошибки */
-.slide-in-pure-top {
-  animation: slideInPureTop 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
-}
-
-@keyframes slideInPureTop {
-  0% {
-    transform: translateY(-500px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
+@keyframes slideOutPureRight {
+  0% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(1000px); opacity: 0; }
 }

@@ -5,12 +5,12 @@ import VoidButton from '../../comp/buttons/VoidButton';
 function ErrorMenu({ error, onBack }) {
   return (
     <div className="mainMenu">
-      <h2 className="kanji-loading-display" style={{ color: 'var(--red-color)' }}>
+      <h2 className="kanji-loading-display error-state">
         異常終了
       </h2>
 
-      <div className="menu-text-container" style={{ marginTop: '1rem', marginBottom: '2rem' }}>
-        <p style={{ fontSize: '1.1rem', opacity: 0.8, maxWidth: '80%', margin: '0 auto' }}>
+      <div className="menu-text-container">
+        <p className="error-text-message">
           {error || 'Unknown network error occurred'}
         </p>
       </div>

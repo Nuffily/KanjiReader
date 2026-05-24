@@ -47,3 +47,25 @@ export async function getQuests() {
 export async function getStats() {
   return await apiFetch("/api/getStats");
 }
+
+export async function sendGameResult(payload) {
+  const token = localStorage.getItem("accessToken");
+  if (!token) return null;
+
+  try {
+    const response = await fetch("/api/checkResult", { // Заменили config.apiUrl на относительный путь, как в остальных твоих запросах
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json', 
+        "Authorization": "Bearer " + token 
+      },
+      body: JSON.stringify(payload)
+    });
+    
+    if (!response.ok) throw new Error("Server error");
+    return await response.json();
+  } catch (err) {
+    console.error("Failed to sync game results:", err);
+    return null;
+  }
+}

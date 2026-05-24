@@ -4,8 +4,8 @@ import CountdownTimer from './CountDownTimer.jsx';
 import { useGlobalKeyPress } from '../functions/ReactFuncs.jsx';
 import ResultList from './ResultList.jsx';
 import GameInput from '../../comp/input/GameInput.jsx';
-import config from "../../config.js";
 import { checkReading } from '../functions/JSFuncs.jsx';
+import { sendGameResult } from '../../hooks/BaseApi.js'; 
 
 const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum, resultSetter, dataUpdate, theme, updateStats }) => {
   const [num, setNum] = useState(0);
@@ -54,22 +54,10 @@ const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum
       maxInRow: getMaxStreak(answers)
     };
 
-    const token = localStorage.getItem("accessToken");
-    if (!token) return;
-
-    try {
-      const response = await fetch(`${config.apiUrl}/checkResult`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', "Authorization": "Bearer " + token },
-        body: JSON.stringify(payload)
-      });
-      if (!response.ok) throw new Error("Server error");
-      const isLevelUpdated = await response.json();
-      if (isLevelUpdated === true && dataUpdate) {
-        await dataUpdate();
-      }
-    } catch (err) {
-      console.error("Failed to sync game results:", err);
+    const isLevelUpdated = await sendGameResult(payload);
+    
+    if (isLevelUpdated === true && dataUpdate) {
+      await dataUpdate();
     }
   };
 
@@ -135,10 +123,15 @@ const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum
   });
 
   const completedWords = words.slice(0, num + 1);
-  const legacyAnswersArray = completedWords.map((_, idx) => {
-    const record = answers.find(a => a.countAtAttempt === idx);
-    return record ? record.correct : false;
-  });
+  
+  // Оптимизировали сборку массива ответов для ResultList через кэш-карту сложностью O(N) вместо O(N^2)
+  const legacyAnswersArray = useMemo(() => {
+    const answersMap = answers.reduce((acc, cur) => {
+      acc[cur.countAtAttempt] = cur.correct;
+      return acc;
+    }, {});
+    return completedWords.map((_, idx) => !!answersMap[idx]);
+  }, [completedWords, answers]);
 
   const gameplayAnimationClass = isGameFinished ? 'slide-out-pure-left' : 'gameplay-active';
   const resultAnimationClass = isExiting

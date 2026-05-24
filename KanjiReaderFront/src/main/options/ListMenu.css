@@ -1,12 +1,12 @@
 /* ==========================================================================
-   CONTAINER & LAYOUT
+   1. CONTAINER & LAYOUT
    ========================================================================== */
 .list-menu-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 420px; /* Слегка сузили для более аккуратного и собранного вида */
+  max-width: 420px;
   position: absolute;
   box-sizing: border-box;
   padding: 0 1rem;
@@ -14,7 +14,7 @@
 
 .list-menu-container h1 {
   font-family: "Yu Mincho", serif;
-  font-size: 2.2rem; /* Сделали заголовок чуть компактнее и утонченнее */
+  font-size: 2.2rem;
   font-weight: 300;
   letter-spacing: 0.1em;
   margin-bottom: 1.5rem;
@@ -29,7 +29,7 @@
 }
 
 /* ==========================================================================
-   THE LIST & ITEMS (Уменьшили отступы и шрифты)
+   2. THE LIST & ITEMS
    ========================================================================== */
 .list-menu-list {
   list-style: none;
@@ -41,67 +41,65 @@
 .list-menu-item {
   display: flex;
   width: 100%;
-  margin-bottom: 0.5rem; /* Уменьшили разрыв между строками с 1.2rem до 0.5rem */
+  margin-bottom: 0.5rem;
 }
 
-/* Интерактивная подложка строки */
 .list-menu-link {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0.6rem 0.8rem; /* Внутренние отступы вместо внешних маргинов */
+  padding: 0.6rem 0.8rem;
   cursor: pointer;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.01);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03); /* Тонкая дорогая линия */
+  background: var(--profile-bg-card);
+  border-bottom: 1px solid var(--profile-border-main);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.item-left-side, .item-right-side {
+.item-left-side, 
+.item-right-side {
   display: flex;
   align-items: center;
 }
 
-/* Шрифты записей */
 .list-menu-link .item-title {
-  font-size: 1.05rem; /* Уменьшили с 1.3rem */
+  font-size: 1.05rem;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--profile-text-muted);
   transition: color 0.25s ease;
 }
 
-/* Римские цифры слева */
 .list-menu-number {
   font-family: "Yu Mincho", serif;
-  font-size: 0.95rem; /* Уменьшили */
+  font-size: 0.95rem;
   margin-right: 1.2rem;
   min-width: 25px;
-  color: rgba(255, 255, 255, 0.15);
+  color: var(--profile-text-low);
   transition: all 0.25s ease;
 }
 
-/* Эффект Ховера на строку */
+/* Эффект Ховера */
 .list-menu-link:hover {
-  background: rgba(255, 255, 255, 0.03);
-  border-bottom-color: rgba(var(--red-color), 0.3);
-  transform: translateX(4px); /* Легкий интерактивный сдвиг вправо при наведении */
+  background: var(--profile-bg-hover);
+  border-bottom-color: rgba(255, 0, 98, 0.3);
+  transform: translateX(4px);
 }
 
 .list-menu-link:hover .item-title {
-  color: var(--text-color);
+  color: var(--profile-text-hover);
 }
 
-/* Состояние когда элемент выбран (Киберпанк-неон) */
+/* Состояние выборки */
 .list-menu-link.selected {
-  background: linear-gradient(90deg, rgba(192, 12, 117, 0.08) 0%, transparent 100%);
+  background: linear-gradient(90deg, rgba(255, 0, 98, 0.08) 0%, transparent 100%);
   border-bottom-color: var(--red-color);
 }
 
 .list-menu-link.selected .item-title {
   color: var(--redder-color);
   font-weight: 600;
-  text-shadow: 0 0 10px rgba(192, 12, 117, 0.5);
+  text-shadow: 0 0 10px rgba(255, 0, 98, 0.3);
 }
 
 .list-menu-number.selected {
@@ -111,10 +109,10 @@
 
 /* Проценты (статистика) */
 .secondary {
-  font-size: 0.85rem; /* Сделали аккуратнее */
-  color: #666;
+  font-size: 0.85rem;
+  color: var(--faded-gray);
   margin-right: 0.8rem;
-  font-variant-numeric: tabular-nums; /* Чтобы цифры не прыгали */
+  font-variant-numeric: tabular-nums;
 }
 
 .percent {
@@ -122,7 +120,6 @@
   opacity: 0.5;
 }
 
-/* Иероглиф-индикатор "此" (Этот) справа */
 .list-menu-indicator {
   font-family: "Yu Mincho", serif;
   font-size: 0.95rem;
@@ -139,10 +136,12 @@
 }
 
 /* ==========================================================================
-   ANIMATION CONFIGURATION (Взрывной старт, супер-плавный финиш справа)
+   3. ANIMATIONS
    ========================================================================== */
 .noMore {
-  display: none !important;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .slide-in-blurred-right {
@@ -154,23 +153,11 @@
 }
 
 @keyframes slideInPureRight {
-  0% {
-    transform: translateX(1000px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  0% { transform: translateX(1000px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
 }
 
 @keyframes slideOutPureRight {
-  0% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(1000px);
-    opacity: 0;
-  }
+  0% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(1000px); opacity: 0; }
 }

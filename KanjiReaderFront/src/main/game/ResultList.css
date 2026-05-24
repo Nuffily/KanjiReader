@@ -1,9 +1,9 @@
 /* ==========================================================================
-   RESULT LIST CONTAINER (Адаптирован под общую темную сетку)
+   1. RESULT LIST CONTAINER
    ========================================================================== */
 .result-list-container {
   width: 100%;
-  max-width: 1050px; /* Идеальный размер для фокуса по центру */
+  max-width: 1050px;
   margin: 2rem auto;
   padding: 0;
   box-sizing: border-box;
@@ -14,17 +14,17 @@
   padding: 0;
   margin: 0;
   width: 100%;
-  max-height: 680px; /* Ограничение по высоте скролла */
+  max-height: 680px;
   overflow-y: auto;
-  padding-right: 4px; /* Отступ для кастомного скроллбара */
+  padding-right: 4px; /* Отступ под кастомный скроллбар */
 }
 
 /* ==========================================================================
-   УНИФИЦИРОВАННЫЙ СТИЛЬ СТРОКИ РЕЗУЛЬТАТА (Без рамок, на градиентах)
+   2. УНИФИЦИРОВАННЫЙ СТИЛЬ СТРОКИ РЕЗУЛЬТАТА
    ========================================================================== */
 .result-item {
   display: grid;
-  grid-template-columns: 180px 1px 1fr; /* Иероглиф | Разделитель | Чтение и Перевод */
+  grid-template-columns: 180px 1px 1fr; /* Номер + Кандзи | Разделитель | Контент */
   align-items: center;
   width: 95%;
   padding: 0.6rem 1.5rem;
@@ -34,7 +34,6 @@
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Столбец 1: Номер + Кандзи */
 .item-left-side {
   display: flex;
   align-items: center;
@@ -44,7 +43,7 @@
 .result-item-number {
   font-family: "Yu Mincho", serif;
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.15);
+  color: var(--profile-text-muted);
   min-width: 30px;
 }
 
@@ -52,21 +51,21 @@
   font-family: "Yu Mincho", "Meiryo", sans-serif;
   font-size: 1.4rem;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--profile-text-main);
 }
 
-/* Тонкий разделитель посередине */
+/* Тонкий разделитель */
 .result-item-separator {
   width: 1px;
   height: 24px;
   transition: all 0.3s ease;
 }
 
-/* Столбец 2: Чтение и Перевод в одну линию */
+/* Правая часть: Чтение и Перевод */
 .result-item-content {
   display: flex;
   align-items: center;
-  gap: 2.5rem; /* Отступ между чтением и английским переводом */
+  gap: 2.5rem;
   padding-left: 1.5rem;
 }
 
@@ -74,16 +73,16 @@
   font-size: 1rem;
   font-weight: 400;
   letter-spacing: 0.05em;
-  min-width: 120px; /* Фиксируем ширину чтения, чтобы перевод не прыгал */
+  min-width: 120px;
 }
 
 .result-text.english {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--profile-text-muted);
   font-weight: 300;
 }
 
-/* Общая динамика строки при ховере */
+/* Общая динамика ховера */
 .result-item:hover {
   transform: translateX(6px);
 }
@@ -93,62 +92,84 @@
 }
 
 /* ==========================================================================
-   АТМОСФЕРНОЕ СВЕЧЕНИЕ ФОНА (Мягкие градиенты на основе твоих переменных)
+   3. ТЕМАТИЧЕСКИЕ СВЕЧЕНИЯ СТРОК (ПРАВИЛЬНО / НЕПРАВИЛЬНО / НЕЙТРАЛЬНО)
    ========================================================================== */
 
 /* --- СОСТОЯНИЕ: ПРАВИЛЬНО (--occult-green) --- */
 .result-item.correct {
-  /* Градиент мягко подсвечивает левую часть и растворяется в прозрачный к концу строки */
-  background: linear-gradient(90deg, rgba(0, 255, 136, 0.03) 0%, rgba(0, 255, 136, 0.005) 50%, transparent 100%);
+  background: linear-gradient(90deg, rgba(0, 255, 128, 0.03) 0%, rgba(0, 255, 128, 0.005) 50%, transparent 100%);
 }
 
 .result-item.correct .kanji-text,
 .result-item.correct .result-text.furigana {
   color: var(--occult-green);
-  text-shadow: 0 0 12px rgba(0, 255, 136, 0.25);
+  text-shadow: 0 0 12px rgba(0, 255, 128, 0.25);
 }
 
 .result-item.correct .result-item-separator {
-  background: rgba(0, 255, 136, 0.2);
+  background: rgba(0, 255, 128, 0.2);
 }
 
-/* Акцент при наведении на правильную строку */
 .result-item.correct:hover {
-  background: linear-gradient(90deg, rgba(0, 255, 136, 0.06) 0%, rgba(0, 255, 136, 0.01) 60%, transparent 100%);
+  background: linear-gradient(90deg, rgba(0, 255, 128, 0.06) 0%, rgba(0, 255, 128, 0.01) 60%, transparent 100%);
 }
 
 .result-item.correct:hover .result-item-separator {
   background: var(--occult-green);
 }
 
-
 /* --- СОСТОЯНИЕ: НЕПРАВИЛЬНО (--red-color) --- */
 .result-item.incorrect {
-  background: linear-gradient(90deg, rgba(255, 0, 0, 0.03) 0%, rgba(255, 0, 0, 0.005) 50%, transparent 100%);
+  background: linear-gradient(90deg, rgba(255, 0, 98, 0.03) 0%, rgba(255, 0, 98, 0.005) 50%, transparent 100%);
 }
 
 .result-item.incorrect .kanji-text,
 .result-item.incorrect .result-text.furigana {
   color: var(--red-color);
-  text-shadow: 0 0 12px rgba(255, 0, 0, 0.25);
+  text-shadow: 0 0 12px rgba(255, 0, 98, 0.25);
 }
 
 .result-item.incorrect .result-item-separator {
-  background: rgba(255, 0, 0, 0.2);
+  background: rgba(255, 0, 98, 0.2);
 }
 
-/* Акцент при наведении на ошибочную строку */
 .result-item.incorrect:hover {
-  background: linear-gradient(90deg, rgba(255, 0, 0, 0.06) 0%, rgba(255, 0, 0, 0.01) 60%, transparent 100%);
+  background: linear-gradient(90deg, rgba(255, 0, 98, 0.06) 0%, rgba(255, 0, 98, 0.01) 60%, transparent 100%);
 }
 
 .result-item.incorrect:hover .result-item-separator {
   background: var(--red-color);
 }
 
+/* --- СОСТОЯНИЕ: НЕЙТРАЛЬНО (--faded-gray) --- */
+.result-item.neutral {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.002) 50%, transparent 100%);
+}
+
+.result-item.neutral .kanji-text,
+.result-item.neutral .result-text.furigana {
+  color: var(--faded-gray);
+  text-shadow: none;
+}
+
+.result-item.neutral .result-text.english {
+  color: var(--profile-text-ultra-low);
+}
+
+.result-item.neutral .result-item-separator {
+  background: var(--profile-border-main);
+}
+
+.result-item.neutral:hover {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.005) 60%, transparent 100%);
+}
+
+.result-item.neutral:hover .result-item-separator {
+  background: var(--profile-text-low);
+}
 
 /* ==========================================================================
-   ПУСТОЕ СОСТОЯНИЕ (EMPTY STATE)
+   4. ПУСТОЕ СОСТОЯНИЕ (EMPTY STATE)
    ========================================================================== */
 .result-empty-state {
   display: flex;
@@ -156,44 +177,31 @@
   align-items: center;
   justify-content: center;
   padding: 3.5rem 2rem;
-  border: 1px dashed rgba(255, 255, 255, 0.03);
+  border: 1px dashed var(--profile-border-main);
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.005);
+  background: var(--profile-bg-card);
 }
 
 .result-empty-state .empty-text {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.25);
+  color: var(--profile-text-low);
   margin-top: 1rem;
   letter-spacing: 1px;
 }
 
 
 
-/* --- СОСТОЯНИЕ: ПОСЛЕДНЯЯ НЕЙТРАЛЬНАЯ СТРОКА (Серая) --- */
-.result-item.neutral {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.002) 50%, transparent 100%);
+[data-theme='light'] .result-item.correct {
+  /* Увеличиваем прозрачность с 0.03 до 0.15 */
+  background: linear-gradient(90deg, rgba(0, 200, 100, 0.15) 0%, rgba(0, 255, 128, 0.05) 50%, transparent 100%);
 }
 
-.result-item.neutral .kanji-text,
-.result-item.neutral .result-text.furigana {
-  color: rgba(255, 255, 255, 0.4);
-  text-shadow: none; /* Убираем неоновое свечение */
+[data-theme='light'] .result-item.incorrect {
+  /* Увеличиваем прозрачность с 0.03 до 0.15 */
+  background: linear-gradient(90deg, rgba(255, 0, 98, 0.15) 0%, rgba(255, 0, 98, 0.05) 50%, transparent 100%);
 }
 
-.result-item.neutral .result-text.english {
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.result-item.neutral .result-item-separator {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/* Акцент при наведении на нейтральную строку */
-.result-item.neutral:hover {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.005) 60%, transparent 100%);
-}
-
-.result-item.neutral:hover .result-item-separator {
-  background: rgba(255, 255, 255, 0.3);
+[data-theme='light'] .result-item.neutral {
+  /* Делаем нейтральный фон заметнее */
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.01) 50%, transparent 100%);
 }
