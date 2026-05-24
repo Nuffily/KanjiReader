@@ -1,12 +1,11 @@
 package kanjiReader.base.auth
 
-import kanjiReader.base.auth.redis.{KanjiTokenCache, TokenCache}
+import kanjiReader.base.auth.token.cache.TokenCache
 import kanjiReader.base.kanjiUsers.UserRepo
 import kanjiReader.config.GitHubConfig
 import zio.http.Header.Authorization
 import zio.http.{Body, Client, Form, Header, MediaType, Request, Status, URL}
 import zio.json.DecoderOps
-import zio.redis.Redis
 import zio.{&, Scope, ZIO, ZLayer, durationInt, _}
 
 case class GitHubService(
@@ -86,10 +85,9 @@ case class GitHubService(
 
   override def getUserGitData(
       authHeader: Authorization
-  ): ZIO[Client & Redis, AuthUserDataError, GitHubUser] = ZIO.scoped {
+  ): ZIO[Client, AuthUserDataError, GitHubUser] = ZIO.scoped {
     cache.getUser(authHeader).orElse {
       for {
-        _    <- Console.printLine("Cache miss").orDie
         user <- requestUserData(authHeader)
         _ <- cache
           .cacheUser(authHeader, user, 1.hour)
@@ -100,7 +98,7 @@ case class GitHubService(
 
   override def getKanjiUserData(
       authHeader: Authorization
-  ): ZIO[Client & UserRepo & Redis, AuthUserDataError, KanjiUser] = for {
+  ): ZIO[Client & UserRepo, AuthUserDataError, KanjiUser] = for {
 
     gitUser <- getUserGitData(authHeader)
 
@@ -162,10 +160,10 @@ case class GitHubService(
 }
 
 object GitHubService {
-  def layer: ZLayer[GitHubConfig, Throwable, AuthService] = ZLayer.scoped {
+  def layer: ZLayer[GitHubConfig & TokenCache, Throwable, AuthService] = ZLayer.scoped {
     for {
       config <- ZIO.service[GitHubConfig]
-      cache = KanjiTokenCache("bear:")
+      cache  <- ZIO.service[TokenCache]
     } yield GitHubService(config, cache)
   }
 }

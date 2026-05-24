@@ -1,0 +1,271 @@
+/* ==========================================================================
+   1. СЕТКА И МАСШТАБИРОВАНИЕ ПРОФИЛЯ
+   ========================================================================== */
+.list-menu-container.profile-root-wrapper {
+  max-width: 1500px;
+  width: 95%;
+}
+
+.main-frame.profile-root-wrapper {
+  max-width: none;
+  width: 100%;
+}
+
+.profile-root-wrapper .list-menu-button {
+  max-width: 320px;
+  align-self: flex-start;
+}
+
+.profile-card-override {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.profile-grid-layout {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  width: 100%;
+  gap: 5rem;
+  align-items: start;
+}
+
+/* ==========================================================================
+   2. ЛЕВАЯ КОЛОНКА: ЮЗЕР, ОПЫТ И НАСТРОЙКИ
+   ========================================================================== */
+.profile-user-column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.profile-row-static-hero {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--profile-border-hero);
+}
+
+.profile-avatar-flat-hero {
+  width: 56px;
+  height: 56px;
+  border-radius: 4px;
+  background-size: cover;
+  filter: grayscale(0.2);
+}
+
+.profile-meta-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.profile-username-link {
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: var(--profile-text-main);
+  text-decoration: none;
+  font-family: "Yu Mincho", serif;
+  transition: color 0.25s;
+}
+
+.profile-username-link:hover {
+  color: var(--red-color);
+}
+
+.profile-roman-number {
+  font-family: "Yu Mincho", serif;
+  font-size: 0.85rem;
+  color: var(--profile-text-low);
+  letter-spacing: 1.5px;
+}
+
+/* Опыт */
+.profile-xp-row {
+  display: flex;
+  flex-direction: column;
+  padding: 1.2rem 0.8rem 0.6rem 0.8rem;
+  gap: 0.5rem;
+}
+
+.profile-xp-bar-bg {
+  width: 100%;
+  height: 2px;
+  background: var(--profile-border-main);
+}
+
+.profile-xp-bar-fill {
+  height: 100%;
+  background: var(--red-color);
+  box-shadow: 0 0 8px var(--red-color);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: left;
+}
+
+.profile-xp-values {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--profile-text-low);
+  letter-spacing: 1px;
+}
+
+.profile-xp-values .tabular-xp {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Системные переключатели */
+.profile-controls-grid {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+}
+
+/* ==========================================================================
+   3. ПРАВАЯ КОЛОНКА: ОБЩАЯ СТРУКТУРА
+   ========================================================================== */
+.profile-quests-column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.profile-section-divider {
+  font-family: "Yu Mincho", serif;
+  font-size: 0.8rem;
+  color: var(--profile-text-low);
+  letter-spacing: 2px;
+  padding: 0 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.profile-quests-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.profile-timer-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0.8rem;
+  font-size: 0.8rem;
+  color: var(--profile-text-low);
+  letter-spacing: 1px;
+  border-top: 1px solid var(--profile-border-main);
+  margin-top: 0.8rem;
+}
+
+/* ==========================================================================
+   4. УНИФИЦИРОВАННЫЙ СТИЛЬ ЯЧЕЕК И ЭФФЕКТЫ
+   ========================================================================== */
+.profile-interactive-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+  background: var(--profile-bg-card);
+  border-radius: 6px;
+  border: 1px solid var(--profile-border-main);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.profile-interactive-row:hover:not(.completed-task) {
+  background: var(--profile-bg-hover);
+  border-color: rgba(255, 0, 98, 0.2);
+  transform: translateX(6px);
+}
+
+.profile-row-title {
+  font-size: 1.05rem;
+  color: var(--profile-text-muted);
+  flex-grow: 1;
+  transition: color 0.3s ease;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.profile-row-indicator {
+  font-family: "Yu Mincho", serif;
+  font-size: 0.9rem;
+  color: transparent;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.profile-interactive-row:hover .profile-row-title {
+  color: var(--profile-text-hover);
+}
+
+.profile-interactive-row:hover .profile-row-indicator {
+  color: var(--red-color);
+  opacity: 1;
+  transform: translateX(-5px);
+}
+
+.out-action {
+  opacity: 0.5;
+}
+
+.profile-interactive-row:hover .out-action {
+  color: var(--redder-color);
+}
+
+/* Состояния завершенности */
+.completed-task {
+  opacity: 0.3;
+  filter: grayscale(1);
+  border-color: transparent;
+  cursor: default;
+}
+
+.completed-task:hover {
+  transform: none;
+  background: transparent;
+}
+
+.completed-task .profile-quest-text-content {
+  text-decoration: line-through;
+}
+
+/* Спиннер загрузки пустых квестов */
+.profile-empty-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+}
+
+.profile-kanji-pulse {
+  font-family: "Yu Mincho", serif;
+  font-size: 3rem;
+  color: var(--profile-text-low);
+  animation: loadingTextPulse 1.8s infinite ease-in-out;
+}
+
+/* ==========================================================================
+   5. АДАПТИВ И МЕДИАЗАПРОСЫ
+   ========================================================================== */
+@media (max-width: 650px) {
+  .profile-grid-layout {
+    grid-template-columns: 100%;
+    width: 100%;
+    gap: 2.5rem;
+  }
+
+  .profile-card-override {
+    padding: 1.5rem 0.75rem;
+    box-sizing: border-box;
+  }
+
+  .profile-interactive-row:hover:not(.completed-task) {
+    transform: none;
+  }
+}

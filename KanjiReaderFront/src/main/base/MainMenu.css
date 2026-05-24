@@ -1,0 +1,139 @@
+/* ==========================================================================
+   1. MAIN MENU CONTAINERS & TYPOGRAPHY
+   ========================================================================== */
+.mainMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: absolute; /* Для наложения меню и подменю в одной точке */
+}
+
+.result-badge {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--red-color);
+  margin-bottom: 2rem;
+  letter-spacing: 0.05em;
+  transition: opacity 0.3s ease;
+}
+
+.menu-text-container {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.menu-text-container p {
+  margin: 1.2rem 0;
+  font-size: 1.25rem;
+}
+
+/* Вынесли инлайн-стили текста ошибки из ErrorMenu */
+.error-text-message {
+  font-size: 1.1rem;
+  opacity: 0.8;
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   2. KANJI START BUTTON (Внутренние стили, если TrinityButton/VoidButton их не перебивают)
+   ========================================================================== */
+.start-btn {
+  font-family: "Yu Mincho", "Meiryo", "Yu Gothic UI", sans-serif;
+  border: none;
+  width: 110px;
+  height: 110px;
+  font-weight: 700;
+  border-radius: 50%;
+  font-size: 42px;
+}
+
+/* ==========================================================================
+   3. ANIMATIONS & PRELOADERS
+   ========================================================================== */
+
+/* Прелоадер "Загрузка" и Заголовок Ошибки */
+.kanji-loading-display {
+  font-family: "Yu Mincho", "Meiryo", serif;
+  font-size: 6.5rem; 
+  font-weight: 300;
+  color: var(--text-color);
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+  animation: loadingTextPulse 1.8s infinite ease-in-out;
+}
+
+/* Специфичный цвет для кандзи ошибки без инлайн-стилей */
+.kanji-loading-display.error-state {
+  color: var(--red-color);
+}
+
+/* Анимации сдвигов */
+.slide-in-pure-left {
+  animation: slideInPureLeft 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+}
+
+.slide-out-pure-left {
+  animation: slideOutPureLeft 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+  pointer-events: none;
+}
+
+.slide-out-pure-top {
+  animation: slideOutPureTop 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+  pointer-events: none;
+}
+
+.slide-in-pure-bottom {
+  animation: slideInPureBottom 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+}
+
+.slide-in-pure-top {
+  animation: slideInPureTop 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+}
+
+/* Ключевые кадры */
+@keyframes slideInPureLeft {
+  0% { transform: translateX(-1000px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutPureLeft {
+  0% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(-1000px); opacity: 0; }
+}
+
+@keyframes slideOutPureTop {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-500px); opacity: 0; }
+}
+
+@keyframes slideInPureTop {
+  0% { transform: translateY(-500px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInPureBottom {
+  0% { transform: translateY(1000px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes loadingTextPulse {
+  0%, 100% {
+    opacity: 0.4;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.02);
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 35px rgba(0, 242, 255, 0.15);
+  }
+}
+
+.slide-out-pure-right {
+  animation: slideOutPureRight 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+  pointer-events: none;
+}
+
+@keyframes slideOutPureRight {
+  0% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(1000px); opacity: 0; }
+}

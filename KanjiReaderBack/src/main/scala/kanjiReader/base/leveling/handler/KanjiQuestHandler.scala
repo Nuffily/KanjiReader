@@ -1,7 +1,7 @@
 package kanjiReader.base.leveling.handler
 
-import kanjiReader.base.leveling.{Quest, QuestType, WordGameResult}
 import kanjiReader.base.leveling.QuestType._
+import kanjiReader.base.leveling.{Quest, QuestType, WordGameResult}
 
 object KanjiQuestHandler extends QuestHandler {
 
@@ -90,8 +90,11 @@ object KanjiQuestHandler extends QuestHandler {
         }
 
       case Percent =>
+        println(res.count + " < " + quest.parameter2)
+        println((res.correctCount / res.count) * 100 + " < " + quest.parameter)
+        println(res.correctCount + " " +  res.count + " < " + quest.parameter)
         if (
-          res.count < quest.parameter2 || (res.correctCount / res.count) * 100 < quest.parameter
+          res.count < quest.parameter2 || (res.correctCount.toDouble / res.count) * 100 < quest.parameter
         ) quest
         else {
           quest.copy(is_complete = true)

@@ -7,7 +7,7 @@ import kanjiReader.base.leveling.QuestType._
 import kanjiReader.base.leveling.handler.QuestHandler
 import kanjiReader.base.statistics.StatisticsService
 import kanjiReader.utils.Syntax._
-import zio.{&, Clock, Console, URIO, ZIO, ZLayer}
+import zio.{&, Clock, URIO, ZIO, ZLayer}
 
 import javax.sql.DataSource
 import scala.annotation.nowarn
@@ -121,10 +121,6 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
       now <- Clock.localDateTime
       isExpired = user.refill.isBefore(now)
 
-      _    <- Console.printLine(isExpired).orDie
-      _    <- Console.printLine(user.refill).orDie
-      _    <- Console.printLine(now).orDie
-
       quests <-
         if (isExpired) doRefill
         else
@@ -149,6 +145,7 @@ case class KanjiLevelService(ds: DataSource, qh: QuestHandler)
       res: WordGameResult
   ): ZIO[UserRepo & StatisticsService, LevelError, Boolean] = for {
     quests  <- getQuests(id)
+
     updated <- ZIO.foreach(quests)(handleQuest(id, _, res))
     _ <- StatisticsService
       .update(id, res)

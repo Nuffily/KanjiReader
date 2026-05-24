@@ -1,178 +1,196 @@
-:root {
-  font-family:
-    "Yu Mincho",
-    "Meiryo",
-    Yu Gothic UI,
-    MS PGothic, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  :root {
+    /* Fonts */
+    font-family: "Yu Mincho", "Meiryo", "Yu Gothic UI", "MS PGothic", system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
 
-  color-scheme: light dark;
+    /* Color Schemes (Dark Theme) */
+    color-scheme: dark;
+    --background-color: #0d0d0d;
+    --text-color: rgba(255, 255, 255, 0.87);
+    --selection-bg: rgba(255, 255, 255, 0.8);
+    --selection-text: #000000;
 
-  background-color: #242424;
+    /* Accent Colors */
+    --red-color: #ff0062;
+    --redder-color: #bd3569;
+    --occult-pink: #ff0062;
+    --occult-cyan: #00f2ff;
+    --occult-green: #00ff80;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    /* Layout & System Grids */
+    --bg-dark: #0a0a0b;
+    --void-gray: #1a1a1c;
+    --faded-gray: #444;
+    --grid-line-color: rgba(255, 255, 255, 0.015);
+    --scrollbar-thumb-color: rgba(255, 255, 255, 0.05);
 
-  --background-color: #242424;
+    /* Profile Theme System */
+    --profile-bg-card: rgba(255, 255, 255, 0.01);
+    --profile-bg-hover: rgba(255, 255, 255, 0.03);
+    --profile-border-main: rgba(255, 255, 255, 0.03);
+    --profile-border-hero: rgba(255, 255, 255, 0.05);
+    --profile-text-main: rgba(255, 255, 255, 0.95);
+    --profile-text-muted: rgba(255, 255, 255, 0.6);
+    --profile-text-low: rgba(255, 255, 255, 0.3);
+    --profile-text-ultra-low: rgba(255, 255, 255, 0.15);
+    --profile-text-hover: #ffffff;
 
-  --text-color: #f6f1f8ec;
-  --red-color: #c00c75;
+    --button-color: rgba(255, 255, 255, 0.03);
+    --button-text: rgba(255, 255, 255, 0.87);
 
-  --redder-color: #fa0092;
-
-  --second-back: #333;
-  --list-gradient: linear-gradient(145deg, #242424, #1a1a1a);
-
-  --incorrect-text: rgba(253, 220, 220, 0.87);
-  --correct-text: rgba(220, 253, 223, 0.87);
-
-  --incorrect-back: #402424;
-  --correct-back: #244424;
-  --neutural-back: #242430;
-
-  --result-border: #374151;
-
-  --item-correct: #1a2e1a;
-  --item-incorrect: #2e1a1a;
-
-  --text-correct: #4ade80;
-  --text-incorrect: #f87171;
-
-  --button-color: #1f1f1f;
-  --button-text: rgba(221, 215, 219, 0.445);
-
-  color: var(--text-color);
-
-}
-
-*::selection {
-  background-color: var(--red-color);
-  color: white;
-}
-
-href {
-  color: inherit
-}
-
-a {
-  cursor: pointer;
-  font-weight: 500;
-  color: var(--text-color);
-  text-decoration: inherit;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-a:hover {
-  color: var(--red-color);
-  text-shadow: 0 0 15px var(--red-color);
-  transition: all 0.5s ease;
-}
-
-a:active {
-  transform: scale(1.05);
-  color: var(--redder-color);
-  text-shadow: 0 0 20px var(--redder-color);
-  transition: all 0.1s ease;
-}
-
-a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--red-color), transparent);
-  transition: width 0.3s ease;
-}
-
-a:hover::after {
-  width: 100%;
-}
-
-@keyframes textGlow {
-  0% {
-    text-shadow: 0 0 15px var(--red-color);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  100% {
-    text-shadow: 0 0 25px var(--red-color);
-  }
-}
+  [data-theme='light'] {
+    --background-color: #f4f4f4;
+    --text-color: #1a1a1a;
+    --profile-bg-card: rgba(0, 0, 0, 0.03);
+    --profile-bg-hover: rgba(0, 0, 0, 0.06);
+    --profile-border-main: rgba(0, 0, 0, 0.1);
+    --profile-border-hero: rgba(0, 0, 0, 0.15);
+    --profile-text-main: #000000;
+    --profile-text-muted: #2b2b2b;
+    --profile-text-low: #727272;
+    --profile-text-ultra-low: #878686;
 
-@keyframes textGlowHigher {
-  0% {
-    text-shadow: 0 0 20px var(--redder-color);
+    --selection-bg: var(--occult-pink);
+    --selection-text: #f4f4f4;
+
+    --grid-line-color: rgba(0, 0, 0, 0.027);
+    --occult-green: #0dcf6e;
+    --profile-text-hover: var(--occult-pink);
   }
 
-  100% {
+  *::selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-text);
+  }
+
+  /* ==========================================================================
+    THE BASICS & PERFECT DARK GRID
+    ========================================================================== */
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    background-color: var(--background-color);
+  }
+
+  body {
+    font-size: 20px;
+    color: var(--text-color);
+    position: relative;
+    background-image:
+      linear-gradient(var(--grid-line-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line-color) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-attachment: fixed;
+  }
+
+  #root {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+
+  .main-frame {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ==========================================================================
+    SCROLLBAR SYSTEM (Minimalistic)
+    ========================================================================== */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  ::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color);
+    border-radius: 10px;
+    transition: background 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--occult-pink);
+    box-shadow: 0 0 8px var(--occult-pink);
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb-color) transparent;
+  }
+
+  /* ==========================================================================
+    GLOBAL TYPOGRAPHY & LINKS
+    ========================================================================== */
+  h1 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin: 0 0 0.5rem 0;
+  }
+
+  a {
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-color);
+    text-decoration: inherit;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  a:hover {
+    color: var(--red-color);
+    text-shadow: 0 0 20px var(--red-color);
+  }
+
+  a:active {
+    transform: scale(1.05);
+    color: var(--redder-color);
     text-shadow: 0 0 30px var(--redder-color);
+    transition-duration: 0.1s;
   }
-}
 
-body {
-  margin: 0;
-  font-size: 20px;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
+  a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--red-color), transparent);
+    transition: width 0.3s ease;
+  }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  background: var(--button-color);
-  font-family:
-    "Yu Mincho",
-    "Meiryo",
-    Yu Gothic UI;
-  color: var(--button-text);
-  border: none;
-  width: 100px;
-  height: 100px;
-  font-weight: 500;
-
-  border-radius: 50%;
-  font-size: 40px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-button::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  border-radius: 50%;
-  border: 1px solid transparent;
-  background: linear-gradient(45deg, var(--red-color), transparent) border-box;
-  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-button:hover::before {
-  opacity: 1;
-}
-
-button:hover {
-  color: var(--red-color);
-  box-shadow: 0 0 20px #c00c7569;
-  transform: scale(1.1);
-}
-
+  a:hover::after {
+    width: 100%;
+  }

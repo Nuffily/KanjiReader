@@ -2,14 +2,22 @@ package kanjiReader.base.auth
 
 import kanjiReader.base.kanjiUsers.UserRepo
 import kanjiReader.utils.KanjiResponse
-import zio.http.{Client, Method, Request, Response, Routes, handler}
+import zio.http.{
+  Client,
+  Cookie,
+  Method,
+  Path,
+  Request,
+  Response,
+  Routes,
+  handler
+}
 import zio.json.EncoderOps
-import zio.redis.Redis
-import zio.{&, ZIO}
+import zio.{&, ZIO, durationInt}
 
 object AuthRoutes {
 
-  def apply(): Routes[Client & AuthService & UserRepo & Redis, Response] = Routes(
+  def apply(): Routes[Client & AuthService & UserRepo, Response] = Routes(
     /** Принимает код входа через гитхаб в url строке и с помощью него получает
       * токен пользователя с API GitHub
       */
@@ -19,7 +27,18 @@ object AuthRoutes {
       (for {
         service <- ZIO.service[AuthService]
         token   <- service.getAccessToken(code)
-      } yield Response.json(token.toJson))
+
+        cookie = Cookie.Response(
+          name = "kanji_github_token",
+          content = token.access_token,
+          maxAge = Some(1.hours),
+          path = Some(Path.root),
+          isHttpOnly = false,
+          isSecure = false,
+          sameSite = Some(Cookie.SameSite.Lax)
+        )
+
+      } yield Response.json(token.toJson).addCookie(cookie))
         .catchAll {
           case AuthBadToken(message) => KanjiResponse.unauthorized(message)
           case AuthDunnoTokenError(message) =>
@@ -33,7 +52,7 @@ object AuthRoutes {
       */
     Method.GET / "getUserGitData" -> handler { (req: Request) =>
       KanjiResponse
-        .withToken(req) { token =>
+        .withCookie(req) { token =>
           ZIO
             .serviceWithZIO[AuthService](_.getUserGitData(token))
             .map(u => Response.json(u.toJson))
@@ -46,7 +65,7 @@ object AuthRoutes {
       */
     Method.GET / "getKanjiUserData" -> handler { (req: Request) =>
       KanjiResponse
-        .withToken(req) { token =>
+        .withCookie(req) { token =>
           ZIO
             .serviceWithZIO[AuthService](_.getKanjiUserData(token))
             .map(u => Response.json(u.toJson))

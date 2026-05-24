@@ -1,21 +1,16 @@
 package kanjiReader.base.leveling
 
-import kanjiReader.base.auth.AuthService
+import kanjiReader.base.auth.GitHubUser
 import kanjiReader.base.kanjiUsers.UserRepo
 import kanjiReader.base.leveling.handler.KanjiQuestHandler
 import kanjiReader.base.statistics.StatisticsService
-import kanjiReader.utils.KanjiResponse
-import zio.http.{Client, Method, Request, Response, Routes, handler}
+import zio.http.{Method, Request, Response, Routes, handler}
 import zio.json.{DecoderOps, EncoderOps}
-import zio.redis.Redis
 import zio.{&, Random, ZIO}
 
 object LevelRoutes {
 
-  def apply(): Routes[
-    Random & LevelService & UserRepo & AuthService & Client & StatisticsService & Redis,
-    Response
-  ] =
+  def apply(): Routes[Random & UserRepo & LevelService & GitHubUser & StatisticsService, Response] =
     Routes(
       /** Возвращает список квестов пользователя, где кадлый квест состоит из:
         * ```
@@ -30,16 +25,11 @@ object LevelRoutes {
         * ```
         */
       Method.GET / "getQuests" -> handler { (req: Request) =>
-        KanjiResponse
-          .withToken(req) { token =>
-            for {
-              user <- ZIO
-                .serviceWithZIO[AuthService](_.getUserGitData(token))
-                .mapError(KanjiResponse.handleAuthError)
-              quests <- LevelService.getQuests(user.id)
-              printable = quests.map(KanjiQuestHandler.toPrintable)
-            } yield Response.json(printable.toJson)
-          }
+        (for {
+          user   <- ZIO.service[GitHubUser]
+          quests <- LevelService.getQuests(user.id)
+          printable = quests.map(KanjiQuestHandler.toPrintable)
+        } yield Response.json(printable.toJson))
           .catchAll(handleLevelError)
       },
 
@@ -58,36 +48,30 @@ object LevelRoutes {
         * ```
         */
       Method.POST / "checkResult" -> handler { (req: Request) =>
-        KanjiResponse
-          .withToken(req) { token =>
-            for {
-              user <- ZIO
-                .serviceWithZIO[AuthService](_.getUserGitData(token))
-                .mapError(KanjiResponse.handleAuthError)
-              bodyString <- req.body.asString
-                .orElseFail(Response.badRequest("Empty body"))
-              gameResult <- ZIO
-                .fromEither(bodyString.fromJson[WordGameResult])
-                .orElseFail(Response.badRequest("Invalid JSON"))
-              isChanged <- LevelService.checkResult(user.id, gameResult)
-            } yield Response.json(isChanged.toJson)
-          }
+        (
+          for {
+            user <- ZIO.service[GitHubUser]
+            bodyString <- req.body.asString
+              .orElseFail(Response.badRequest("Empty body"))
+            gameResult <- ZIO
+              .fromEither(bodyString.fromJson[WordGameResult])
+              .orElseFail(Response.badRequest("Invalid JSON"))
+            isChanged <- LevelService.checkResult(user.id, gameResult)
+          } yield Response.json(isChanged.toJson)
+        )
           .catchAll(handleLevelError)
       },
 
       // Unused
       Method.GET / "refill" -> handler { (req: Request) =>
-        KanjiResponse
-          .withToken(req) { token =>
-            for {
-              user <- ZIO
-                .serviceWithZIO[AuthService](_.getUserGitData(token))
-                .mapError(KanjiResponse.handleAuthError)
-              _ <- LevelService
-                .refillQuests(user.id)
-                .mapError(e => Response.badRequest(s"wrong id: $e"))
-            } yield Response.ok
-          }
+        (
+          for {
+            user <- ZIO.service[GitHubUser]
+            _ <- LevelService
+              .refillQuests(user.id)
+              .mapError(e => Response.badRequest(s"wrong id: $e"))
+          } yield Response.ok
+        )
           .catchAll(handleLevelError)
       }
     )

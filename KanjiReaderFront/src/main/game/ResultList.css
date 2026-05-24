@@ -1,0 +1,207 @@
+/* ==========================================================================
+   1. RESULT LIST CONTAINER
+   ========================================================================== */
+.result-list-container {
+  width: 100%;
+  max-width: 1050px;
+  margin: 2rem auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.result-list-wrapper {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-height: 680px;
+  overflow-y: auto;
+  padding-right: 4px; /* Отступ под кастомный скроллбар */
+}
+
+/* ==========================================================================
+   2. УНИФИЦИРОВАННЫЙ СТИЛЬ СТРОКИ РЕЗУЛЬТАТА
+   ========================================================================== */
+.result-item {
+  display: grid;
+  grid-template-columns: 180px 1px 1fr; /* Номер + Кандзи | Разделитель | Контент */
+  align-items: center;
+  width: 95%;
+  padding: 0.6rem 1.5rem;
+  margin-bottom: 0.6rem;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.item-left-side {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.result-item-number {
+  font-family: "Yu Mincho", serif;
+  font-size: 0.85rem;
+  color: var(--profile-text-muted);
+  min-width: 30px;
+}
+
+.kanji-text {
+  font-family: "Yu Mincho", "Meiryo", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--profile-text-main);
+}
+
+/* Тонкий разделитель */
+.result-item-separator {
+  width: 1px;
+  height: 24px;
+  transition: all 0.3s ease;
+}
+
+/* Правая часть: Чтение и Перевод */
+.result-item-content {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding-left: 1.5rem;
+}
+
+.result-text.furigana {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  min-width: 120px;
+}
+
+.result-text.english {
+  font-size: 1rem;
+  color: var(--profile-text-muted);
+  font-weight: 300;
+}
+
+/* Общая динамика ховера */
+.result-item:hover {
+  transform: translateX(6px);
+}
+
+.result-item:hover .result-item-separator {
+  height: 32px;
+}
+
+/* ==========================================================================
+   3. ТЕМАТИЧЕСКИЕ СВЕЧЕНИЯ СТРОК (ПРАВИЛЬНО / НЕПРАВИЛЬНО / НЕЙТРАЛЬНО)
+   ========================================================================== */
+
+/* --- СОСТОЯНИЕ: ПРАВИЛЬНО (--occult-green) --- */
+.result-item.correct {
+  background: linear-gradient(90deg, rgba(0, 255, 128, 0.03) 0%, rgba(0, 255, 128, 0.005) 50%, transparent 100%);
+}
+
+.result-item.correct .kanji-text,
+.result-item.correct .result-text.furigana {
+  color: var(--occult-green);
+  text-shadow: 0 0 12px rgba(0, 255, 128, 0.25);
+}
+
+.result-item.correct .result-item-separator {
+  background: rgba(0, 255, 128, 0.2);
+}
+
+.result-item.correct:hover {
+  background: linear-gradient(90deg, rgba(0, 255, 128, 0.06) 0%, rgba(0, 255, 128, 0.01) 60%, transparent 100%);
+}
+
+.result-item.correct:hover .result-item-separator {
+  background: var(--occult-green);
+}
+
+/* --- СОСТОЯНИЕ: НЕПРАВИЛЬНО (--red-color) --- */
+.result-item.incorrect {
+  background: linear-gradient(90deg, rgba(255, 0, 98, 0.03) 0%, rgba(255, 0, 98, 0.005) 50%, transparent 100%);
+}
+
+.result-item.incorrect .kanji-text,
+.result-item.incorrect .result-text.furigana {
+  color: var(--red-color);
+  text-shadow: 0 0 12px rgba(255, 0, 98, 0.25);
+}
+
+.result-item.incorrect .result-item-separator {
+  background: rgba(255, 0, 98, 0.2);
+}
+
+.result-item.incorrect:hover {
+  background: linear-gradient(90deg, rgba(255, 0, 98, 0.06) 0%, rgba(255, 0, 98, 0.01) 60%, transparent 100%);
+}
+
+.result-item.incorrect:hover .result-item-separator {
+  background: var(--red-color);
+}
+
+/* --- СОСТОЯНИЕ: НЕЙТРАЛЬНО (--faded-gray) --- */
+.result-item.neutral {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.002) 50%, transparent 100%);
+}
+
+.result-item.neutral .kanji-text,
+.result-item.neutral .result-text.furigana {
+  color: var(--faded-gray);
+  text-shadow: none;
+}
+
+.result-item.neutral .result-text.english {
+  color: var(--profile-text-ultra-low);
+}
+
+.result-item.neutral .result-item-separator {
+  background: var(--profile-border-main);
+}
+
+.result-item.neutral:hover {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.005) 60%, transparent 100%);
+}
+
+.result-item.neutral:hover .result-item-separator {
+  background: var(--profile-text-low);
+}
+
+/* ==========================================================================
+   4. ПУСТОЕ СОСТОЯНИЕ (EMPTY STATE)
+   ========================================================================== */
+.result-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem 2rem;
+  border: 1px dashed var(--profile-border-main);
+  border-radius: 6px;
+  background: var(--profile-bg-card);
+}
+
+.result-empty-state .empty-text {
+  font-size: 0.9rem;
+  color: var(--profile-text-low);
+  margin-top: 1rem;
+  letter-spacing: 1px;
+}
+
+
+
+[data-theme='light'] .result-item.correct {
+  /* Увеличиваем прозрачность с 0.03 до 0.15 */
+  background: linear-gradient(90deg, rgba(0, 200, 100, 0.15) 0%, rgba(0, 255, 128, 0.05) 50%, transparent 100%);
+}
+
+[data-theme='light'] .result-item.incorrect {
+  /* Увеличиваем прозрачность с 0.03 до 0.15 */
+  background: linear-gradient(90deg, rgba(255, 0, 98, 0.15) 0%, rgba(255, 0, 98, 0.05) 50%, transparent 100%);
+}
+
+[data-theme='light'] .result-item.neutral {
+  /* Делаем нейтральный фон заметнее */
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.01) 50%, transparent 100%);
+}

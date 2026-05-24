@@ -7,18 +7,7 @@ import zio.schema.codec.{BinaryCodec, ProtobufCodec}
 
 object KanjiRedisConfig {
 
-//  val configLayer: ZLayer[Any, Throwable, RedisConfig] = ZLayer {
-//    for {
-//      host <- System.env("REDIS_HOST").map(_.getOrElse("localhost"))
-//
-//      portString <- System.env("REDIS_PORT").map(_.getOrElse("6379"))
-//      port <- ZIO
-//        .attempt(portString.toInt)
-//        .mapError(_ => new Exception(s"Invalid REDIS_PORT: $portString"))
-//
-//      _ <- Console.printLine(s"Подключаемся к Redis на $host:$port")
-//    } yield RedisConfig(host, port)
-//  }
+
   private object ProtobufCodecSupplier extends CodecSupplier {
     def get[A: Schema]: BinaryCodec[A] = ProtobufCodec.protobufCodec
   }
