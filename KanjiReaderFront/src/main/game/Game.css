@@ -1,0 +1,182 @@
+/* ==========================================================================
+   1. GAMEPLAY ROOT FRAME
+   ========================================================================== */
+.game-container-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+}
+
+.game-root-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.game-root-container.preloader-state {
+  min-height: 50vh;
+}
+
+/* ==========================================================================
+   2. THE KANJI ALTAR (Центральный блок отображения слова)
+   ========================================================================== */
+.kanji-altar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  margin-bottom: 2rem;
+}
+
+.kanji-main-display {
+  font-family: "Yu Mincho", serif;
+  font-size: 6.5rem;
+  font-weight: 300;
+  margin: 1rem 0;
+  color: var(--text-color);
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+/* Подсказки при ошибке */
+.game-text-furigana {
+  font-family: "Yu Mincho", serif;
+  font-size: 1.8rem;
+  margin: 0;
+  color: var(--red-color);
+  text-shadow: 0 0 15px rgba(255, 0, 98, 0.4);
+  letter-spacing: 0.1em;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.game-text-english {
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin: 0;
+  color: var(--profile-text-muted);
+  letter-spacing: 0.05em;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.game-text-furigana.hidden,
+.game-text-english.hidden {
+  opacity: 0;
+}
+
+.game-text-furigana.visible,
+.game-text-english.visible {
+  opacity: 1;
+}
+
+/* Таймер */
+.game-timer-wrapper {
+  margin-bottom: 1.5rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 1.5px;
+}
+
+/* ==========================================================================
+   3. INPUT SYSTEM WRAPPER
+   ========================================================================== */
+.game-input-wrapper {
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   4. ИНТЕРАКТИВНЫЕ ЭФФЕКТЫ И МЯГКИЕ АНИМАЦИИ ВСПОЛОХОВ
+   ========================================================================== */
+.result-screen-active .result-header {
+  font-size: 2.2rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.slash-divider {
+  color: var(--profile-border-main);
+  font-family: "Yu Mincho", serif;
+  margin: 0 0.4rem;
+}
+
+/* Анимации вспышек кандзи */
+.correct-flash .kanji-main-display {
+  animation: correctTextGlow 0.6s cubic-bezier(0.2, 0.4, 0.1, 1);
+}
+
+.incorrect-flash .kanji-main-display {
+  animation: incorrectTextGlow 0.6s cubic-bezier(0.2, 0.4, 0.1, 1);
+}
+
+@keyframes correctTextGlow {
+  0% { color: var(--occult-green); text-shadow: 0 0 30px var(--occult-green); transform: scale(1.02); }
+  100% { color: var(--text-color); text-shadow: 0 0 30px rgba(255, 255, 255, 0.05); transform: scale(1); }
+}
+
+@keyframes incorrectTextGlow {
+  0% { color: var(--red-color); text-shadow: 0 0 40px var(--red-color); transform: scale(0.98); }
+  100% { color: var(--text-color); text-shadow: 0 0 30px rgba(255, 255, 255, 0.05); transform: scale(1); }
+}
+
+/* ==========================================================================
+   5. LOADING SCREEN & TRANSITIONS
+   ========================================================================== */
+.kanji-loading-display {
+  font-family: "Yu Mincho", "Meiryo", serif;
+  font-size: 5rem;
+  font-weight: 300;
+  color: var(--text-color);
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+  animation: loadingTextPulse 1.8s infinite ease-in-out;
+}
+
+.noMore {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.slide-in-pure-bottom {
+  animation: slideInPureBottom 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+}
+
+.slide-out-pure-left {
+  animation: slideOutPureLeft 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+  pointer-events: none;
+}
+
+.slide-in-blurred-right {
+  animation: slideInPureRight 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+}
+
+.slide-out-up {
+  animation: slideOutUp 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+}
+
+@keyframes slideInPureBottom {
+  0% { transform: translateY(1000px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes loadingTextPulse {
+  0%, 100% { opacity: 0.4; text-shadow: 0 0 20px rgba(255, 255, 255, 0.02); }
+  50% { opacity: 1; text-shadow: 0 0 35px rgba(0, 242, 255, 0.15); }
+}
+
+@keyframes slideOutUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(+500px); opacity: 0; } /* Исправлено направление улета вверх */
+}

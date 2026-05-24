@@ -1,0 +1,28 @@
+/* ==========================================================================
+   LAYOUT CONTAINERS (GLOBAL APP FRAMES)
+   ========================================================================== */
+.main-frame {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* GAME SESSION SCREEN */
+.game-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.game-placeholder h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.kanji-loading-display {
+  font-size: 6.5rem;
+}

@@ -1,13 +1,23 @@
-FROM sbtscala/scala-sbt:eclipse-temurin-jammy-17.0.5_8_1.8.2_2.13.10 AS build
+FROM sbtscala/scala-sbt:eclipse-temurin-jammy-17.0.10_7_1.9.9_2.13.12 AS build
 WORKDIR /app
-COPY . .
+COPY project project
+COPY build.sbt .
+RUN sbt update
+COPY src src
 RUN sbt clean assembly
 
 FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 
-COPY --from=build /app/target/scala-2.13/app-assembly.jar app.jar
+RUN useradd -ms /bin/bash scalauser
 
+COPY --from=build /app/target/scala-2.13/*assembly.jar app.jar
+
+RUN chown -R scalauser:scalauser /app
+
+USER scalauser
+
+ENV JAVA_OPTS="-Xmx512m -Xms256m"
 EXPOSE 8099
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]

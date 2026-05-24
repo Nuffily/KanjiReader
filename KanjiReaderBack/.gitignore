@@ -1,2 +1,6 @@
 *application.conf
 */application.conf
+.env
+*env
+/.env
+env

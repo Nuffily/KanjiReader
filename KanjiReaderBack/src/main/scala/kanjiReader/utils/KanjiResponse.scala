@@ -1,10 +1,6 @@
 package kanjiReader.utils
 
-import kanjiReader.auth.{
-  AuthBadUserError,
-  AuthDunnoUserError,
-  AuthUserDataError
-}
+import kanjiReader.base.auth.{AuthBadUserError, AuthDunnoUserError, AuthUserDataError}
 import zio.ZIO
 import zio.http.Header.Authorization.Bearer
 import zio.http.{Header, Request, Response, Status}
@@ -41,15 +37,22 @@ object KanjiResponse {
   } yield id
 
   def withToken[E, R](req: Request)(
-    f: Bearer => ZIO[R, E, Response]
+      f: Bearer => ZIO[R, E, Response]
   ): ZIO[R, E, Response] =
     req.header(Header.Authorization) match {
       case Some(auth @ Bearer(_)) => f(auth)
       case None                   => noAuthorization
     }
 
-  val handleAuthErrorZIO
-  : AuthUserDataError => ZIO[Any, Nothing, Response] = {
+  def withCookie[E, R](req: Request)(
+    f: Bearer => ZIO[R, E, Response]
+  ): ZIO[R, E, Response] =
+    req.cookie("kanji_github_token").map(c => c.content) match {
+      case Some(cookie) => f(Bearer(cookie))
+      case None                   => noAuthorization
+    }
+
+  val handleAuthErrorZIO: AuthUserDataError => ZIO[Any, Nothing, Response] = {
     case AuthBadUserError(message) =>
       KanjiResponse.unauthorized(message)
     case AuthDunnoUserError(message) =>
@@ -59,8 +62,7 @@ object KanjiResponse {
         )
   }
 
-  val handleAuthError
-  : AuthUserDataError => Response = {
+  val handleAuthError: AuthUserDataError => Response = {
     case AuthBadUserError(message) =>
       Response.unauthorized(message)
     case AuthDunnoUserError(message) =>
