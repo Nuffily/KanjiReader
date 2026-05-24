@@ -3,7 +3,7 @@ package kanjiReader.base.statistics
 import kanjiReader.base.auth.GitHubUser
 import zio.http.{Method, Request, Response, Routes, handler}
 import zio.json.EncoderOps
-import zio.{&, Console, ZIO}
+import zio.{&, ZIO}
 
 object StatisticsRoutes {
   def apply(): Routes[StatisticsService & GitHubUser, Response] =
@@ -16,10 +16,8 @@ object StatisticsRoutes {
        */
       Method.GET / "getStats" -> handler { (req: Request) =>
         (for {
-          user  <- ZIO.service[GitHubUser] // Достаем юзера из R
-          _ <- Console.printLine(user).orDie
+          user  <- ZIO.service[GitHubUser]
           stats <- StatisticsService.get(user.id)
-          _ <- Console.printLine(stats).orDie
         } yield Response.json(stats.toJson))
           .catchAll { e: StatError =>
             ZIO.succeed(Response.badRequest(s"StatError: ${e.getMessage}"))

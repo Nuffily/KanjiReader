@@ -124,7 +124,6 @@ const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum
 
   const completedWords = words.slice(0, num + 1);
 
-  // Оптимизировали сборку массива ответов для ResultList через кэш-карту сложностью O(N) вместо O(N^2)
   const legacyAnswersArray = useMemo(() => {
     const answersMap = answers.reduce((acc, cur) => {
       acc[cur.countAtAttempt] = cur.correct;
@@ -156,7 +155,6 @@ const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum
             {isWrong ? words[num]?.furigana : ""}
           </p>
 
-          {/* Добавляем key={num}. При смене слова анимация гарантированно запустится заново */}
           <h1 key={num} className="kanji-main-display">
             {words[num]?.kanji}
           </h1>

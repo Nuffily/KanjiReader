@@ -7,5 +7,4 @@ const config = {
   }
 }
 
-// In Vite, use import.meta.env.MODE instead of NODE_ENV
 export default config[import.meta.env.MODE || 'development'];

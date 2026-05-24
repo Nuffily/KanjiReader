@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 
 
 export function getTimeRemaining(targetDateString) {
-    // Просто создаем Date из строки.
-    // Браузер сам поймет, если там есть Z (UTC) или если там просто время (локальное).
     const targetDate = new Date(targetDateString);
     const now = Date.now();
 

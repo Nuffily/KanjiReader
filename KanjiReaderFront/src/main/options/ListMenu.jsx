@@ -1,4 +1,3 @@
-// src/comp/main/ListMenu.jsx
 import React from 'react';
 import './ListMenu.css'; 
 import ArchitectButton from '../../comp/buttons/ArchitectButton';
@@ -13,7 +12,6 @@ const ListMenu = ({ getter, setter, isActive, isPicked, title, collec, back, sec
       <h1>{title}</h1>
 
       <div className="list-card">
-        {/* ПРАВКА: Меняем ol на ul, чтобы избавиться от скрытых паддингов */}
         <ul className="list-menu-list">
           {collec.map((e, index) => (
             <li key={index} className="list-menu-item">
