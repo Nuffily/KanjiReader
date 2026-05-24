@@ -167,3 +167,33 @@
   margin-top: 1rem;
   letter-spacing: 1px;
 }
+
+
+
+/* --- СОСТОЯНИЕ: ПОСЛЕДНЯЯ НЕЙТРАЛЬНАЯ СТРОКА (Серая) --- */
+.result-item.neutral {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.002) 50%, transparent 100%);
+}
+
+.result-item.neutral .kanji-text,
+.result-item.neutral .result-text.furigana {
+  color: rgba(255, 255, 255, 0.4);
+  text-shadow: none; /* Убираем неоновое свечение */
+}
+
+.result-item.neutral .result-text.english {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.result-item.neutral .result-item-separator {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Акцент при наведении на нейтральную строку */
+.result-item.neutral:hover {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.005) 60%, transparent 100%);
+}
+
+.result-item.neutral:hover .result-item-separator {
+  background: rgba(255, 255, 255, 0.3);
+}

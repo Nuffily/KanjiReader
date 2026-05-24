@@ -7,18 +7,17 @@ import config from "../../config.js";
 import { checkReading } from '../functions/JSFuncs.jsx';
 
 const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum, resultSetter, dataUpdate, theme, updateStats }) => {
-  // --- СТЕЙТЫ И РЕФЫ ---
   const [num, setNum] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const [answers, setAnswers] = useState([]);
   const [flash, setFlash] = useState("neutral-pulse"); 
   const [forceEnd, setForceEnd] = useState(false);
+  const [isExiting, setIsExiting] = useState(false); // Состояние для уезда вверх
 
   const inputRef = useRef(null);
   const containerRef = useRef(null);
   const hasSentResult = useRef(false);
 
-  // --- ВЫЧИСЛЯЕМЫЕ СВОЙСТВА ---
   const isWrong = useMemo(() => {
     return answers.some(ans => ans.countAtAttempt === num && !ans.correct);
   }, [answers, num]);
@@ -43,7 +42,6 @@ const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum
     return max;
   };
 
-  // --- СИНХРОНИЗАЦИЯ С БЭКЕНДОМ ---
   const sendResult = async () => {
     if (hasSentResult.current) return;
     hasSentResult.current = true;
@@ -81,16 +79,23 @@ const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum
     }
   }, [isGameFinished]);
 
-  // Фокусировка инпута
   useEffect(() => {
-    if (inputRef.current && !isWrong && !isGameFinished) inputRef.current.focus();
+    if (!isGameFinished && !isWrong && inputRef.current) {
+      inputRef.current.focus();
+    }
   }, [num, isWrong, isGameFinished]);
+
+  useEffect(() => {
+    if (!isGameFinished && !isWrong && inputRef.current) {
+      const timer = setTimeout(() => inputRef.current.focus(), 10);
+      return () => clearTimeout(timer);
+    }
+  }, [isWrong, isGameFinished]);
 
   useEffect(() => {
     if (containerRef.current) containerRef.current.focus();
   }, []);
 
-  // --- ОБРАБОТКА ЛОГИКИ ВВОДА ---
   const handleAnswerSubmit = () => {
     setFlash("neutral-pulse");
 
@@ -112,92 +117,97 @@ const Game = ({ words = [], timerKey, duration, isGameGoes, count, voca, vocaNum
     }
   };
 
-  // --- УПРАВЛЕНИЕ КЛАВИШАМИ ---
+  // Вынесли закрытие с задержкой в отдельную функцию, чтобы не дублировать код
+  const handleExitWithAnimation = () => {
+    updateStats();
+    setIsExiting(true); // Включаем анимацию уезда вверх
+    
+    setTimeout(() => {
+      isGameGoes(false); // Закрываем полностью через 400мс
+    }, 275);
+  };
+
   useGlobalKeyPress({
     'Escape': (event) => {
       event.preventDefault();
+      
+      // Запоминаем результаты
       resultSetter({ correct: correctCount, total: isWrong ? num + 1 : num });
 
       if (!isGameFinished) {
         setForceEnd(true);
       } else {
-        updateStats();
-        isGameGoes(false);
+        handleExitWithAnimation();
       }
     },
     'Enter': () => {
       if (!isGameFinished) {
         handleAnswerSubmit();
       } else {
-        updateStats();
         resultSetter({ correct: correctCount, total: num });
-        isGameGoes(false);
+        handleExitWithAnimation();
       }
     }
   });
 
-  if (isGameFinished) {
-    const completedWords = words.slice(0, num + 1);
+  const completedWords = words.slice(0, num + 1);
+  const legacyAnswersArray = completedWords.map((_, idx) => {
+    const record = answers.find(a => a.countAtAttempt === idx);
+    return record ? record.correct : false;
+  });
 
-    const legacyAnswersArray = completedWords.map((_, idx) => {
-      const record = answers.find(a => a.countAtAttempt === idx);
-      return record ? record.correct : false;
-    });
+  const gameplayAnimationClass = isGameFinished ? 'slide-out-pure-left' : 'gameplay-active';
+  
+  // Динамически меняем класс: если выходим, то slide-out-up, иначе стандартное поведение
+  const resultAnimationClass = isExiting 
+    ? 'slide-out-up' 
+    : (isGameFinished ? 'slide-in-blurred-right' : 'noMore');
 
-    return (
-      <div
-        key="result-screen"
-        ref={containerRef}
-        tabIndex={0}
-        className="game-root-container result-screen-active"
-      >
+  return (
+    <div ref={containerRef} tabIndex={0} className="game-container-wrapper">
+      
+      {/* ИГРОВОЙ ПРОЦЕСС */}
+      <div className={`game-root-container ${gameplayAnimationClass} ${flash}`}>
+        <div className="game-timer-wrapper">
+          <CountdownTimer
+            resetKey={timerKey}
+            time={duration}
+            timeIsUp={(isUp) => isUp && setForceEnd(true)}
+          />
+        </div>
+
+        <div className="kanji-altar">
+          <p className={`game-text-furigana ${isWrong ? "visible" : "hidden"}`}>
+            {isWrong ? words[num]?.furigana : ""}
+          </p>
+
+          <h1 className="kanji-main-display">{words[num]?.kanji}</h1>
+
+          <p className={`game-text-english ${isWrong ? "visible" : "hidden"}`}>
+            {isWrong ? words[num]?.english : ""}
+          </p>
+        </div>
+
+        <div className="game-input-wrapper">
+          <input
+            className={theme ? 'occult-neon-input' : 'occult-neon-line'}
+            ref={inputRef}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            disabled={isWrong}
+            placeholder={isWrong ? "Press ENTER to skip" : "Type reading..."}
+          />
+        </div>
+      </div>
+
+      {/* ЭКРАН РЕЗУЛЬТАТОВ */}
+      <div className={`game-root-container result-screen-active ${resultAnimationClass}`}>
         <h1 className="result-header">
           Result: {correctCount} <span className="slash-divider">/</span> {num}
         </h1>
         <ResultList items={completedWords} answers={legacyAnswersArray} />
       </div>
-    );
-  }
 
-  // --- ИГРОВОЙ ПРОЦЕСС ---
-  return (
-    <div
-      key={num}
-      ref={containerRef}
-      tabIndex={0}
-      className={`game-root-container gameplay-active ${flash}`}
-    >
-      <div className="game-timer-wrapper">
-        <CountdownTimer
-          resetKey={timerKey}
-          time={duration}
-          timeIsUp={(isUp) => isUp && setForceEnd(true)}
-        />
-      </div>
-
-      <div className="kanji-altar">
-        <p className={`game-text-furigana ${isWrong ? "visible" : "hidden"}`}>
-          {isWrong ? words[num]?.furigana : ""}
-        </p>
-
-        <h1 className="kanji-main-display">{words[num]?.kanji}</h1>
-
-        <p className={`game-text-english ${isWrong ? "visible" : "hidden"}`}>
-          {isWrong ? words[num]?.english : ""}
-        </p>
-      </div>
-
-      <div className="game-input-wrapper">
-        <input
-          autoFocus={!isWrong}
-          className={theme ? 'occult-neon-input' : 'occult-neon-line'}
-          ref={inputRef}
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          disabled={isWrong}
-          placeholder={isWrong ? "Press ENTER to skip" : "Type reading..."}
-        />
-      </div>
     </div>
   );
 };

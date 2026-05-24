@@ -104,8 +104,8 @@
 }
 
 .occult-neon-input:focus {
-  border-color: rgba(0, 242, 255, 0.4);
-  box-shadow: 0 0 20px rgba(0, 242, 255, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.8);
+  border-color: rgba(192, 18, 61, 0.4);
+  box-shadow: 0 0 20px rgba(255, 0, 38, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .occult-neon-input:disabled {
@@ -131,7 +131,7 @@
 }
 
 .occult-neon-line:focus {
-  border-bottom-color: var(--occult-cyan);
+  border-bottom-color: var(--occult-green);
 }
 
 .occult-neon-line:disabled {
@@ -181,7 +181,7 @@
 }
 
 @keyframes correctTextGlow {
-  0% { color: var(--occult-cyan); text-shadow: 0 0 30px var(--occult-cyan); transform: scale(1.02); }
+  0% { color: var(--occult-green); text-shadow: 0 0 30px var(--occult-green); transform: scale(1.02); }
   100% { color: var(--text-color); text-shadow: 0 0 30px rgba(255, 255, 255, 0.05); transform: scale(1); }
 }
 
@@ -229,5 +229,59 @@
   50% {
     opacity: 1;
     text-shadow: 0 0 35px rgba(0, 242, 255, 0.15);
+  }
+}
+
+/* Общий контейнер, удерживающий оба экрана в одной точке */
+.game-container-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+}
+
+/* Модифицируем существующий класс, чтобы экраны накладывались для анимации */
+.game-root-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: absolute; /* Важно: чтобы один экран улетал, а второй вставал на его место */
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* Если экран скрыт и игра еще идет, полностью убираем результаты из видимости */
+.noMore {
+  display: none !important;
+}
+
+/* Переиспользуем твои анимации улета влево и вылета справа */
+.slide-out-pure-left {
+  animation: slideOutPureLeft 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+  pointer-events: none;
+}
+
+.slide-in-blurred-right {
+  animation: slideInPureRight 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+}
+
+
+.slide-out-up {
+  animation: slideOutUp 0.6s cubic-bezier(0.2, 0.4, 0.1, 1) both;
+}
+
+@keyframes slideOutUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(+500px);
+    opacity: 0;
   }
 }

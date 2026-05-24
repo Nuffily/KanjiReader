@@ -2,33 +2,33 @@ import React from "react";
 import "./ResultList.css";
 
 const ResultList = ({ items, answers }) => {
-  // Функция для генерации римских цифр
   const toRoman = (num) => {
     const roman = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
     return roman[num] || num + 1;
   };
 
   return (
-    <div className="result-list-container slide-in-blurred-right">
+    <div className="result-list-container">
       {items.length > 0 ? (
         <ul className="result-list-wrapper">
           {items.slice(0, answers.length).map((item, index) => {
             const isCorrect = answers[index];
+            const isLast = index === answers.length - 1;
+
             return (
               <li
                 key={index}
-                className={`result-item ${isCorrect ? "correct" : "incorrect"}`}
+                className={`result-item ${
+                  isLast ? "neutral" : isCorrect ? "correct" : "incorrect"
+                }`}
               >
-                {/* Столбец 1: Римский номер + Кандзи */}
                 <div className="item-left-side">
                   <span className="result-item-number">{toRoman(index)}</span>
                   <span className="kanji-text">{item.kanji}</span>
                 </div>
 
-                {/* Вертикальный адаптивный разделитель */}
                 <div className="result-item-separator" />
 
-                {/* Столбец 2: Чтение (Furigana) и Перевод (English) по горизонтали */}
                 <div className="result-item-content">
                   <span className="result-text furigana">{item.furigana}</span>
                   <span className="result-text english">{item.english}</span>
